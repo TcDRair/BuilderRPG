@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+
 // using UnityEditor;
 
 [Serializable]
@@ -12,9 +12,12 @@ using UnityEngine.UI;
 /// </summary>
 public class Building
 {
+    GameObject _gameObject;
+    public void SetGameObject(GameObject gameObject) { _gameObject = gameObject; }
+
     public BuildingInfo info;
     /// <summary>건설 진행 중에 사용되는 건축 모델 배열입니다. 맨 마지막을 건설 완료 모델로 간주합니다.</summary>
-    [Tooltip("건설 중일 때 순서대로 표시되는 건축 모델링들을 저장합니다. 가장 마지막 모델이 건설 완료 모델입니다.")]
+    [Tooltip("건설 중일 때 순서대로 표시되는 건축 모델링들을 지정합니다. 가장 마지막 모델이 건설 완료 모델입니다.")]
     public Transform[] constructings;
 
     /*// 리소스 파일 경로
@@ -22,15 +25,29 @@ public class Building
     internal const string ResourcePath = "Prefabs/Buildings/";*/
 
     // 건설 중 사용되는 정보.
+    public enum State {
+        /// <summary>건설 자재를 기다리고 있습니다.</summary>
+        NeedMaterials,
+        /// <summary>건설이 완료되기를 기다리고 있습니다.</summary>
+        Constructing,
+        /// <summary>건설이 완료되었습니다.</summary>
+        Complete
+    } public State state;
     /// <summary>실제로 경과한 건설 시간을 의미합니다. 건설 속도 증감에 영향을 받으며 <see cref="BuildingInfo.buildTime"/>이 최대치입니다.</summary>
     float _buildProgress = 0f;
     /// <summary>건설 이전을 0, 건설 완료를 1로 잡았을 때 현재 건설 진행도 비율을 의미합니다.</summary>
     public float buildProgress { get => _buildProgress/info.buildTime; }
+
+    Vector2Int _pos;
+    /// <summary>맵에서 건축물의 셀 위치를 저장합니다.</summary>
+    public Vector2Int pos { get => _pos; }
+    
+    //TODO 건설 자재를 넣는 메서드 추가
     
     /// <summary>
     /// 플레이어가 이 건축물을 건설하고 있는 프레임마다 호출하여 건설 진행 상황을 업데이트합니다.<br/>
-    /// 진행도에 비례하여 건축물 모델이 변화할 수 있으며, 시간이 충분히 누적되면 완성 모델을 보여줍니다.<br/>
-    /// 처음 모델 변화 전까지는 프리뷰 모델을 보여줍니다.
+    /// 진행도에 비례하여 저장된 모델의 수에 따라 건축물의 외형이 변화합니다.<br/>
+    /// 건설이 완료되면 NavMesh에 해당 건물을 추가합니다.
     /// </summary>
     /// <param name="elapsedTime">
     /// 이전 호출로부터 경과한 시간을 나타냅니다. <see cref="Time.deltaTime"/>을 기본값으로 사용합니다.
@@ -43,10 +60,79 @@ public class Building
         for (int i = 0; i < constructings.Length; i++) {
             constructings[i].gameObject.SetActive(i == index);
         }
-        return _buildProgress >= info.buildTime;
+        bool buildComplete = buildProgress >= 1f;
+        if (buildComplete) {
+            state = State.Complete;
+            NavMeshManager.Instance.surface.BuildNavMesh();
+        }
+        return buildComplete;
+    }
+
+    public void SavePosition(Vector2Int pos) { _pos = pos; }
+
+
+
+    //* 건축물 기본 지원 슬롯. SimpleStructure.cs에서 사용법 참고
+    InteractSlot _dBI, _dFM, _dB, _dCB, _dD; // Lazy initialization
+    /// <summary>이 건물의 간략한 정보를 보여주는 슬롯입니다.</summary>
+    public InteractSlot defaultBuildingInfo  {
+        get => (_dBI ??= new InteractSlot() {
+            type = InteractSlot.Type.Info,
+            sprite = InteractSlotSprites.Instance.buildInfo,
+            action = new UnityAction<BaseEventData>((_) => { UI.Instance.ShowBuildingInfo(this); }),
+            slotName = "건물 정보",
+        });
+    }
+    /// <summary>이 건물의 자재를 채워넣는 슬롯입니다. 건설 시작 전 유효합니다.</summary>
+    public InteractSlot defaultFillMaterials {
+        get => (_dFM ??= new InteractSlot() {
+            type = InteractSlot.Type.CallUI,
+            sprite = InteractSlotSprites.Instance.buildFillMaterials,
+            action = new UnityAction<BaseEventData>((_) => {
+                //TODO 자재 보충 UI 메서드 추가
+            }),
+            slotName = "자재 넣기",
+        });
+    }
+    /// <summary>이 건물의 건설을 시작 또는 재개하는 슬롯입니다. 완공 전 유효합니다.</summary>
+    public InteractSlot defaultBuild {
+        get => (_dB ??= new InteractSlot() {
+            type = InteractSlot.Type.StartAction,
+            sprite = InteractSlotSprites.Instance.build,
+            action = new UnityAction<BaseEventData>((_) => {
+                //TODO 이것도
+            }),
+            slotName = "건설",
+        });
+    }
+    /// <summary>이 건물의 건설을 취소하는 슬롯입니다. 완공 전 유효합니다.</summary>
+    public InteractSlot defaultCancelBuild {
+        get => (_dCB ??= new InteractSlot() {
+            type = InteractSlot.Type.StartAction,
+            sprite = InteractSlotSprites.Instance.buildCancel,
+            action = new UnityAction<BaseEventData>((_) => {
+                //TODO 자재를 반환하는 메서드 추가. Destroy에서도 호출할 수 있으므로 buildProgress를 사용할 것.
+                //* 취소 확인 문구가 있어도 괜찮으려나
+                //TODO 매 프레임 변경되는 점은 Update() switch로, 그렇지 않은 것은 ChangeState()로 구현
+                UI.Instance.ClearInteractions();
+                MapGenerator.Instance.CleanBuilding(this);
+                GameObject.Destroy(_gameObject);
+            }),
+            slotName = "건설 취소",
+        });
+    }
+    /// <summary>이 건물을 철거하는 슬롯입니다. 완공된 이후 유효합니다.</summary>
+    public InteractSlot defaultDestroy {
+        get => (_dD ??= new InteractSlot() {
+            type = InteractSlot.Type.CallUI,
+            sprite = InteractSlotSprites.Instance.buildDestroy,
+            action = new UnityAction<BaseEventData>((_) => {
+                //TODO 철거 UI 메서드 추가
+            }),
+            slotName = "건물 철거",
+        });
     }
 }
-
 
 [Serializable]
 public class BuildingInfo {
@@ -72,8 +158,6 @@ public class BuildingInfo {
         HeatSource,
     }
     public ItemT[] material;
-    public const InteractTargetType interactTargetType = InteractTargetType.Building;
-    public InteractType[] interactTypes = new InteractType[] { InteractType.Build, InteractType.BuildCancel };
 
     public BuildableGrid grid;
     [Tooltip("건축물의 미리보기 이미지입니다. 건설 선택 화면에서 표시됩니다.")]
@@ -92,7 +176,7 @@ public class BuildingInfo {
 
 public interface IBuildingObject {
     /// <summary>게임오브젝트에 들어있는 Building 오브젝트에 접근합니다.</summary>
-    Building obj { get; }
+    Building bldg { get; }
 }
 
 

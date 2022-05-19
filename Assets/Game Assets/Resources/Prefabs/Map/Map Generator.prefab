@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1973957793731158158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976268166046333316}
+  - component: {fileID: 1973164052544491933}
+  m_Layer: 0
+  m_Name: Map Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1976268166046333316
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973957793731158158}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1973164052544491933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973957793731158158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64567d1adeb8b35448a4449552875e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapTransform: {fileID: 0}
+  buildings: {fileID: 0}
+  mapTexture: {fileID: 2800000, guid: 8f4881ba6ffc2ce48a096f26b3b36bca, type: 3}
+  overlayAllowPrefab: {fileID: 8166829947786505755, guid: ba53ea7c630fce14286566ee2d68720a,
+    type: 3}
+  overlayDenyPrefab: {fileID: 8166829947786505755, guid: e672a2a5bc0e8564dacbe110be7f9c2f,
+    type: 3}
+  overlayAdjacentPrefab: {fileID: 8166829947786505755, guid: d3b7e564c9bcf8646a3ec2a53b1b53e4,
+    type: 3}
+  overlayAcceptMat: {fileID: 2100000, guid: 0824121ba71ed444ab4dd7e31c914bc7, type: 2}
+  overlayDenyMat: {fileID: 2100000, guid: 45dd9c23c5691054f82b1aff11c82bf6, type: 2}
+  overlayObjects: {fileID: 0}
+  buildLayer: 8
+  floor: {fileID: 1316661190979104, guid: aa00b326357295c45b04432ef0a7dce8, type: 3}
+  ceiling: {fileID: 1757992522787278, guid: 30a18c0c57a55ba41a8e68e05e34e859, type: 3}
+  wallNorth: {fileID: 1655673125402110, guid: 6ccb420be26286b40bbfd8c2eb2cb0a9, type: 3}
+  wallEast: {fileID: 1655673125402110, guid: 1b3d16ee50c849a4ca48567ec9f7f5c2, type: 3}
+  wallSouth: {fileID: 1655673125402110, guid: 59984063fbe3fa246a13213cbb23d9ac, type: 3}
+  wallWest: {fileID: 1655673125402110, guid: 991696768a0b1574da810715235ae906, type: 3}
+  cornerNorthEast: {fileID: 1840828261763088, guid: c21204b2dfbe46648b51e98c5fdd927c,
+    type: 3}
+  cornerNorthWest: {fileID: 1840828261763088, guid: 45762d0bcd8c9c9439e76ba433e69972,
+    type: 3}
+  cornerSouthEast: {fileID: 1840828261763088, guid: 1f1e5074e008bdb46ac1ddd030f092a9,
+    type: 3}
+  cornerSouthWest: {fileID: 1840828261763088, guid: 66da52a2522c62243932555cb71bf5bf,
+    type: 3}
+  diagonal: {fileID: 1118157281631126, guid: 5c69562cb8cbe47409b3ba49c5351c0e, type: 3}
+  diagonalReverse: {fileID: 1118157281631126, guid: e41a510ed6ed3d644baa62f06be6bd3c,
+    type: 3}
+  edgeNorthEast: {fileID: 1332032387223852, guid: ff0955f8441bbd544903d8012d9b8c07,
+    type: 3}
+  edgeNorthWest: {fileID: 1332032387223852, guid: ddf78e84eabe9f04e8ec88898ad3e0c7,
+    type: 3}
+  edgeSouthEast: {fileID: 1332032387223852, guid: 337a683f3d1528443af616d6331bad10,
+    type: 3}
+  edgeSouthWest: {fileID: 1332032387223852, guid: 096b81bc7291f44418c0c48d48898b68,
+    type: 3}
+  mapCreated: 1

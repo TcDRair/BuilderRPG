@@ -12,16 +12,20 @@ using Newtonsoft.Json;
 /// 인접 셀의 정보도 
 /// </summary>
 public class BuildableGrid : MonoBehaviour {
+    #if UNITY_EDITOR
     [Tooltip("건물의 크기를 할당합니다. 그리드는 건물 인접 셀까지 포함합니다.")]
+    #endif
     public Vector2Int range = new Vector2Int(1, 1);
+    #if UNITY_EDITOR
     [ReadOnly, Tooltip("그리드가 저장된 Json 문자열입니다. BuildableGrid에서 그리드를 저장할 수 있습니다.")]
+    #endif
     public string gridJson;
 
     Buildable[,] _grid;
     /// <summary>그리드 작성 및 저장에 사용되는 배열입니다.<br/>플래그 데이터를 상대적 위치로 접근하려는 경우 <see cref="this"/>를 사용하십시오.</summary>
     internal Buildable[,] grid {
         get {
-            if (_grid == null && gridJson.Length != 0) _grid = JsonConvert.DeserializeObject<Buildable[,]>(gridJson);
+            if (_grid is null && gridJson.Length != 0) _grid = JsonConvert.DeserializeObject<Buildable[,]>(gridJson);
             return _grid;
         }
         set {
@@ -40,6 +44,7 @@ public class BuildableGrid : MonoBehaviour {
 
 
 
+#if UNITY_EDITOR
 
 /// https://stackoverflow.com/questions/49353971/how-to-create-multidimensional-array-in-unity-inspector 코드 사용
 [CustomEditor(typeof(BuildableGrid))]
@@ -71,7 +76,7 @@ public class GridDictionaryEditor : Editor {
         if (GUILayout.Button("Save Grid")) buildable.SaveGrid();
 
         // Draw grid
-        else if (buildable.grid == null) buildable.grid = new Buildable[3, 3];
+        else if (buildable.grid is null) buildable.grid = new Buildable[3, 3];
         EditorGUILayout.Space();
 
         /*GUIStyle tableStyle = new GUIStyle("box");
@@ -141,3 +146,4 @@ public class GridDictionaryEditor : Editor {
         EditorGUILayout.EndHorizontal();
     }
 }
+#endif

@@ -8,7 +8,7 @@ create a bit map file in your favourite image editor you can select both height 
 
 save your bitmap WITHOUT ANY compression and import it to unity with read and write enabled.
 
-open the MapGen scene and add the desired map texture to Map on MapGenerator game object.
+open the MapGen scene and add the desired map texture to Map on MapGeneratorTool game object.
 
 by default only 1 sample of each possible tile type assigned to the generator, you may want to modify those. you can add multiple prefabs to each tile type, the generator will choose one of them at random for each instance of that type. Make sure all your tiles have the same size and set that size in the TileDimension option in MapGen Script.
 Trans is the parent transform your map will be allocated. That helps export your maps for better tunning and re-usage between scenes.

@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEditor;
 
 public class NavMeshManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static NavMeshManager Instance;
+    void Awake() { Instance = this; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public NavMeshSurface surface;
+}
+
+#if UNITY_EDITOR
+
+[CustomEditor(typeof(NavMeshManager))]
+public class NavMeshManagerEditor : Editor
+{
+    public override void OnInspectorGUI() {
+        base.OnInspectorGUI();
+        if (GUILayout.Button("Build NavMesh")) {
+            NavMeshManager manager = (NavMeshManager)target;
+            manager.surface.BuildNavMesh();
+        }
     }
 }
+#endif

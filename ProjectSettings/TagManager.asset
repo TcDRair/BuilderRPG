@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Map Floor
   - Map
   - Building
   - 
@@ -43,4 +43,13 @@ TagManager:
     locked: 0
   - name: UI_mask
     uniqueID: 2546965205
+    locked: 0
+  - name: MG_Ground
+    uniqueID: 17044
+    locked: 0
+  - name: MG_Water
+    uniqueID: 96451
+    locked: 0
+  - name: MG_Objects
+    uniqueID: 23297
     locked: 0

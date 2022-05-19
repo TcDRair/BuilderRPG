@@ -85,7 +85,7 @@ public class BuildSelector_Info : MonoBehaviour
         // 건설 버튼 활성화
         isButtonActive = true;
         buildButton.color = Color.white;
-        MapGenerator.currentBuilding = building;
+        MapGenerator.Instance.currentBuilding = building;
     }
 
     /// <summary>현재 표시중인 건축물 정보란을 초기 상태로 청소합니다.</summary>
@@ -115,7 +115,6 @@ public class BuildSelector_Info : MonoBehaviour
     /// <summary>건설 버튼을 눌렀을 때 호출. 건물 선택 모드 UI를 닫고 건물 프리뷰 모드 UI를 시작</summary>
     public void BuildButtonPressed() {
         if (!isButtonActive) return;
-        UI.ui.CloseBuildSelector();
-        UI.buildPreview = true;
+        State.current.Set(State.Main.Menu_BuildPreview);
     }
 }
