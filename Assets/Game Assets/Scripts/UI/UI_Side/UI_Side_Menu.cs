@@ -17,11 +17,11 @@ public class UI_Side_Menu : MonoBehaviour
     public void OpenSideMenu() {
         menu.Enable();
         icon.Disable();
-        State.current.Set(State.Main.Menu_Side);
+        State.Current.Set(State.MState.Menu_Side);
     }
     public void CloseSideMenu() {
         menu.Disable();
         icon.Enable();
-        State.current.Set(State.Main.Idle);
+        State.Current.Set(State.MState.Idle);
     }
 }

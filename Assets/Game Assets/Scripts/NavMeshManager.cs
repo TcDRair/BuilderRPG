@@ -6,10 +6,10 @@ using UnityEditor;
 
 public class NavMeshManager : MonoBehaviour
 {
-    public static NavMeshManager Instance;
-    void Awake() { Instance = this; }
+  public static NavMeshManager Instance;
+  public void Awake() { Instance = this; }
 
-    public NavMeshSurface surface;
+  public NavMeshSurface surface;
 }
 
 #if UNITY_EDITOR
@@ -17,12 +17,12 @@ public class NavMeshManager : MonoBehaviour
 [CustomEditor(typeof(NavMeshManager))]
 public class NavMeshManagerEditor : Editor
 {
-    public override void OnInspectorGUI() {
-        base.OnInspectorGUI();
-        if (GUILayout.Button("Build NavMesh")) {
-            NavMeshManager manager = (NavMeshManager)target;
-            manager.surface.BuildNavMesh();
-        }
+  public override void OnInspectorGUI() {
+    base.OnInspectorGUI();
+    if (GUILayout.Button("Build NavMesh")) {
+      NavMeshManager manager = (NavMeshManager)target;
+      manager.surface.BuildNavMesh();
     }
+  }
 }
 #endif

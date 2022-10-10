@@ -3,147 +3,235 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using Newtonsoft.Json;
 
 [Serializable]
 /// <summary>
 /// 인스펙터에 그리드로 2차원 Enum(Flag) 배열을 표시하기 위한 클래스입니다.<br/>
-/// (0, 0)셀부터 지정 크기만큼 정사각형 셀로 그리드 격자를 그립니다.<br/>
-/// 인접 셀의 정보도 
+/// (0, 0)셀부터 지정 크기만큼 정사각형 셀로 그리드 격자를 그립니다.
 /// </summary>
 public class BuildableGrid : MonoBehaviour {
-    #if UNITY_EDITOR
-    [Tooltip("건물의 크기를 할당합니다. 그리드는 건물 인접 셀까지 포함합니다.")]
-    #endif
-    public Vector2Int range = new Vector2Int(1, 1);
-    #if UNITY_EDITOR
-    [ReadOnly, Tooltip("그리드가 저장된 Json 문자열입니다. BuildableGrid에서 그리드를 저장할 수 있습니다.")]
-    #endif
-    public string gridJson;
+  public string gridJson;
+  public (int x, int y) Size => Data.size; // For convinience
 
-    Buildable[,] _grid;
-    /// <summary>그리드 작성 및 저장에 사용되는 배열입니다.<br/>플래그 데이터를 상대적 위치로 접근하려는 경우 <see cref="this"/>를 사용하십시오.</summary>
-    internal Buildable[,] grid {
-        get {
-            if (_grid is null && gridJson.Length != 0) _grid = JsonConvert.DeserializeObject<Buildable[,]>(gridJson);
-            return _grid;
-        }
-        set {
-            _grid = value;
-        }
+  ((int x, int y) size, Buildable[] occupiedGrid, Buildable[] neededGrid) _data;
+  public ((int x, int y) size, Buildable[] occupiedGrid, Buildable[] neededGrid) Data {
+    get {
+      if (_data.Equals(default)) _data = JsonConvert.DeserializeObject<((int, int), Buildable[], Buildable[])>(gridJson);
+      return _data;
     }
+    set => _data = value;
+  }
 
-    /// <summary>실제 상대적 셀 위치의 건설 가능성 데이터를 반환합니다. [-1, -1]에서 <see cref="range"/>까지 지원합니다.</summary>
-    public Buildable this[int x, int y] {
-        get => grid[x+1, y+1];
+  /// <summary>해당 위치의 건축물 정보를 나타냅니다.</summary>
+  public Buildable this[int x, int y, bool showOccupiedData] {
+    get => showOccupiedData ? Data.occupiedGrid[x + y * Data.size.x] : Data.neededGrid[x + y * Data.size.x];
+    set {
+      if (showOccupiedData) Data.occupiedGrid[x + y * Data.size.x] = value;
+      else Data.neededGrid[x + y * Data.size.x] = value;
     }
-    /// <summary>격자 데이터를 저장합니다.</summary>
-    internal void SaveGrid() { gridJson = JsonConvert.SerializeObject(_grid); }
+  }
+  public (Buildable occupied, Buildable needed) this[int x, int y] => (Data.occupiedGrid[x + y * Data.size.x], Data.neededGrid[x + y * Data.size.x]);
+
+  public void LoadGrid() {
+    if (gridJson is null || gridJson.Length == 0) _data = new() {
+      size = new(2, 2),
+      occupiedGrid = new Buildable[4],
+      neededGrid = new Buildable[4]
+    };
+    else _data = JsonConvert.DeserializeObject<((int, int), Buildable[], Buildable[])>(gridJson);
+  }
+}
+
+[Flags]
+public enum Buildable : ushort {
+  None = 0,
+  //? 기본 구조
+  /// <summary>바닥</summary>
+  Floor  = 1 << 0,
+  /// <summary>천장. <see cref="Wall"/> 플래그 중 하나라도 활성화되어야 합니다.</summary>
+  Ceiling  = 1 << 1,
+  /// <summary>벽 - 북쪽</summary>
+  Wall_North  = 1 << 2,
+  /// <summary>벽 - 동쪽</summary>
+  Wall_East   = 1 << 3,
+  /// <summary>벽 - 남쪽</summary>
+  Wall_South  = 1 << 4,
+  /// <summary>벽 - 서쪽</summary>
+  Wall_West   = 1 << 5,
+  //? 부착물 / 설치물 - 종속 비트
+  /// <summary>부착물 - 북쪽 벽</summary>
+  Attatch_Wall_North = 1 << 6,
+  /// <summary>부착물 - 동쪽 벽</summary>
+  Attatch_Wall_East  = 1 << 7,
+  /// <summary>부착물 - 남쪽 벽</summary>
+  Attatch_Wall_South = 1 << 8,
+  /// <summary>부착물 - 서쪽 벽</summary>
+  Attatch_Wall_West  = 1 << 9,
+  /// <summary>설치물 - 바닥</summary>
+  Attatch_Floor = 1 << 10,
+  /// <summary>설치물 - 천장</summary>
+  Attatch_Ceiling = 1 << 11,
+
+
+  //? 합성 비트
+  /// <summary>벽 - 모든 방향</summary>
+  Wall = Wall_North | Wall_East | Wall_South | Wall_West,
+  /// <summary>부착물이 달린 벽 - 북쪽</summary>
+  Attatched_Wall_North = Attatch_Wall_North | Wall_North,
+  /// <summary>부착물이 달린 벽 - 동쪽</summary>
+  Attatched_Wall_East  = Attatch_Wall_East  | Wall_East,
+  /// <summary>부착물이 달린 벽 - 남쪽</summary>
+  Attatched_Wall_South = Attatch_Wall_South | Wall_South,
+  /// <summary>부착물이 달린 벽 - 서쪽</summary>
+  Attatched_Wall_West  = Attatch_Wall_West  | Wall_West,
+  /// <summary>부착물이 달린 벽 - 모든 방향</summary>
+  Attatched_Wall = Attatched_Wall_North | Attatched_Wall_East | Attatched_Wall_South | Attatched_Wall_West,
+
+  //? 특수 목적 비트
+  /// <summary>전체 차지</summary>
+  Full = 65535,
+  /// <summary>모든 인접 비트</summary>
+  Adjacent = Wall_North | Wall_East | Wall_South | Wall_West,
 }
 
 
 
-
 #if UNITY_EDITOR
-
 /// https://stackoverflow.com/questions/49353971/how-to-create-multidimensional-array-in-unity-inspector 코드 사용
 [CustomEditor(typeof(BuildableGrid))]
 public class GridDictionaryEditor : Editor {
-    private Vector2Int currRange = new Vector2Int(1, 1);
-    private bool showJsonData = false;
-    public override void OnInspectorGUI() {
-        BuildableGrid buildable = (BuildableGrid)target;
-        // 가급적 프리팹 편집 모드에서만 동작하도록...
-        if (!Application.isPlaying) EditorUtility.SetDirty(buildable);
-        else EditorUtility.ClearDirty(buildable);
-        buildable.range = EditorGUILayout.Vector2IntField("Range", buildable.range);
+  private (int x, int y) currentSize = new(1, 1);
+  public override void OnInspectorGUI() {
+    if (Application.isPlaying) EditorGUILayout.HelpBox("You can't modify grid during runtime", MessageType.Info);
 
-        // Json Data
-        showJsonData = EditorGUILayout.Foldout(showJsonData, "Json Data");
-        if (showJsonData) {
-            GUI.enabled = false;
-            buildable.gridJson = EditorGUILayout.TextArea(buildable.gridJson);
-            GUI.enabled = true;
-        }
-        
-        // Resize and initialize grid
-        if (GUILayout.Button("Resize Grid")) {
-            currRange = buildable.range;
-            buildable.grid = new Buildable[buildable.range.x + 2, buildable.range.y + 2];
-        }
+    BuildableGrid buildable = (BuildableGrid)target;
+    if (enumStyle is null) enumStyle = new("popup");
 
-        // Save grid
-        if (GUILayout.Button("Save Grid")) buildable.SaveGrid();
+    // Json Data
+    EditorGUILayout.BeginHorizontal();
+      EditorGUILayout.LabelField("Json Data", GUILayout.Width(60));
+      GUI.enabled = false;
+      EditorGUILayout.TextArea(buildable.gridJson);
+      GUI.enabled = true;
+    EditorGUILayout.EndHorizontal();
 
-        // Draw grid
-        else if (buildable.grid is null) buildable.grid = new Buildable[3, 3];
-        EditorGUILayout.Space();
+    EditorGUILayout.BeginHorizontal();
+      EditorGUILayout.LabelField("Width", GUILayout.Width(50));
+      currentSize.x = EditorGUILayout.IntSlider(currentSize.x, 1, 4);
+      EditorGUILayout.Space(10);
+      EditorGUILayout.LabelField("Height", GUILayout.Width(50));
+      currentSize.y = EditorGUILayout.IntSlider(currentSize.y, 1, 4);
+      EditorGUILayout.Space(10);
+    EditorGUILayout.EndHorizontal();
 
-        /*GUIStyle tableStyle = new GUIStyle("box");
-        tableStyle.padding = new RectOffset(0, 10, 10, 10);
-        tableStyle.margin.left = 32;*/
-
-        GUIStyle headerColumnStyle = new GUIStyle();
-        headerColumnStyle.fixedWidth = 35;
-
-        GUIStyle columnStyle = new GUIStyle();
-        columnStyle.fixedWidth = 35;
-
-        GUIStyle rowStyle = new GUIStyle();
-        rowStyle.fixedHeight = 25;
-
-        GUIStyle rowHeaderStyle = new GUIStyle();
-        rowHeaderStyle.fixedWidth = columnStyle.fixedWidth - 1;
-
-        GUIStyle columnHeaderStyle = new GUIStyle();
-        columnHeaderStyle.fixedWidth = 30;
-        columnHeaderStyle.fixedHeight = 25.5f;
-
-        GUIStyle columnLabelStyle = new GUIStyle();
-        columnLabelStyle.fixedWidth = rowHeaderStyle.fixedWidth - 6;
-        columnLabelStyle.alignment = TextAnchor.MiddleCenter;
-        columnLabelStyle.fontStyle = FontStyle.Bold;
-
-        GUIStyle cornerLabelStyle = new GUIStyle();
-        cornerLabelStyle.fixedWidth = 42;
-        cornerLabelStyle.alignment = TextAnchor.MiddleRight;
-        cornerLabelStyle.fontStyle = FontStyle.BoldAndItalic;
-        cornerLabelStyle.fontSize = 14;
-        cornerLabelStyle.padding.top = -5;
-
-        GUIStyle rowLabelStyle = new GUIStyle();
-        rowLabelStyle.fixedWidth = 25;
-        rowLabelStyle.alignment = TextAnchor.MiddleRight;
-        rowLabelStyle.fontStyle = FontStyle.Bold;
-
-        GUIStyle enumStyle = new GUIStyle("popup");
-        rowStyle.fixedWidth = 35;
-
-        EditorGUILayout.BeginHorizontal();
-        for(int x = -1; x < currRange.x+2; x++) {
-            EditorGUILayout.BeginVertical((x == -1) ? headerColumnStyle : columnStyle);
-            for(int y = currRange.y+1; y > -2; y--) {
-                if(x == -1 && y == -1) {
-                    EditorGUILayout.BeginVertical(rowHeaderStyle);
-                    EditorGUILayout.LabelField("[X,Y]", cornerLabelStyle);
-                    EditorGUILayout.EndHorizontal();
-                } else if (x == -1) {
-                    EditorGUILayout.BeginVertical(columnHeaderStyle);
-                    EditorGUILayout.LabelField($"{y-1}", rowLabelStyle);
-                    EditorGUILayout.EndHorizontal();
-                } else if (y == -1) {
-                    EditorGUILayout.BeginVertical(rowHeaderStyle);
-                    EditorGUILayout.LabelField($"{x-1}", columnLabelStyle);
-                    EditorGUILayout.EndHorizontal();
-                } else {
-                    EditorGUILayout.BeginHorizontal(rowStyle);
-                    buildable.grid[x, y] = (Buildable)EditorGUILayout.EnumFlagsField(buildable.grid[x, y], enumStyle, GUILayout.Width(35));
-                    EditorGUILayout.EndHorizontal();
-                }
-            }
-            EditorGUILayout.EndVertical();
-        }
-        EditorGUILayout.EndHorizontal();
+    EditorGUILayout.Space();
+    
+    // Resize and initialize grid
+    if (GUILayout.Button("Resize Grid")) {
+      buildable.Data = new() {
+        size = currentSize,
+        occupiedGrid = new Buildable[currentSize.x * currentSize.y],
+        neededGrid = new Buildable[currentSize.x * currentSize.y]
+      };
     }
+
+    // Save grid
+    if (GUILayout.Button("Save Grid")) {
+      Undo.RecordObject(buildable, "Save Buildable Grid Data");
+      buildable.gridJson = JsonConvert.SerializeObject(buildable.Data);
+      var temp = buildable.Data;
+      buildable.Data = new();
+      buildable.Data = temp;
+    }
+    
+    // Load grid (if inspector is opened but data are not loaded)
+    else if (buildable.Data.Equals(default)) {
+      buildable.LoadGrid();
+      currentSize = buildable.Data.size;
+    }
+
+    EditorGUILayout.Space();
+
+    //! 현재 문제점 : 인스펙터의 데이터를 프리팹 파일이 저장하고 있지 않습니다.
+
+    DrawGridInspector(buildable.Data.size, "Occupying", (x, y) => {
+      buildable[x, y, true] = (Buildable)EditorGUILayout.EnumFlagsField(buildable[x, y, true], enumStyle);
+    });
+    EditorGUILayout.Space();
+    DrawGridInspector(buildable.Data.size, "Needed", (x, y) => {
+      buildable[x, y, false] = (Buildable)EditorGUILayout.EnumFlagsField(buildable[x, y, false], enumStyle);
+    });
+
+    /*if (GUI.changed) {
+      EditorUtility.SetDirty(buildable);
+      EditorSceneManager.MarkSceneDirty(buildable.gameObject.scene);
+    }*/
+  }
+
+  void DrawGridInspector((int x, int y) size, string gridName, Action<int, int> behavior) { //! Use in OnInspectorGUI
+    EditorGUILayout.BeginHorizontal();
+    for(int x = -1; x < size.x; x++) {
+      EditorGUILayout.BeginVertical((x == -1) ? headerColumnStyle : columnStyle);
+      for(int y = -1; y < size.y; y++) {
+        if(x == -1 && y == -1) {
+          EditorGUILayout.BeginVertical(rowHeaderStyle);
+          EditorGUILayout.LabelField(gridName, cornerLabelStyle);
+          EditorGUILayout.EndHorizontal();
+        } else if (x == -1) {
+          EditorGUILayout.BeginVertical(columnHeaderStyle);
+          EditorGUILayout.LabelField($"{y+1}", rowLabelStyle);
+          EditorGUILayout.EndHorizontal();
+        } else if (y == -1) {
+          EditorGUILayout.BeginVertical(rowHeaderStyle);
+          EditorGUILayout.LabelField($"{x+1}", columnLabelStyle);
+          EditorGUILayout.EndHorizontal();
+        } else {
+          EditorGUILayout.BeginHorizontal(rowStyle);
+          EditorGUILayout.BeginVertical();
+          behavior?.Invoke(x, y);
+          EditorGUILayout.EndVertical();
+          EditorGUILayout.EndHorizontal();
+        }
+      }
+      EditorGUILayout.EndVertical();
+    }
+    EditorGUILayout.EndHorizontal();
+  }
+  static GUIStyle headerColumnStyle, columnStyle, rowStyle, rowHeaderStyle, columnHeaderStyle, columnLabelStyle, cornerLabelStyle, rowLabelStyle, enumStyle;
+
+  /*tableStyle = new("box") {
+    padding = new(0, 10, 10, 10),
+    margin = new() { left = 32 }
+  };*/
+
+  public void OnEnable() {
+    headerColumnStyle = new() { fixedWidth = 80 };
+    columnStyle = new() { fixedWidth = 60 };
+    rowStyle = new() { fixedWidth = 60, fixedHeight = 25 };
+    rowHeaderStyle = new() { fixedWidth = columnStyle.fixedWidth - 1 };
+    columnHeaderStyle = new() { fixedWidth = 60, fixedHeight = 26f };
+    columnLabelStyle = new() {
+      fixedWidth = rowHeaderStyle.fixedWidth - 6,
+      alignment = TextAnchor.MiddleCenter,
+      normal = new() { textColor = Color.white },
+      fontStyle = FontStyle.Bold
+    };
+    cornerLabelStyle = new() {
+      fixedWidth = 80,
+      alignment = TextAnchor.MiddleCenter,
+      normal = new() { textColor = Color.white },
+      fontStyle = FontStyle.Bold,
+      fontSize = 14,
+      padding = new() { top = -5 },
+    };
+    rowLabelStyle = new() {
+      fixedWidth = 80,
+      alignment = TextAnchor.MiddleCenter,
+      normal = new() { textColor = Color.white },
+      fontStyle = FontStyle.Bold
+    };
+  }
 }
 #endif

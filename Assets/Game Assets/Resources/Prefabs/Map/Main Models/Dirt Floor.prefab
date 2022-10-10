@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1201598731883614224}
   - component: {fileID: 1191664721532213638}
   - component: {fileID: 1170610563585686986}
-  - component: {fileID: 2442774940664767693}
+  - component: {fileID: 42587259424608700}
   m_Layer: 7
   m_Name: Dirt
   m_TagString: Untagged
@@ -131,7 +131,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43204642838645992, guid: 2ca00a7e0c04965408f4b472f11a9a7b, type: 2}
---- !u!114 &2442774940664767693
+--- !u!114 &42587259424608700
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,23 +140,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1214959102607201774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e038bf700cfa444fb16c6ef963be9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 1
-  m_DefaultArea: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: a346c3188b0410a4aaa9dc83db70f36a, type: 2}
