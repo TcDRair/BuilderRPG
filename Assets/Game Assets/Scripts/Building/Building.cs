@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 // using UnityEditor;
 
@@ -119,7 +117,8 @@ public class Building
       Player.Instance.StartBuild(this);
     }),
     slotName = "건설",
-    shouldApproach = true
+    shouldApproach = true,
+    actionState = State.MState.Menu_Solo
   };
   /// <summary>이 건물의 건설을 취소하는 슬롯입니다. 완공 전 유효합니다.</summary>
   public InteractSlot DefaultCancelBuild => _DCB ??= new InteractSlot(_m) {
@@ -134,7 +133,8 @@ public class Building
       Object.Destroy(_g);
     }),
     slotName = "건설 취소",
-    shouldApproach = true
+    shouldApproach = true,
+    actionState = State.MState.Menu_Solo
   };
   /// <summary>이 건물을 철거하는 슬롯입니다. 완공된 이후 유효합니다.</summary>
   public InteractSlot DefaultDestroy => _DD ??= new InteractSlot(_m) {

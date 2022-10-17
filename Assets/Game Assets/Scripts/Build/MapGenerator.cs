@@ -247,7 +247,7 @@ public class MapGenerator : MonoBehaviour {
   /// </summary>
   public (int x, int y)? GetCurrentCell()
   {
-    if (Physics.Raycast(MainCamera.ray, out hitData, maxDistance, floorMask)) {
+    if (Physics.Raycast(MainCamera.Ray, out hitData, maxDistance, floorMask)) {
       Transform cell = hitData.transform;
       // 가장 상위 바닥 오브젝트를 셀로 간주합니다.
       while (cell.parent.gameObject.layer == floorLayer) cell = cell.parent;

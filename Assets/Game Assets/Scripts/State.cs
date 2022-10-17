@@ -121,7 +121,7 @@ public class State
         _ui = UState.FullScreen;
         break;
       case MState.Menu_Solo:
-        _camera = CState.Track_Interactable;
+        _camera = CState.Track_Player;
         _player = PState.Action_Inactive;
         _ui = UState.Solo;
         break;

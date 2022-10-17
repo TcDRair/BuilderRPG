@@ -13,9 +13,7 @@ public class MainCamera : MonoBehaviour
   
   public Vector3 quaterViewPos;
 
-  public static Ray ray {
-    get => cam.ScreenPointToRay(Input.mousePosition);
-  }
+  public static Ray Ray => cam.ScreenPointToRay(Input.mousePosition);
 
   void Awake() {
     cam = GetComponent<Camera>();
@@ -49,8 +47,8 @@ public class MainCamera : MonoBehaviour
     public Color color;
     public bool recovered = false;
   }
-  Dictionary<int, Blender> blenders = new Dictionary<int, Blender>();
-  List<int> blockings = new List<int>();
+  readonly Dictionary<int, Blender> blenders = new();
+  readonly List<int> blockings = new();
 
   /// <summary>
   /// 카메라와 플레이어 사이에 다른 오브젝트가 존재할 때 머티리얼을 반투명하게 만듭니다.<br/>
@@ -63,19 +61,15 @@ public class MainCamera : MonoBehaviour
     Vector3 line = Player.Instance.transform.position - transform.position;
     if (State.Current.IsCameraTrackingPlayer) foreach (var hit in Physics.RaycastAll(transform.position, line, line.magnitude - 0.3f)) {
       // 바닥 타일을 제외하기 위해 0.3f 정도 짧게 설정합니다.
-      // 저장할 키와 값을 가져옵니다.
+      //? 저장할 키와 값을 가져옵니다.
       int key = hit.colliderInstanceID;
       Renderer renderer = hit.collider.GetComponent<Renderer>();
-      // 렌더러가 유효하지 않으면 검사하지 않습니다.
-      if (renderer == null || !renderer.enabled) {
-        // 다만 이 경우 활성화된 자식 오브젝트에 렌더러가 있는지도 검사합니다. 건물 오브젝트가 이 경우에 해당합니다.
-        if ((renderer = hit.collider.GetComponentInChildren<Renderer>()) == null || !renderer.enabled) continue;
-      }
-      // 렌더러가 유효하면 검사합니다.
+      //? 렌더러가 유효하지 않거나 자식 오브젝트에서도 렌더러가 없을 경우 검사하지 않습니다. (후자 예시 : 건물 오브젝트)
+      if ((renderer == null) && (renderer = hit.collider.GetComponentInChildren<Renderer>()) == null && !renderer.enabled) continue;
       blockings.Add(key);
-      // 새 오브젝트가 추가되면 추적을 시작합니다.
+      //? 새 오브젝트가 추가되면 추적을 시작합니다.
       if (!blenders.ContainsKey(key)) {
-        blenders.Add(key, new Blender() {
+        blenders.Add(key, new() {
           material = renderer.material,
           blend = renderer.material.CheckRenderMode(),
           color = renderer.material.color
@@ -84,15 +78,15 @@ public class MainCamera : MonoBehaviour
       }
     }
     // 이번 컬링에서 투명성을 판단할 오브젝트들을 검사합니다.
-    foreach(var pair in blenders.ToArray()) {
+    foreach(var pair in blenders.ToArray()) { // ToArray로 복제한 뒤 Dictionary를 제어합니다.
       // 카메라를 가리는 오브젝트는 minAlpha까지 점차 투명해집니다.
-      if (blockings.Contains(pair.Key)) {
+      if (blockings.Contains(pair.Key)) { //? 해당 시점에 카메라를 가리는 오브젝트일 경우
         if (!pair.Value.material.IsRenderMode(StandardShaderMethods.Mode.Transparent)) {
           pair.Value.material.ChangeRenderMode(StandardShaderMethods.Mode.Transparent);
         }
         var color = pair.Value.material.color;
         color.a = Mathf.Clamp(color.a - fadeSpeed, minAlpha, 1f);
-        pair.Value.material.color = color;
+        pair.Value.material.color = color; // Dict Value(Blender) is called by reference
       }
       // 카메라를 가리지 않는 오브젝트는 점차 알파를 회복하고, 완전히 회복한 오브젝트는 더 이상 추적하지 않습니다.
       else {
@@ -123,34 +117,27 @@ public static class StandardShaderMethods
     Transparent
   }
 
-  public static bool IsRenderMode(this Material standardShaderMaterial, Mode mode) {
-    switch (mode)
-    {
-      case Mode.Opaque:
-        return (
-          standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.One &&
-          standardShaderMaterial.GetInt("_DstBlend") == (int)BlendMode.Zero &&
-          standardShaderMaterial.IsKeywordEnabled("_ALPHATEST_ON") == false
-        );
-      case Mode.Cutout:
-        return (
-          standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.One &&
-          standardShaderMaterial.GetInt("_DstBlend") == (int)BlendMode.Zero &&
-          standardShaderMaterial.IsKeywordEnabled("_ALPHATEST_ON") == true
-        );
-      case Mode.Fade:
-        return (
-          standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.SrcAlpha &&
-          standardShaderMaterial.GetInt("_DstBlend") == (int)BlendMode.OneMinusSrcAlpha
-        );
-      case Mode.Transparent:
-        return (
-          standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.One &&
-          standardShaderMaterial.GetInt("_DstBlend") == (int)BlendMode.OneMinusSrcAlpha
-        );
-      default : return false;
-    }
-  }
+  public static bool IsRenderMode(this Material standardShaderMaterial, Mode mode) => mode switch {
+    Mode.Opaque => (
+      standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.One &&
+      standardShaderMaterial.GetInt("_DstBlend") == (int)BlendMode.Zero &&
+      standardShaderMaterial.IsKeywordEnabled("_ALPHATEST_ON") == false
+    ),
+    Mode.Cutout => (
+      standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.One &&
+      standardShaderMaterial.GetInt("_DstBlend") == (int)BlendMode.Zero &&
+      standardShaderMaterial.IsKeywordEnabled("_ALPHATEST_ON") == true
+    ),
+    Mode.Fade => (
+      standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.SrcAlpha &&
+      standardShaderMaterial.GetInt("_DstBlend") == (int)BlendMode.OneMinusSrcAlpha
+    ),
+    Mode.Transparent => (
+      standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.One &&
+      standardShaderMaterial.GetInt("_DstBlend") == (int)BlendMode.OneMinusSrcAlpha
+    ),
+    _ => false
+  };
 
   public static Mode CheckRenderMode(this Material standardShaderMaterial) {
     if (standardShaderMaterial.GetInt("_SrcBlend") == (int)BlendMode.One) {
@@ -204,5 +191,4 @@ public static class StandardShaderMethods
         break;
     }
   }
- }
- 
+}

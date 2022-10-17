@@ -8,7 +8,7 @@ using static MainSetting;
 public class Player : MonoBehaviour
 {
   public NavMeshAgent agent;
-  public TextMeshProUGUI text;
+  // public TextMeshProUGUI text;
 
   public Animator animator;
   public Rigidbody rigidBody;
@@ -32,10 +32,9 @@ public class Player : MonoBehaviour
 
   public static Player Instance;
 
-  void Start()
-  {
-    Instance = this;
+  void Awake() { Instance = this; }
 
+  void Start() {
     agent.updatePosition = false;
   }
 
@@ -45,8 +44,8 @@ public class Player : MonoBehaviour
 
     //* 이동 제어
     if (State.Current.CanMove()) {
-      if (Input.GetMouseButton(1) && Physics.Raycast(MainCamera.ray, out hit, 100, floorMask)) {
-        //TODO 이동할 수 없는 조건을 체크합니다 -> 추후 업데이트로 추가
+      if (Input.GetMouseButton(1) && Physics.Raycast(MainCamera.Ray, out hit, 100, floorMask)) {
+        //TODO 이동할 수 없는 조건을 체크합니다
         agent.SetDestination(hit.point);
         State.Current.DoMove();
       }
@@ -67,14 +66,14 @@ public class Player : MonoBehaviour
       }
     }
 
-    if (Input.GetMouseButtonDown(0)) {
+    /*if (Input.GetMouseButtonDown(0)) {
       var idx = TMP_TextUtilities.FindIntersectingWord(text, Input.mousePosition, null);
-      if (idx != -1) {
+      if (idx > 0) {
         var word = text.textInfo.wordInfo[idx].GetWord();
         if (Keywords.TryGetKeyword(word, out var keyword)) Debug.Log($"{keyword.Name} : Keyword\n{keyword.Description}");
         else Debug.Log(word);
       }
-    }
+    }*/
   }
 
   private Quaternion previousRotation;

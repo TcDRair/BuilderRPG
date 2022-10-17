@@ -65,7 +65,7 @@ public class RTGEditor : Editor
         //* Progress Bar
         if (inst.isRunning) {
             if (inst?.MapTexture?.progress.HasStarted ?? false) {
-                progress = inst.MapTexture.progress.totalProgress * 0.8f + 0.2f;
+                progress = inst.MapTexture.progress.TotalProgress * 0.8f + 0.2f;
                 EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(), progress, inst.MapTexture.progress.ToString());
             }
             else if (inst?.Map?.Graph?.progress.HasStarted ?? false) {
