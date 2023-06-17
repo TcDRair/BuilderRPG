@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
+/*
 namespace Unity.EditorCoroutines.Editor
 {
     public static class EditorWindowCoroutineExtension
@@ -101,3 +102,5 @@ namespace Unity.EditorCoroutines.Editor
         }
     }
 }
+
+*/

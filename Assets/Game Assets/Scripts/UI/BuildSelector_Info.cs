@@ -113,12 +113,4 @@ public class BuildSelector_Info : MonoBehaviour
     isButtonActive = false;
     buildButton.color = Color.gray;
   }
-
-
-
-  /// <summary>건설 버튼을 눌렀을 때 호출. 건물 선택 모드 UI를 닫고 건물 프리뷰 모드 UI를 시작</summary>
-  public void BuildButtonPressed() {
-    if (!isButtonActive) return;
-    State.Current.Set(State.MState.Mode_BuildPreview);
-  }
 }

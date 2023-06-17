@@ -33,7 +33,7 @@ public class UI : MonoBehaviour
     buildingModeMenu.Disable(); // Build_Preview 상태에서만 활성화됩니다.
     nameTagUI.Disable();
 
-    switch (State.Current.UI) {
+    /*switch (State.Current.UI) {
       case State.UState.Idle: {
         // 일반 상태에서는 기본 UI 메뉴 호출과 네임태그를 통한 상태 전환이 가능합니다.
         if (Input.GetKeyDown(KeyCode.B)) {
@@ -64,7 +64,7 @@ public class UI : MonoBehaviour
         
         break;
       }
-    }
+    }*/
   }
 
   #region Interact UI (NameTag ~ Slots)
@@ -79,7 +79,7 @@ public class UI : MonoBehaviour
   void ShowInteractableNameTags() {
     nameTagUI.Enable();
 
-    Vector3 playerPos = Player.Instance.transform.position;
+    Vector3 playerPos = Player.Instance.tr.position;
     hits.Clear();
     //* 일정 거리 내의 모든 상호작용 개체의 이름표를 표시합니다.
     foreach (RaycastHit hit in Physics.SphereCastAll(playerPos, 10f, Vector3.up, 0f, interactableMask)) {
@@ -117,7 +117,6 @@ public class UI : MonoBehaviour
     //* 카메라에 개체 추적을 설정하고 추적 대상을 전달합니다.
     MainCamera.Instance.trackTarget = interactable; 
     //* UI와 상태를 설정합니다.
-    State.Current.Set(State.MState.Interactable_Select);
     interactionSelectUI.Enable();
     interactableObjectName.text = interactable.TagName;
 
@@ -165,8 +164,6 @@ public class UI : MonoBehaviour
   
   /// <summary>상호작용 선택을 해제합니다. 아무것도 선택하지 않고 나갈 때만 호출해야 합니다.</summary>
   public void ClearInteractions() {
-    State.Current.Set(State.MState.Idle);
-
     interactionSelectUI.Disable();
     interactableObjectName.text = "";
   }
