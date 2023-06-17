@@ -1,0 +1,3 @@
+[submodule "Assets/Game Assets/Scripts/MapGenerator/polygon-map-unity"]
+	path = Assets/Game Assets/Scripts/MapGenerator/polygon-map-unity
+	url = https://github.com/TcDRair/polygon-map-unity
