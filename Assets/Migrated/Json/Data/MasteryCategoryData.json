@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "채집",
+    "icon": "Sprites/Icon/Gathering",
+    "masteries": [ 1, 2, 3, 4, 5, 6 ],
+    "row": [ 1, 1, 2, 2, 1, 1 ],
+    "maxLevel": 60,
+    "ratio": 1.15,
+    "basic": 500
+  },
+  {
+    "id": 2,
+    "name": "운동",
+    "icon": "Sprites/Icon/Exercise",
+    "masteries": [ 11, 12 ],
+    "row": [ 1, 1 ],
+    "maxLevel": 200,
+    "ratio": 1.05,
+    "basic": 1000
+  }
+]

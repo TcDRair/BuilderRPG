@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "tier": 1,
+    "name": "초목 환경 조사",
+    "icon": "Environment",
+    "prerequisites" : [],
+    "descriptions": [
+      { "level": -1, "desc": "초목이 자랄 수 있는 환경에서 식생을 조사합니다. 새로 발견된 식생은 도감에 수록됩니다." },
+      { "level": 15, "name": "사전 준비", "desc": "[lv0:1,0] 레벨 이하 식생의 조사 시간이 [lv1:0.333,-5]초 감소합니다." },
+      { "level": 30, "name": "표본 수집", "desc": "조사가 길어지는 대신 [lvp:0.005,-0.1]의 확률로 식생 표본을 습득할 수 있습니다.", "toggle": true },
+      { "level": 40, "name": "광역 탐색", "desc": "시간을 들여 지도에 주변의 식생 정보를 기록합니다. 현재 반경은 [lv0:2,-20]m입니다." }
+    ],
+    "maxLevel": 50,
+    "ratio": 1.05,
+    "basic": 100
+  },
+  {
+    "id": 2,
+    "tier": 2,
+    "name": "식물학 지식",
+    "icon": "Searching",
+    "prerequisites": [ { "id": 1, "level": 10 } ],
+    "descriptions": [
+      { "level": -1, "desc": "식물 채집을 통해 조사도를 올릴 수 있습니다. 돌발 이벤트에서 식물학 관련 선택지를 사용할 수 있습니다." },
+      { "level":  1, "name": "아는 만큼 보인다", "desc": "식물의 탐색 거리가 조사도에 비례하여 최대 [lvp:0.02,0] 증가합니다." },
+      { "level": 10, "name": "아는 것이 힘이다!", "desc": "식물의 채집 조건이 조사도에 비례하여 최대 [lvp:0.005,-0.05] 완화됩니다." },
+      { "level": 20, "name": "모르는 게 약이다?", "desc": "이름을 제외한 식물의 정보가 가려지지만 완벽 채집 확률이 50% 증가합니다.", "toggle": true }
+    ],
+    "maxLevel": 30,
+    "ratio": 1.1,
+    "basic": 50
+  },
+  {
+    "id": 3,
+    "tier": 2,
+    "name": "채집 실습",
+    "icon": "Gathering",
+    "prerequisites": [ { "id": 1, "level": 10 } ],
+    "descriptions": [
+      { "level": -1, "desc": "여러 식물을 정확한 방법으로 채집할 수 있습니다." },
+      { "level": 15, "name": "실패 요인 분석", "desc": "채집 실패 시 다음 채집의 성공률이 [lvp:0.025,0.25], 소요 시간이 [lvp:0.01,0.2] 증가합니다.", "toggle": true },
+      { "level": 30, "name": "채집 마스터", "desc": "", "flavor": "왠지 세상 어딘가에는 채집 닥터도 있을 것 같습니다." }
+    ],
+    "maxLevel": 30,
+    "ratio": 1.12,
+    "basic": 80
+  },
+  {"id":4,"tier":4,"name":"","icon":"","prerequisites":[{"id":3,"level":15}],"descriptions":[],"maxLevel":99,"ratio":1,"basic":999},
+  {"id":5,"tier":3,"name":"","icon":"","prerequisites":[],"descriptions":[],"maxLevel":99,"ratio":1,"basic":999},
+  {"id":6,"tier":5,"name":"","icon":"","prerequisites":[{"id":5,"level":10}],"descriptions":[],"maxLevel":99,"ratio":1,"basic":999},
+
+  {
+    "id":11,
+    "tier":1,
+    "name":"",
+    "icon":"",
+    "prerequisites":[],
+    "descriptions":[],
+    "maxLevel":99,
+    "ratio":1,
+    "basic":999
+  },
+  {"id":12,"tier":2,"name":"","icon":"","prerequisites":[{"id":11,"level":10}],"descriptions":[],"maxLevel":99,"ratio":1,"basic":999}
+]

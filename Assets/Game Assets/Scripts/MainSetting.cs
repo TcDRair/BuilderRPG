@@ -155,10 +155,6 @@ public static class TimerStringExtension {
 }
 
 public static class NiceStringMethods {
-  public static string ToNiceString(this string str) {
-    return UnityEditor.ObjectNames.NicifyVariableName(str);
-  }
-  public static string ToNiceString(this Vector2Int vec) {
-    return $"({vec.x}/{vec.y})";
-  }
+  public static string ToNiceString(this string str) => UnityEditor.ObjectNames.NicifyVariableName(str);
+  public static string ToNiceString(this Vector2Int vec) => $"({vec.x}/{vec.y})";
 }

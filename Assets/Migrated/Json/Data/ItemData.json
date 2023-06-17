@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "type": -1,
+    "name": "\"씨앗\"",
+    "description": "...",
+    "spritePath": "",
+    "maxStack": 1
+  },
+
+  {
+    "id": 101,
+    "type": 0,
+    "name": "철광석",
+    "description": "철 성분이 담긴 광석",
+    "spritePath": "Icon/ore",
+    "recipeCount": 2,
+    "taggable": true
+  },
+
+  {
+    "id": 2101,
+    "type": 1,
+    "name": "철 한손검",
+    "description": "철 광석으로 제련한 기본 한손검",
+    "spritePath": "Icon/sword",
+    "maxStack": 1,
+    "isEquipment": true,
+    "statEnabled": true,
+    "initialStats": [
+      { "id":  3, "value": 100 },
+      { "id":  7, "value": 1   },
+      { "id": 10, "value": 10  }
+    ],
+    "taggable": true,
+    "initialTags": [
+      { "id":  11, "level": 1 },
+      { "id":  12, "level": 1 },
+      { "id": 101, "level": 1 }
+    ]
+  }
+]
