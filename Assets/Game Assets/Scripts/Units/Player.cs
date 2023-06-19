@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     }
 
     //** X. 카메라 조정
-    cam.UpdatePos(tr.position);
+    cam.SmoothUpdatePos(tr.position);
 
     //* 다른 제어
     

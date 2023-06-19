@@ -85,7 +85,7 @@ public class UI : MonoBehaviour
     foreach (RaycastHit hit in Physics.SphereCastAll(playerPos, 10f, Vector3.up, 0f, interactableMask)) {
       IInteractable interactable = hit.transform.GetComponent<IInteractable>();
       if (interactable != null) {
-        Vector3 newPosition = MainCamera.cam.WorldToScreenPoint(interactable.GetPosition());
+        Vector3 newPosition = MainCamera.Cam.WorldToScreenPoint(interactable.GetPosition());
         int id = hit.colliderInstanceID;
         if (nameTagIDs.ContainsKey(id)) nameTagIDs[id].position = newPosition;
         else nameTagIDs.Add(id, CreateNameTag(interactable, newPosition));

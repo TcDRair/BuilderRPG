@@ -2,37 +2,48 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEditor;
+
+[CustomEditor(typeof(MainCamera))]
+public class MainCameraEditor : Editor {
+  public override void OnInspectorGUI() {
+    base.OnInspectorGUI();
+    if (GUILayout.Button("Set Target")) {
+      var cam = target as MainCamera;
+      cam.transform.position = cam.target.position + cam.RelativePos;
+    }
+  }
+}
 
 public class MainCamera : MonoBehaviour
 {
-  public static Camera cam;
+  public static Camera Cam;
   public static MainCamera Instance;
-  private Transform tr;
-
+  public Transform T { get; private set; }
+  public Transform target;
   public IInteractable trackTarget;
   
   public Vector3 RelativePos;
 
-  public static Ray Ray => cam.ScreenPointToRay(Input.mousePosition);
-
+  public static Ray Ray => Cam.ScreenPointToRay(Input.mousePosition);
   protected void Awake() {
-    cam = GetComponent<Camera>();
-    tr = transform;
+    Cam = GetComponent<Camera>();
+    T = transform;
     Instance = this;
   }
 
   protected void Start() {
-    tr.position = Player.Instance.tr.position + RelativePos;
-    tr.LookAt(Player.Instance.tr);
+    T.position = target.position + RelativePos;
+    T.LookAt(target);
   }
 
   private Vector3 camVel = Vector3.zero;
-  public void UpdatePos(Vector3 pos) {
+  public void SmoothUpdatePos(Vector3 pos) {
     transform.position = Vector3.SmoothDamp(transform.position, pos + RelativePos, ref camVel, .2f, 100f);
   }
 
 
-  const float minAlpha = 0.4f, fadeSpeed = 0.02f;
+  const float MIN_ALPHA = 0.4f, FADE_SPEED = 0.02f;
   class Blender {
     public Material material;
     public StandardShaderMethods.Mode blend;
@@ -50,8 +61,8 @@ public class MainCamera : MonoBehaviour
     blockings.Clear();
     // 카메라와 플레이어 사이에 존재하는 모든 Collider에 대해 다음을 검사합니다.
     //TODO 카메라가 플레이어를 추적하고 있지 않을 경우 일시적으로 투명화를 중단합니다.
-    Vector3 line = Player.Instance.tr.position - tr.position;
-    foreach (var hit in Physics.RaycastAll(tr.position, line, line.magnitude - 0.6f)) {
+    Vector3 line = target.position - T.position;
+    foreach (var hit in Physics.RaycastAll(T.position, line, line.magnitude - 0.6f)) {
       // 바닥 타일과 플레이어 모델을 제외하기 위해 0.3f 정도 짧게 설정합니다.
       //* 0. 렌더러가 유효하지 않거나 자식 오브젝트에서도 렌더러가 없을 경우 검사하지 않습니다. (후자 예시 : 건물 오브젝트)
       Renderer renderer;
@@ -82,13 +93,13 @@ public class MainCamera : MonoBehaviour
           pair.Value.material.ChangeRenderMode(StandardShaderMethods.Mode.Transparent);
         }
         var color = pair.Value.material.color;
-        color.a = Mathf.Clamp(color.a - fadeSpeed, minAlpha, 1f);
+        color.a = Mathf.Clamp(color.a - FADE_SPEED, MIN_ALPHA, 1f);
         pair.Value.material.color = color; // Dict Value(Blender) is called by reference
       }
       // 카메라를 가리지 않는 오브젝트는 점차 알파를 회복하고, 완전히 회복한 오브젝트는 더 이상 추적하지 않습니다.
       else {
         var color = pair.Value.material.color;
-        color.a = Mathf.Clamp(color.a + fadeSpeed, minAlpha, pair.Value.color.a);
+        color.a = Mathf.Clamp(color.a + FADE_SPEED, MIN_ALPHA, pair.Value.color.a);
         pair.Value.material.color = color;
         if (color.a == pair.Value.color.a) {
           if (pair.Value.blend != StandardShaderMethods.Mode.Transparent) {
@@ -101,7 +112,6 @@ public class MainCamera : MonoBehaviour
     }
   }
 }
-
 
 // https://answers.unity.com/questions/1004666/change-material-rendering-mode-in-runtime.html 에서 코드 참조.
 public static class StandardShaderMethods

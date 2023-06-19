@@ -13,9 +13,9 @@ public class TerrainGenerator : MonoBehaviour
   [Tooltip("Height Map을 지정합니다.")]
   public Texture2D HeightMap;
   [Tooltip("지형을 생성할 대상을 지정합니다.")]
-  public Terrain terrain;
+  public TerrainData terrain;
   [Tooltip("지형의 경계를 지정합니다.")]
-  public Terrain BorderTerrain;
+  public TerrainData BorderTerrain;
 
   [Range(0, 150)] public int height;
 
@@ -57,13 +57,11 @@ public class TerrainGenerator : MonoBehaviour
   public void Reset() { progress = new(); }
 
   public IEnumerator GenerateTerrain(Map mapData) {
-    
     // 지형의 크기를 지정합니다.
-    terrain.terrainData.size = new Vector3(Map.width, height, Map.height);
-    terrain.terrainData.heightmapResolution = HeightMap.width;
+    terrain.size = new Vector3(Map.width, height, Map.height);
+    terrain.heightmapResolution = HeightMap.width;
+    BorderTerrain.heightmapResolution = HeightMap.width;
 
-    BorderTerrain.terrainData.size = new Vector3(Map.width, 5, Map.height);
-    BorderTerrain.terrainData.heightmapResolution = HeightMap.width;
     // 지형의 높이를 지정합니다.
     progress.state = Progress.State.SettingHeights;
     float[,] heights1 = new float[HeightMap.height, HeightMap.width];
@@ -74,7 +72,7 @@ public class TerrainGenerator : MonoBehaviour
         if (Elapsed) { progress.cPC.x = x * HeightMap.height + y; yield return null; }
       }
     }
-    terrain.terrainData.SetHeights(0, 0, heights1);
+    terrain.SetHeights(0, 0, heights1);
     // 맵 경계를 지정합니다.
     float[,] heights2 = new float[HeightMap.height, HeightMap.width];
     for (int x = 0; x < HeightMap.width; x++) {
@@ -83,7 +81,9 @@ public class TerrainGenerator : MonoBehaviour
         if (Elapsed) { progress.cPC.x = x * HeightMap.height + y + progress.cPC.y/2; yield return null; }
       }
     }
-    BorderTerrain.terrainData.SetHeights(0, 0, heights2);
+    BorderTerrain.SetHeights(0, 0, heights2);
+    
+    BorderTerrain.size = new Vector3(Map.width, 99.9921875f, Map.height);
 
     // yield return SetAlphaMaps(terrain, mapData);
 
@@ -93,7 +93,7 @@ public class TerrainGenerator : MonoBehaviour
   //* Basic Methods from : https://alastaira.wordpress.com/2013/11/14/procedural-terrain-splatmapping/
   /*IEnumerator SetAlphaMaps(Terrain terrain, Map map) {
     // Get a reference to the terrain data
-    TerrainData tD = terrain.terrainData;
+    TerrainData tD = terrain;
     int width = tD.alphamapWidth, height = tD.alphamapHeight;
     var biomes = new Biome[width, height];
     float sX = map.Width/width, sY = map.Height/height;
