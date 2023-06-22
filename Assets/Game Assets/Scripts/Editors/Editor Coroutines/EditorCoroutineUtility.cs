@@ -38,7 +38,7 @@ namespace Unity.EditorCoroutines.Editor
     /// Only types that don't inherit from <see cref="UnityEngine.Object">UnityEngine.Object</see> will get collected the next time the GC runs instead of getting null-ed immediately.
     /// </remarks>
     /// <returns>A handle to an <see cref="EditorCoroutine">EditorCoroutine</see>.</returns>
-    // public static EditorCoroutine StartCoroutine(IEnumerator routine, object owner) => new(routine, owner);
+    public static EditorCoroutine StartCoroutine(IEnumerator routine, object owner) => new(routine, owner);
 
     /// <summary>
     /// This method starts an <see cref="EditorCoroutine">EditorCoroutine</see> without an owning object. The <see cref="EditorCoroutine">EditorCoroutine</see> runs until it completes or is canceled using <see cref="StopCoroutine(EditorCoroutine)">StopCoroutine</see>.

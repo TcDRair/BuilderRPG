@@ -1,118 +1,140 @@
+using System.IO;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEditor;
+using Unity.EditorCoroutines.Editor;
 
 using Assets.Maps;
-public class TerrainGenerator : MonoBehaviour
+using Assets.Util;
+using Rair.Field.Values;
+
+[CustomEditor(typeof(TerrainGenerator))]
+public class TGEditor : Editor {
+  GUIStyle bold;
+  protected void OnEnable() {
+    bold = new() {
+      fontStyle = FontStyle.Bold,
+      normal = new() { textColor = Color.white }
+    };
+  }
+  public override void OnInspectorGUI() {
+    var inst = (TerrainGenerator)target;
+
+    EditorGUILayout.LabelField("Properties", bold);
+      EditorGUI.indentLevel++;
+      base.OnInspectorGUI();
+      EditorGUI.indentLevel--;
+    EditorGUILayout.LabelField("Status", bold);
+      EditorGUI.indentLevel++;
+      bool loaded = inst.MapData != null;
+      EditorGUILayout.LabelField("Map Data : " + (loaded ? $"{inst.MapData.Width} x {inst.MapData.Height}" : "Not Loaded"));
+      if (inst.IsRunning)
+        EditorGUI.ProgressBar(Indented, inst.Timer.CurrentRatio, $"{inst.Timer}");
+      GUI.enabled = loaded && !inst.IsRunning;
+      if (GUI.Button(Indented, "Apply Terrain Texture")) {
+        EditorCoroutineUtility.StartCoroutine(inst.GenerateTerrain(), this);
+        //TODO : 코루틴 진행 상황 표시
+      }
+      EditorGUI.indentLevel--;
+    GUI.enabled = true;
+  }
+  Rect Indented => EditorGUI.IndentedRect(EditorGUILayout.GetControlRect());
+}
+
+public class TerrainGenerator : MonoBehaviour, IProgressTimerProvider
 {
-  [Tooltip("Map의 텍스처를 지정합니다. 해당 텍스처로 지형을 생성합니다.")]
-  public Texture2D Map;
-  [Tooltip("Height Map을 지정합니다.")]
-  public Texture2D HeightMap;
-  [Tooltip("지형을 생성할 대상을 지정합니다.")]
-  public TerrainData terrain;
-  [Tooltip("지형의 경계를 지정합니다.")]
-  public TerrainData BorderTerrain;
+  public Texture2D Map, HeightMoistureMap;
+  public Terrain MapTerrain, BorderTerrain;
+  TerrainData TMap => MapTerrain.terrainData;
+  TerrainData BMap => BorderTerrain.terrainData;
 
   [Range(0, 150)] public int height;
 
-  public class Progress {
-    /// <summary>Graph 작업의 전체적인 진행도를 나타냅니다.<br/>0에서 1 사이의 비율로 나타나며, 실제 시간과 일치하지 않을 수 있습니다.</summary>
-    public float TotalProgress => state switch {
-      State.NotStarted => 0,
-      State.SettingHeights => .25f * CurrentProgress,
-      State.GettingBiomeData => .5f * CurrentProgress + .25f,
-      State.SettingAlphaMaps => .25f * CurrentProgress + .75f,
-      State.Finished => 1,
-      _ => 0
-    };
-    public float CurrentProgress => (float)cPC.x/cPC.y;
-    public Vector2Int cPC;
-    public enum State {
-      NotStarted,
-      SettingHeights, GettingBiomeData, SettingAlphaMaps,
-      Finished,
-    } public State state = State.NotStarted;
-    public bool HasStarted => state is not State.NotStarted;
-
-    public override string ToString() => state is State.NotStarted or State.Finished
-      ? "[Terrain] " + $"{state}".ToNiceString()
-      : "[Terrain] " + $"{state}".ToNiceString() + /*$" ({CurrentProgress*100:F0}%)"*/ $" ({cPC.x}/{cPC.y})";
-  }
-  public Progress progress = new();
+  public ProgressTimer Timer { get; private set; } = new(
+    "Terrain",
+    ("Setting Heights"   ,    0,  true),
+    ("Generating Grids"  , .10f, false),
+    ("Generating Props"  , .25f,  true)/*,
+    ("Getting Biome Data", .50f, false),
+    ("Setting Alpha Maps", .75f, false)*/
+  );
   
-  private float _prevTime = 0;
-  const float deltaTime = .05f;
-  private bool Elapsed {
-    get {
-      bool e = Time.realtimeSinceStartup - _prevTime > deltaTime;
-      if (e) _prevTime = Time.realtimeSinceStartup;
-      return e;
-    }
-  }
-  
-  public void Reset() { progress = new(); }
-
-  public IEnumerator GenerateTerrain(Map mapData) {
+  public void Reset() { Timer.Reset(); }
+  public bool IsRunning { get; private set; }
+  public Map MapData;
+  private OccupyGrid grid;
+  public IEnumerator GenerateTerrain() {
+    //TODO 메서드 분리
+    IsRunning = true;
+    if (MapData is null) yield break;
     // 지형의 크기를 지정합니다.
-    terrain.size = new Vector3(Map.width, height, Map.height);
-    terrain.heightmapResolution = HeightMap.width;
-    BorderTerrain.heightmapResolution = HeightMap.width;
+    TMap.size = new Vector3(Map.width, height, Map.height);
+    TMap.heightmapResolution = HeightMoistureMap.width;
+    BMap.heightmapResolution = HeightMoistureMap.width;
 
     // 지형의 높이를 지정합니다.
-    progress.state = Progress.State.SettingHeights;
-    float[,] heights1 = new float[HeightMap.height, HeightMap.width];
-    progress.cPC.y = HeightMap.height * HeightMap.width * 2;
-    for (int x = 0; x < HeightMap.width; x++) {
-      for (int y = 0; y < HeightMap.height; y++) {
-        heights1[y, x] = HeightMap.GetPixel(x, y).grayscale;
-        if (Elapsed) { progress.cPC.x = x * HeightMap.height + y; yield return null; }
+    float[,] heights1 = new float[HeightMoistureMap.height, HeightMoistureMap.width];
+    int total = HeightMoistureMap.height * HeightMoistureMap.width * 2;
+    for (int x = 0; x < HeightMoistureMap.width; x++) {
+      for (int y = 0; y < HeightMoistureMap.height; y++) {
+        heights1[y, x] = HeightMoistureMap.GetPixel(x, y).grayscale;
+        if (Timer.Elapsed) { Timer.SetDetail(x * HeightMoistureMap.height + y, total); yield return null; }
       }
     }
-    terrain.SetHeights(0, 0, heights1);
+    TMap.SetHeights(0, 0, heights1);
     // 맵 경계를 지정합니다.
-    float[,] heights2 = new float[HeightMap.height, HeightMap.width];
-    for (int x = 0; x < HeightMap.width; x++) {
-      for (int y = 0; y < HeightMap.height; y++) {
-        heights2[y, x] = HeightMap.GetPixel(x, y).grayscale == 0 ? 0 : 1;
-        if (Elapsed) { progress.cPC.x = x * HeightMap.height + y + progress.cPC.y/2; yield return null; }
+    float[,] heights2 = new float[HeightMoistureMap.height, HeightMoistureMap.width];
+    for (int x = 0; x < HeightMoistureMap.width; x++) {
+      for (int y = 0; y < HeightMoistureMap.height; y++) {
+        heights2[y, x] = Mathf.Ceil(HeightMoistureMap.GetPixel(x, y).r); // 0 -> 0, 0+ -> 1
+        if (Timer.Elapsed) { Timer.SetDetail(x * HeightMoistureMap.height + y + total/2, total); yield return null; }
       }
     }
-    BorderTerrain.SetHeights(0, 0, heights2);
-    
-    BorderTerrain.size = new Vector3(Map.width, 99.9921875f, Map.height);
+    BMap.SetHeights(0, 0, heights2);
+    BMap.size = new Vector3(Map.width, 99.99f, Map.height);
 
-    // yield return SetAlphaMaps(terrain, mapData);
+    Timer.Next();
+    int scale = 4;
+    grid = new(
+      Map.width,
+      HeightMoistureMap.GetPixels32().Select(p => (Occupy)p.b),
+      scale
+    );
+    grid.SetWorldPivot(MapTerrain);
 
-    progress.state = Progress.State.Finished;
+    yield return GenerateProps();
+    // yield return SetAlphaMaps(MapTerrain, mapData);
+    Timer.Next();
+    IsRunning = false;
+  }
+  IEnumerator GenerateProps() {
+    Timer.Next();
+    yield break;
   }
 
   //* Basic Methods from : https://alastaira.wordpress.com/2013/11/14/procedural-terrain-splatmapping/
-  /*IEnumerator SetAlphaMaps(Terrain terrain, Map map) {
+  /*IEnumerator SetAlphaMaps(TerrainData data, Map map) {
     // Get a reference to the terrain data
-    TerrainData tD = terrain;
-    int width = tD.alphamapWidth, height = tD.alphamapHeight;
+    int width = data.alphamapWidth, height = data.alphamapHeight;
     var biomes = new Biome[width, height];
     float sX = map.Width/width, sY = map.Height/height;
 
-    progress.state = Progress.State.GettingBiomeData;
-    progress.cPC = new Vector2Int(0, width * height);
+    timer.Next();
+    int total = width * height;
     //TODO 아무래도 바이옴 다시 짜는 건 미친 짓이야. Polygon 만들 때 터레인 해상도로 같이 알파맵+높이맵 만들어야겠어...
     //! CornerMap / CenterMap도 다시 구축하는 과정에서 뭔가 문제가 생긴 걸지도 몰라...
     for (int x = 0; x < width; x++) for (int y = 0; y < height; y++) {
       biomes[x, y] = map.Graph.GetNearestCenter(new Vector2(x * sX, y * sY)).biome;
-      if (Elapsed) { progress.cPC.x = x * height + y; yield return null; }
+      if (timer.Elapsed) { timer.SetDetail(x * height + y, total); yield return null; }
     }
     // Splatmap data is stored internally as a 3d array of floats, so declare a new empty array ready for your custom splatmap data:
-    progress.state = Progress.State.SettingAlphaMaps;
-    progress.cPC = new Vector2Int(0, width * height);
-    float[,,] splatmapData = new float[width, height, tD.alphamapLayers];
+    timer.Next();
+    float[,,] splatmapData = new float[width, height, data.alphamapLayers];
     
-    for (int y = 0; y < tD.alphamapHeight; y++) {
-      for (int x = 0; x < tD.alphamapWidth; x++) {        
+    for (int y = 0; y < data.alphamapHeight; y++) {
+      for (int x = 0; x < data.alphamapWidth; x++) {        
         float[] cellData = biomes[y, x] switch { //TODO Fill Weights properly (sum=1)
           //? Note this :                   Map  Ocean Grass Sand  Rock  Snow  Muddy Dark
           Biome.Ocean     => new float[] { .00f, .50f, .00f, .00f, .00f, .00f, .00f, .50f },
@@ -135,12 +157,9 @@ public class TerrainGenerator : MonoBehaviour
           _               => new float[] { .00f, .00f, .00f, .00f, .00f, .00f, .00f, .00f }
         };
         for (int i = 0; i < 8; i++) splatmapData[x, y, i] = cellData[i]; // Write to array
-        if (Elapsed) { progress.cPC.x = y * tD.alphamapHeight + x; yield return null; }
+        if (timer.Elapsed) { timer.SetDetail(y * data.alphamapHeight + x, total); yield return null; }
       }
     }
-    
-    // Finally assign the new splatmap to the terrainData:
-    progress.cPC = Vector2Int.one;
-    tD.SetAlphamaps(0, 0, splatmapData);
+    data.SetAlphamaps(0, 0, splatmapData);
   }*/
 }

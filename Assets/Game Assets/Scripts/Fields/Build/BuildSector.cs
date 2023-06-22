@@ -25,9 +25,9 @@ public class BuildSector : MonoBehaviour
     // Singleton 패턴 (인터넷에서 긁어옴)
     public static BuildSector GetSector() {
         if (!buildSector) {
-            buildSector = GameObject.FindObjectOfType(typeof(BuildSector)) as BuildSector;
+            buildSector = FindAnyObjectByType(typeof(BuildSector)) as BuildSector;
             if (!buildSector) {
-                GameObject obj = new GameObject("sector");
+                GameObject obj = new("sector");
                 buildSector = obj.AddComponent(typeof(BuildSector)) as BuildSector;
             }
         }

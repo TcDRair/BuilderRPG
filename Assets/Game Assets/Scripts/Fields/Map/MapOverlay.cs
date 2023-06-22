@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Assets.Maps;
 using UnityEditor;
 
-namespace Rair.Field.MapASDF {
+namespace Rair.Field.Maps {
   public class MapOverlay : MonoBehaviour
   {
     public RandomTextureGenerator generator;
@@ -17,15 +16,12 @@ namespace Rair.Field.MapASDF {
     Transform parent;
     protected void Awake() { parent = transform; }
 
-    Values.GridMap grid;
-    RectInt bounds;
+    Values.OccupyGrid grid;
 
     protected void Start() { InitGrid(); }
     public void InitGrid() {
       var h = Resources.Load<Texture2D>("Sprites/Map/heightMoisture");
-      int size = h.width - 1; //? Heightmap size is 513x513
-      grid = new(size / 4, h.GetPixels(0, 0, size, size).Select(p => p.r > 0), 4);
-      bounds = new RectInt(0, 0, size/4, size/4);
+      grid = new(h.width, h.GetPixels32().Select(p => (Values.Occupy)p.b), 4);
     }
     protected void Update() { if (Input.GetKeyDown(KeyCode.G)) GenerateGrid(); }
 
@@ -40,7 +36,7 @@ namespace Rair.Field.MapASDF {
       for (int x = -RANGE; x <= RANGE; x++) {
         for (int y = -RANGE; y <= RANGE; y++) {
           Vector2Int pos = new(center.x + x, center.y + y);
-          if (!bounds.Contains(pos)) continue; // skip if out of bounds
+          if (!grid.bounds.Contains(pos)) continue; // skip if out of bounds
           var g = grid.Grids[pos.x + pos.y * grid.size];
           var cell = Instantiate((g > Values.Occupy.None) ? Red : Blue, parent).transform;
           cell.position = new Vector3(pos.x*grid.scale, 0, pos.y*grid.scale);

@@ -79,7 +79,7 @@ namespace CraftingAnims
 			if (animator) {
 				animator.gameObject.AddComponent<CrafterAnimatorController>();
 				animator.GetComponent<CrafterAnimatorController>().crafterController = this;
-				animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
+				animator.updateMode = AnimatorUpdateMode.Fixed;
 				animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
 				animator.SetLayerWeight(1, 1f);
 				animator.SetLayerWeight(2, 0f);

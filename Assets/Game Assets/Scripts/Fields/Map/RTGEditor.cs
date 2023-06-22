@@ -1,108 +1,125 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 using Assets.Maps;
+using Assets.Util;
 
 #if UNITY_EDITOR
-namespace Rair.Field.MapASDF
+namespace Rair.Field.Maps
 {
   [CustomEditor(typeof(RandomTextureGenerator))]
   public class RTGEditor : Editor
   {
-    bool aborted = false, randomConfig = false, usePreset = false;
+    bool aborted = false, randomConfig = false, useSample = false;
+    bool initial = true; // Has not generated yet
     float progress;
+
+    GUIStyle bold;
+    protected void OnEnable() {
+      bold = new() {
+        fontStyle = FontStyle.Bold,
+        normal = new() { textColor = Color.white }
+      };
+    }
     public override void OnInspectorGUI()
     {
-      base.OnInspectorGUI();
       RandomTextureGenerator inst = (RandomTextureGenerator)target;
 
-      GUI.enabled = !inst.isRunning && !aborted;
+      //* Inspector properties
+      EditorGUILayout.LabelField("Properties", bold);
+        EditorGUI.indentLevel++;
+        base.OnInspectorGUI();
+        EditorGUI.indentLevel--;
+      //* Inspector configurations
+      EditorGUILayout.LabelField("Configurations", bold);
+        EditorGUI.indentLevel++;
 
-      //* Map Generate Settings
-      GUILayout.BeginHorizontal();
-      inst.saveMap = GUILayout.Toggle(inst.saveMap, new GUIContent("Save Map to Asset", "체크하면 지정한 이미지 파일에 맵(Texture)을 저장합니다."));
-      usePreset = GUILayout.Toggle(usePreset, new GUIContent("Use Preset", "체크하면 아래 설정들이 사전에 지정된 값들로 초기화됩니다. 항상 동일한 샘플 맵을 생성합니다."));
-      GUILayout.EndHorizontal();
-
-      //* Start Button
-      if (GUILayout.Button("Create New Island")) {
-        if (randomConfig) {
-          inst.landRatio = Random.Range(.25f, .75f);
-          inst.lakeThreshold = Random.Range(0, .7f);
-          inst.riverCount = Random.Range(0, (int)((int)inst.mapSize/16 * inst.landRatio) + 1);
-        }
-        inst.TryMapGenerate();
-      }
-      if (usePreset) {
-        GUI.enabled = false;
-        randomConfig = false;
-        inst.randomSeed = true;
-        inst.seed = 1167937052;
-        inst.mapSize = Size.s4;
-        inst.landRatio = 0.4142049f;
-        inst.lakeThreshold = 0.08866274f;
-        inst.riverCount = 11;
-        /*inst.seed = 920955062;
-        inst.mapSize = Size.s4;
-        inst.landRatio = .5f;
-        inst.lakeThreshold = .5f;
-        inst.riverCount = 5;*/
-      }
-      GUI.enabled = !usePreset;
-
-      //* Seed
-      GUILayout.BeginHorizontal();
-      inst.randomSeed = GUILayout.Toggle(inst.randomSeed, new GUIContent("Fix Seed", "체크하면 오른쪽의 시드를 고정시킨 상태로 맵을 생성합니다. 체크 해제 시 시드가 랜덤으로 생성됩니다."));
-      GUI.enabled = !inst.randomSeed && !usePreset;
-      inst.seed = EditorGUILayout.IntField(inst.seed);
-      GUILayout.EndHorizontal();
-
-      //* Config
-      GUI.enabled = !usePreset;
-      inst.mapSize = (Size)EditorGUILayout.EnumPopup("Map Size", inst.mapSize);
-      randomConfig = GUILayout.Toggle(randomConfig, new GUIContent("Random Config", "체크하면 아래의 설정들이 랜덤으로 생성됩니다. 체크 해제 시 아래의 설정들이 사용됩니다."));
-      GUI.enabled = !randomConfig && !usePreset;
-      inst.landRatio = EditorGUILayout.Slider("Land Ratio", inst.landRatio, 0.25f, 0.75f);
-      inst.lakeThreshold = EditorGUILayout.Slider("Lake Threshold", inst.lakeThreshold, 0f, 0.7f);
-      inst.riverCount = EditorGUILayout.IntSlider("River Amount", inst.riverCount, 0, (int)((int)inst.mapSize/16 * inst.landRatio));
-
-      GUI.enabled = !aborted;
-      //* Progress Bar
-      if (inst.isRunning) {
-        if (inst.terrainGenerator?.progress.HasStarted is true) {
-          progress = inst.terrainGenerator.progress.TotalProgress;
-          EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(), progress, inst.terrainGenerator.progress.ToString() + " [4/4]");
-        }
-        else if (inst.MapTexture?.progress.HasStarted is true) {
-          progress = inst.MapTexture.progress.TotalProgress;
-          EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(), progress, inst.MapTexture.progress.ToString() + " [3/4]");
-        }
-        else if (inst.Map?.Graph.progress.HasStarted is true) {
-          progress = inst.Map.Graph.progress.TotalProgress;
-          EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(), progress, inst.Map.Graph.progress.ToString() + " [2/4]");
-        }
-        else if (inst.Map?.progress.HasStarted is true) {
-          progress = inst.Map.progress.TotalProgress;
-          EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(), progress, inst.Map.progress.ToString() + " [1/4]");
+        useSample = EditorGUILayout.Toggle("Use Sample", useSample);
+        if (useSample) {
+          GUI.enabled = randomConfig = inst.fixedSeed = false;
+          inst.seed = 1167937052;
+          inst.mapSize = Size.s4;
+          inst.landRatio = 0.4142049f;
+          inst.lakeThreshold = 0.08866274f;
+          inst.riverCount = 11;
         }
 
-        if (GUILayout.Button(new GUIContent("Cancel Generating", "설정을 변경하고 싶거나 너무 오래 걸릴 때 눌러 생성을 취소합니다."))) {
-          inst.CancelGenerate();
-          Unity.EditorCoroutines.Editor.EditorCoroutineUtility.StopAllCoroutine();
-          aborted = true;
+        GUI.enabled = !useSample;
+        GUILayout.BeginHorizontal();
+          inst.fixedSeed = EditorGUILayout.Toggle("Fix Seed", inst.fixedSeed);
+          GUI.enabled = !inst.fixedSeed;
+          inst.seed = EditorGUILayout.IntField(inst.seed);
+          GUI.enabled = !useSample;
+        GUILayout.EndHorizontal();
+
+        inst.mapSize = (Size)EditorGUILayout.EnumPopup("Map Size", inst.mapSize);
+        randomConfig = EditorGUILayout.Toggle("Random Config", randomConfig);
+          EditorGUI.indentLevel++;
+          GUI.enabled = !randomConfig && !useSample;
+            inst.landRatio = EditorGUILayout.Slider("Land Ratio", inst.landRatio, 0.25f, 0.75f);
+            inst.lakeThreshold = EditorGUILayout.Slider("Lake Threshold", inst.lakeThreshold, 0f, 0.7f);
+            inst.riverCount = EditorGUILayout.IntSlider("River Amount", inst.riverCount, 0, (int)((int)inst.mapSize/16 * inst.landRatio));
+          GUI.enabled = true;
+          EditorGUI.indentLevel--;
+        
+        EditorGUI.indentLevel--;
+      //* Progress Indiators
+      EditorGUILayout.LabelField("Progress", bold);
+        EditorGUI.indentLevel++;
+        if (inst.isRunning) {
+          var m = inst.Map;
+          (var p, int step) =
+            m.Timer.Finished is not true
+              ? ((IProgressTimerProvider)m, 1)
+            : m.Graph.Timer.Finished is not true
+              ? (m.Graph, 2)
+            : inst.MapTexture.Timer.Finished is not true
+              ? (inst.MapTexture, 3)
+              : (inst.terrainGenerator, 4);
+          EditorGUI.ProgressBar(
+            Indented,
+            progress = p.Timer.CurrentRatio,
+            $"{p.Timer} [{step}/4]"
+          );
+          if (GUI.Button(Indented, "Cancel Generating")) {
+            inst.CancelGenerate();
+            aborted = true;
+          }
+          Repaint();
+        } else if (aborted) {
+          var temp = GUI.contentColor;
+          GUI.contentColor = Color.yellow;
+            EditorGUI.ProgressBar(
+              Indented,
+              progress,
+              "Cancelled. Restart Generator to proceed."
+            );
+          GUI.contentColor = temp;
+          if (GUI.Button(Indented, "Restart Generator")) {
+            inst.CancelGenerate();
+            inst.Reset();
+            aborted = false;
+          }
+        } else {
+          EditorGUI.ProgressBar(
+            Indented,
+            initial ? 0 : 1,
+            initial ? "Ready" : "Finished"
+          );
+          if (GUI.Button(Indented, "Create New Island")) {
+            if (randomConfig) {
+              inst.landRatio = Random.Range(.25f, .75f);
+              inst.lakeThreshold = Random.Range(0, .7f);
+              inst.riverCount = Random.Range(0, (int)((int)inst.mapSize/16 * inst.landRatio));
+            }
+            initial = false;
+            inst.TryMapGenerate(this);
+          }
         }
-        Repaint();
-      }
-      else if (aborted) {
-        var temp = GUI.contentColor;
-        GUI.color = Color.yellow;
-        EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(), progress, "Cancelled. Restart Generator to proceed.");
-        GUI.color = temp;
-      }
-      else EditorGUI.ProgressBar(EditorGUILayout.GetControlRect(), 1f, "Finished");
+        EditorGUI.indentLevel--;
+      //end
     }
+    Rect Indented => EditorGUI.IndentedRect(EditorGUILayout.GetControlRect());
   }
 }
 #endif

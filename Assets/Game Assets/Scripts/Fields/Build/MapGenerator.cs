@@ -16,7 +16,7 @@ public class MapGenerator : MonoBehaviour {
   static MapGenerator _inst;
   public static MapGenerator Instance {
     get {
-      if (_inst == null && (_inst = FindObjectOfType<MapGenerator>()) == null) {
+      if (_inst == null && (_inst = FindAnyObjectByType<MapGenerator>()) == null) {
         return _inst = new GameObject("MapGenerator").AddComponent<MapGenerator>();
       }
       return _inst;
