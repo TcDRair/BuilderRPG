@@ -16,7 +16,7 @@
  * Target OS :
  *   Windows, MacOS, Linux
  */
-namespace dotBunny.Unity
+namespace EVRair.Unity
 {
   using System;
   using System.IO;
@@ -200,8 +200,8 @@ namespace dotBunny.Unity
     /// <summary>Force Unity To Write Project File</summary>
     /// <remarks>Reflection!</remarks>
     public static void SyncSolution() {
-      var T = Type.GetType("UnityEditor.SyncVS,UnityEditor");
-      T.GetMethod("SyncSolution", BindingFlags.Public |  BindingFlags.Static).Invoke(null, null);
+      var T = Type.GetType("UnityEditor.SyncVS");
+      T.GetMethod("SyncSolution", BindingFlags.Public |  BindingFlags.Static)?.Invoke(null, null);
     }
 
     /// <summary>Update the solution files so that they work with VS Code</summary>
@@ -372,18 +372,14 @@ namespace dotBunny.Unity
     /// <summary>Force Unity Preferences Window To Read From Settings</summary>
     static void FixUnityPreferences() {
       // I want that window, please and thank you
-      var T = Type.GetType("UnityEditor.PreferencesWindow,UnityEditor");
-
+      var T = Type.GetType("UnityEditor.PreferencesWindow");
+      if (T == null) return;
       // Only run this when the editor window is visible (cause its what screwed us up)
-      if (EditorWindow.focusedWindow?.GetType() == T)
-      {
+      if (EditorWindow.focusedWindow?.GetType() == T) {
         var window = EditorWindow.GetWindow(T, true, "Unity Preferences");
 
-
-        if (window == null)
-        {
+        if (window == null) {
           if (UseDebug) UnityEngine.Debug.Log("[VSCode] No Preferences Window Found (really?)");
-          
           return;
         }
 

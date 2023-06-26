@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 using Assets.Maps;
 using Assets.Util;
@@ -21,10 +22,11 @@ namespace Rair.Field.Maps
         normal = new() { textColor = Color.white }
       };
     }
-    public override void OnInspectorGUI()
-    {
-      RandomTextureGenerator inst = (RandomTextureGenerator)target;
+    public override void OnInspectorGUI() {
+      var inst = (RandomTextureGenerator)target;
+      var tg = inst.TerrainGenerator;
 
+      #region Map Generator
       //* Inspector properties
       EditorGUILayout.LabelField("Properties", bold);
         EditorGUI.indentLevel++;
@@ -66,16 +68,14 @@ namespace Rair.Field.Maps
       //* Progress Indiators
       EditorGUILayout.LabelField("Progress", bold);
         EditorGUI.indentLevel++;
-        if (inst.isRunning) {
-          var m = inst.Map;
+        if (inst.IsRunning()) {
+          var m = inst.MapGraph;
           (var p, int step) =
             m.Timer.Finished is not true
               ? ((IProgressTimerProvider)m, 1)
             : m.Graph.Timer.Finished is not true
               ? (m.Graph, 2)
-            : inst.MapTexture.Timer.Finished is not true
-              ? (inst.MapTexture, 3)
-              : (inst.terrainGenerator, 4);
+            : (inst.MapTexture, 3);
           EditorGUI.ProgressBar(
             Indented,
             progress = p.Timer.CurrentRatio,
@@ -97,7 +97,7 @@ namespace Rair.Field.Maps
           GUI.contentColor = temp;
           if (GUI.Button(Indented, "Restart Generator")) {
             inst.CancelGenerate();
-            inst.Reset();
+            inst.Restart();
             aborted = false;
           }
         } else {
@@ -117,7 +117,7 @@ namespace Rair.Field.Maps
           }
         }
         EditorGUI.indentLevel--;
-      //end
+      #endregion
     }
     Rect Indented => EditorGUI.IndentedRect(EditorGUILayout.GetControlRect());
   }

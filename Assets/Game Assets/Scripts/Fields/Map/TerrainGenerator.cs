@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,51 +7,36 @@ using Unity.EditorCoroutines.Editor;
 
 using Assets.Maps;
 using Assets.Util;
-using Rair.Field.Values;
 
-[CustomEditor(typeof(TerrainGenerator))]
-public class TGEditor : Editor {
-  GUIStyle bold;
-  protected void OnEnable() {
-    bold = new() {
-      fontStyle = FontStyle.Bold,
-      normal = new() { textColor = Color.white }
-    };
-  }
-  public override void OnInspectorGUI() {
-    var inst = (TerrainGenerator)target;
-
-    EditorGUILayout.LabelField("Properties", bold);
-      EditorGUI.indentLevel++;
-      base.OnInspectorGUI();
-      EditorGUI.indentLevel--;
-    EditorGUILayout.LabelField("Status", bold);
-      EditorGUI.indentLevel++;
-      bool loaded = inst.MapData != null;
-      EditorGUILayout.LabelField("Map Data : " + (loaded ? $"{inst.MapData.Width} x {inst.MapData.Height}" : "Not Loaded"));
-      if (inst.IsRunning)
-        EditorGUI.ProgressBar(Indented, inst.Timer.CurrentRatio, $"{inst.Timer}");
-      GUI.enabled = loaded && !inst.IsRunning;
-      if (GUI.Button(Indented, "Apply Terrain Texture")) {
-        EditorCoroutineUtility.StartCoroutine(inst.GenerateTerrain(), this);
-        //TODO : 코루틴 진행 상황 표시
-      }
-      EditorGUI.indentLevel--;
-    GUI.enabled = true;
-  }
-  Rect Indented => EditorGUI.IndentedRect(EditorGUILayout.GetControlRect());
-}
-
-public class TerrainGenerator : MonoBehaviour, IProgressTimerProvider
+#if UNITY_EDITOR
+namespace Rair.Field.Maps {
+[System.Serializable]
+public class TerrainGenerator
 {
-  public Texture2D Map, HeightMoistureMap;
-  public Terrain MapTerrain, BorderTerrain;
-  TerrainData TMap => MapTerrain.terrainData;
-  TerrainData BMap => BorderTerrain.terrainData;
+  #region Inspector
+  //! 유니티 쓰발럼들은 제정신으로 지원하는 꼴을 못 보겠네 그냥 !\\
+  public RandomTextureGenerator Generator;
+  [System.Serializable] public struct TerrainVar {
+    [Range(0, 150)] public int height;
+    public Transform propParent;
+    public GameObject grass;
+  } TerrainVar vars;
+  #endregion
 
-  [Range(0, 150)] public int height;
+  #region Properties
+  bool run;
+  public bool IsRunning() => run;
+  public readonly int scale = 4;
+  private Values.OccupyGrid grid;
+  #endregion
 
-  public ProgressTimer Timer { get; private set; } = new(
+  public TerrainGenerator(RandomTextureGenerator Generator) {
+    this.Generator = Generator;
+    vars = Generator.terrainVariables;
+    run = false;
+  }
+
+  public readonly ProgressTimer Timer = new(
     "Terrain",
     ("Setting Heights"   ,    0,  true),
     ("Generating Grids"  , .10f, false),
@@ -60,61 +44,76 @@ public class TerrainGenerator : MonoBehaviour, IProgressTimerProvider
     ("Getting Biome Data", .50f, false),
     ("Setting Alpha Maps", .75f, false)*/
   );
-  
-  public void Reset() { Timer.Reset(); }
-  public bool IsRunning { get; private set; }
-  public Map MapData;
-  private OccupyGrid grid;
+
   public IEnumerator GenerateTerrain() {
     //TODO 메서드 분리
-    IsRunning = true;
-    if (MapData is null) yield break;
+    run = true;
+    vars.propParent.RemoveAllChildren();
+    // 변수 할당 파트
+    var map = Generator.Map;
+    var mapData = Generator.MapData;
+    var mapTData = Generator.MapTerrain.terrainData;
+    var mapBData = Generator.BorderTerrain.terrainData;
     // 지형의 크기를 지정합니다.
-    TMap.size = new Vector3(Map.width, height, Map.height);
-    TMap.heightmapResolution = HeightMoistureMap.width;
-    BMap.heightmapResolution = HeightMoistureMap.width;
+    mapTData.heightmapResolution = mapData.width;
+    mapBData.heightmapResolution = mapData.width;
+    mapTData.size = new(map.width, vars.height, map.height);
+    mapBData.size = new Vector3(map.width, 99.99f, map.height);
 
     // 지형의 높이를 지정합니다.
-    float[,] heights1 = new float[HeightMoistureMap.height, HeightMoistureMap.width];
-    int total = HeightMoistureMap.height * HeightMoistureMap.width * 2;
-    for (int x = 0; x < HeightMoistureMap.width; x++) {
-      for (int y = 0; y < HeightMoistureMap.height; y++) {
-        heights1[y, x] = HeightMoistureMap.GetPixel(x, y).grayscale;
-        if (Timer.Elapsed) { Timer.SetDetail(x * HeightMoistureMap.height + y, total); yield return null; }
+    float[,] heights1 = new float[mapData.height, mapData.width];
+    int total = mapData.height * mapData.width * 2;
+    for (int x = 0; x < mapData.width; x++) {
+      for (int y = 0; y < mapData.height; y++) {
+        heights1[y, x] = mapData.GetPixel(x, y).grayscale;
+        if (Timer.Elapsed) { Timer.SetDetail(x * mapData.height + y, total); yield return null; }
       }
     }
-    TMap.SetHeights(0, 0, heights1);
+    mapTData.SetHeights(0, 0, heights1);
     // 맵 경계를 지정합니다.
-    float[,] heights2 = new float[HeightMoistureMap.height, HeightMoistureMap.width];
-    for (int x = 0; x < HeightMoistureMap.width; x++) {
-      for (int y = 0; y < HeightMoistureMap.height; y++) {
-        heights2[y, x] = Mathf.Ceil(HeightMoistureMap.GetPixel(x, y).r); // 0 -> 0, 0+ -> 1
-        if (Timer.Elapsed) { Timer.SetDetail(x * HeightMoistureMap.height + y + total/2, total); yield return null; }
+    float[,] heights2 = new float[mapData.height, mapData.width];
+    for (int x = 0; x < mapData.width; x++) {
+      for (int y = 0; y < mapData.height; y++) {
+        heights2[y, x] = Mathf.Ceil(mapData.GetPixel(x, y).r); // 0 -> 0, 0+ -> 1
+        if (Timer.Elapsed) { Timer.SetDetail(x * mapData.height + y + total/2, total); yield return null; }
       }
     }
-    BMap.SetHeights(0, 0, heights2);
-    BMap.size = new Vector3(Map.width, 99.99f, Map.height);
+    mapBData.SetHeights(0, 0, heights2);
 
     Timer.Next();
-    int scale = 4;
     grid = new(
-      Map.width,
-      HeightMoistureMap.GetPixels32().Select(p => (Occupy)p.b),
+      map.width,
+      mapData.GetPixels32().Select(p => (Values.Occupy)p.a),
       scale
     );
-    grid.SetWorldPivot(MapTerrain);
+    grid.SetWorldPivot(Generator.MapTerrain);
 
     yield return GenerateProps();
     // yield return SetAlphaMaps(MapTerrain, mapData);
     Timer.Next();
-    IsRunning = false;
+    run = false;
   }
+
   IEnumerator GenerateProps() {
     Timer.Next();
+    for (int i = 0; i < grid.size; i++) { for (int j = 0; j < grid.size; j++) {
+      var biome = (Biome)(Generator.MapData.GetPixel(i*scale, j*scale).b * BiomeProperties.Length2Pow);
+      switch (biome) {
+        case Biome.Grassland : {
+          if (Random.value < .75f) break;
+          var pos = grid.GetWorldPos(new(i, j));
+          var rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+          var prop = Object.Instantiate(vars.grass, pos, rotation, vars.propParent);
+          prop.transform.localScale = Vector3.one * Random.Range(.8f, 1.2f) * scale;
+          break;
+        }
+      }
+      if (Timer.Elapsed) { Timer.SetDetail(i * grid.size + j, grid.size * grid.size); yield return null; }
+    }}
     yield break;
   }
 
-  //* Basic Methods from : https://alastaira.wordpress.com/2013/11/14/procedural-terrain-splatmapping/
+  //* Basic Methods from : https://alastaira.wordpress.com/2013/11/14/procedural-terrain-splamapTerrainping/
   /*IEnumerator SetAlphaMaps(TerrainData data, Map map) {
     // Get a reference to the terrain data
     int width = data.alphamapWidth, height = data.alphamapHeight;
@@ -123,15 +122,13 @@ public class TerrainGenerator : MonoBehaviour, IProgressTimerProvider
 
     timer.Next();
     int total = width * height;
-    //TODO 아무래도 바이옴 다시 짜는 건 미친 짓이야. Polygon 만들 때 터레인 해상도로 같이 알파맵+높이맵 만들어야겠어...
-    //! CornerMap / CenterMap도 다시 구축하는 과정에서 뭔가 문제가 생긴 걸지도 몰라...
     for (int x = 0; x < width; x++) for (int y = 0; y < height; y++) {
-      biomes[x, y] = map.Graph.GetNearestCenter(new Vector2(x * sX, y * sY)).biome;
+      biomes[x, y] = //TODO ?
       if (timer.Elapsed) { timer.SetDetail(x * height + y, total); yield return null; }
     }
-    // Splatmap data is stored internally as a 3d array of floats, so declare a new empty array ready for your custom splatmap data:
+    // SplamapTerrain data is stored internally as a 3d array of floats, so declare a new empty array ready for your custom splamapTerrain data:
     timer.Next();
-    float[,,] splatmapData = new float[width, height, data.alphamapLayers];
+    float[,,] splamapTerrainData = new float[width, height, data.alphamapLayers];
     
     for (int y = 0; y < data.alphamapHeight; y++) {
       for (int x = 0; x < data.alphamapWidth; x++) {        
@@ -156,10 +153,12 @@ public class TerrainGenerator : MonoBehaviour, IProgressTimerProvider
           Biome.SubTropiD => new float[] { .00f, .05f, .05f, .90f, .00f, .00f, .00f, .00f },
           _               => new float[] { .00f, .00f, .00f, .00f, .00f, .00f, .00f, .00f }
         };
-        for (int i = 0; i < 8; i++) splatmapData[x, y, i] = cellData[i]; // Write to array
+        for (int i = 0; i < 8; i++) splamapTerrainData[x, y, i] = cellData[i]; // Write to array
         if (timer.Elapsed) { timer.SetDetail(y * data.alphamapHeight + x, total); yield return null; }
       }
     }
-    data.SetAlphamaps(0, 0, splatmapData);
+    data.SetAlphamaps(0, 0, splamapTerrainData);
   }*/
 }
+}
+#endif

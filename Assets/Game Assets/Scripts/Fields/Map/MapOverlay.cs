@@ -21,7 +21,7 @@ namespace Rair.Field.Maps {
     protected void Start() { InitGrid(); }
     public void InitGrid() {
       var h = Resources.Load<Texture2D>("Sprites/Map/heightMoisture");
-      grid = new(h.width, h.GetPixels32().Select(p => (Values.Occupy)p.b), 4);
+      grid = new(h.width, h.GetPixels().Select(p => (Values.Occupy)p.a), 4);
     }
     protected void Update() { if (Input.GetKeyDown(KeyCode.G)) GenerateGrid(); }
 
@@ -37,7 +37,7 @@ namespace Rair.Field.Maps {
         for (int y = -RANGE; y <= RANGE; y++) {
           Vector2Int pos = new(center.x + x, center.y + y);
           if (!grid.bounds.Contains(pos)) continue; // skip if out of bounds
-          var g = grid.Grids[pos.x + pos.y * grid.size];
+          var g = grid.Grid[pos.x + pos.y * grid.size];
           var cell = Instantiate((g > Values.Occupy.None) ? Red : Blue, parent).transform;
           cell.position = new Vector3(pos.x*grid.scale, 0, pos.y*grid.scale);
           cell.localScale = new Vector3(grid.scale, 1, grid.scale);
