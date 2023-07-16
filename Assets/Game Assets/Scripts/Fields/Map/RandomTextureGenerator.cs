@@ -28,7 +28,7 @@ namespace Rair.Field.Maps
     [HideInInspector] public bool saveMap = true, fixedSeed;
     [HideInInspector] public float lakeThreshold, landRatio;
     [HideInInspector] public Size mapSize;
-    public TerrainGenerator.TerrainVar terrainVariables;
+    public TerrainVar terrainVariables;
     #endregion
 
     EditorCoroutine coroutine;

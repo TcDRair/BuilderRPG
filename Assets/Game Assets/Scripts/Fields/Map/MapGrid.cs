@@ -50,8 +50,11 @@ namespace Rair.Field.Values
       worldScale = terrain.terrainData.size.XZ();
       Debug.Log($"[OccupyGrid] {basis} {worldScale}");
     }
-    public Vector3 GetWorldPos(Vector2Int pos)
-      => basis + (pos * worldScale / size).XZToX0Z();
+    public Vector3 GetWorldPos(Vector2Int pos, float randomRatio = 0, float yOffset = 0) {
+      float o1 = Random.Range(-randomRatio, randomRatio), o2 = Random.Range(-randomRatio, randomRatio);
+      var offsetPos = pos + new Vector2(o1, o2);
+      return basis + (offsetPos * worldScale / size).XZToX0Z() + Vector3.up * yOffset;
+    }
     public Occupy this[Vector3 worldPos] =>
       this[Vector2Int.FloorToInt((worldPos.XZ() - basis.XZ()) / worldScale * size)];
     public Occupy this[Vector2Int pos, bool unscaled = false] =>

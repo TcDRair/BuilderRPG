@@ -11,16 +11,27 @@ using Assets.Util;
 #if UNITY_EDITOR
 namespace Rair.Field.Maps {
 [System.Serializable]
+public struct TerrainVar {
+  [System.Serializable] public struct Prop {
+    public string name;
+    public GameObject prefab;
+    [System.Serializable] public struct Condition {
+      public Biome biome;
+      [Range(0, .5f)] public float scale;
+      [Range(0, .5f)] public float density;
+    }
+    public Condition[] conditions;
+  }
+  public Transform propParent;
+  public Prop[] props;
+} 
+
+[System.Serializable]
 public class TerrainGenerator
 {
   #region Inspector
-  //! 유니티 쓰발럼들은 제정신으로 지원하는 꼴을 못 보겠네 그냥 !\\
   public RandomTextureGenerator Generator;
-  [System.Serializable] public struct TerrainVar {
-    [Range(0, 150)] public int height;
-    public Transform propParent;
-    public GameObject grass;
-  } TerrainVar vars;
+  TerrainVar vars;
   #endregion
 
   #region Properties
@@ -29,6 +40,8 @@ public class TerrainGenerator
   public readonly int scale = 4;
   private Values.OccupyGrid grid;
   #endregion
+
+  public const int MAP_HEIGHT = 5, BORDER_HEIGHT = 100;
 
   public TerrainGenerator(RandomTextureGenerator Generator) {
     this.Generator = Generator;
@@ -40,16 +53,26 @@ public class TerrainGenerator
     "Terrain",
     ("Setting Heights"   ,    0,  true),
     ("Generating Grids"  , .10f, false),
-    ("Generating Props"  , .25f,  true)/*,
-    ("Getting Biome Data", .50f, false),
-    ("Setting Alpha Maps", .75f, false)*/
+    ("Generating Props"  , .25f,  true),
+    ("Getting Biome Data", .50f,  true),
+    ("Setting Alpha Maps", .75f,  true)
   );
 
   public IEnumerator GenerateTerrain() {
-    //TODO 메서드 분리
     run = true;
     vars.propParent.RemoveAllChildren();
-    // 변수 할당 파트
+    Random.InitState(new System.Random().Next());
+    
+    yield return SetHeights();
+
+    yield return GenerateProps();
+
+    yield return SetAlphaMaps(Generator.MapTerrain.terrainData, Generator.MapTexture);
+    Timer.Next();
+    run = false;
+  }
+
+  IEnumerator SetHeights() {
     var map = Generator.Map;
     var mapData = Generator.MapData;
     var mapTData = Generator.MapTerrain.terrainData;
@@ -57,108 +80,97 @@ public class TerrainGenerator
     // 지형의 크기를 지정합니다.
     mapTData.heightmapResolution = mapData.width;
     mapBData.heightmapResolution = mapData.width;
-    mapTData.size = new(map.width, vars.height, map.height);
-    mapBData.size = new Vector3(map.width, 99.99f, map.height);
-
-    // 지형의 높이를 지정합니다.
+    mapTData.size = new(map.width,    MAP_HEIGHT, map.height);
+    mapBData.size = new Vector3(map.width, BORDER_HEIGHT, map.height);
+    
+    // 맵 경계를 지정합니다.
+    int total = mapData.height * mapData.width;
     float[,] heights1 = new float[mapData.height, mapData.width];
-    int total = mapData.height * mapData.width * 2;
+    float[,] heights2 = new float[mapData.height, mapData.width];
     for (int x = 0; x < mapData.width; x++) {
       for (int y = 0; y < mapData.height; y++) {
-        heights1[y, x] = mapData.GetPixel(x, y).grayscale;
+        var height = Mathf.Ceil(mapData.GetPixel(x, y).r); // 0 -> 0, 0+ -> 1
+        heights1[y, x] = heights2[y, x] = height;
         if (Timer.Elapsed) { Timer.SetDetail(x * mapData.height + y, total); yield return null; }
       }
     }
     mapTData.SetHeights(0, 0, heights1);
-    // 맵 경계를 지정합니다.
-    float[,] heights2 = new float[mapData.height, mapData.width];
-    for (int x = 0; x < mapData.width; x++) {
-      for (int y = 0; y < mapData.height; y++) {
-        heights2[y, x] = Mathf.Ceil(mapData.GetPixel(x, y).r); // 0 -> 0, 0+ -> 1
-        if (Timer.Elapsed) { Timer.SetDetail(x * mapData.height + y + total/2, total); yield return null; }
-      }
-    }
     mapBData.SetHeights(0, 0, heights2);
-
-    Timer.Next();
-    grid = new(
-      map.width,
-      mapData.GetPixels32().Select(p => (Values.Occupy)p.a),
-      scale
-    );
-    grid.SetWorldPivot(Generator.MapTerrain);
-
-    yield return GenerateProps();
-    // yield return SetAlphaMaps(MapTerrain, mapData);
-    Timer.Next();
-    run = false;
   }
 
   IEnumerator GenerateProps() {
     Timer.Next();
+    grid = new(
+      Generator.Map.width,
+      Generator.MapData.GetPixels32().Select(p => (Values.Occupy)p.a),
+      scale
+    );
+    grid.SetWorldPivot(Generator.MapTerrain);
+
+    Timer.Next();
     for (int i = 0; i < grid.size; i++) { for (int j = 0; j < grid.size; j++) {
-      var biome = (Biome)(Generator.MapData.GetPixel(i*scale, j*scale).b * BiomeProperties.Length2Pow);
-      switch (biome) {
-        case Biome.Grassland : {
-          if (Random.value < .75f) break;
-          var pos = grid.GetWorldPos(new(i, j));
+      var biome = (Biome)Generator.MapData.GetPixel(i * scale, j* scale).b;
+      foreach (var prop in vars.props) foreach (var cond in prop.conditions) {
+        if (cond.biome == biome) {
+          if (Random.value > cond.density) continue;
+          var pos = grid.GetWorldPos(new(i, j), .5f, MAP_HEIGHT);
           var rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
-          var prop = Object.Instantiate(vars.grass, pos, rotation, vars.propParent);
-          prop.transform.localScale = Vector3.one * Random.Range(.8f, 1.2f) * scale;
+          var obj = Object.Instantiate(prop.prefab, pos, rotation, vars.propParent);
+          obj.transform.localScale *= Random.Range(1 - cond.scale, 1 + cond.scale) * scale;
           break;
         }
       }
       if (Timer.Elapsed) { Timer.SetDetail(i * grid.size + j, grid.size * grid.size); yield return null; }
     }}
-    yield break;
   }
 
   //* Basic Methods from : https://alastaira.wordpress.com/2013/11/14/procedural-terrain-splamapTerrainping/
-  /*IEnumerator SetAlphaMaps(TerrainData data, Map map) {
+  IEnumerator SetAlphaMaps(TerrainData data, MapTexture mapData) {
     // Get a reference to the terrain data
-    int width = data.alphamapWidth, height = data.alphamapHeight;
-    var biomes = new Biome[width, height];
-    float sX = map.Width/width, sY = map.Height/height;
+    int width = mapData.MapData.width;
+    data.alphamapResolution = width;
+    var biomes = new BiomeEnum[width, width];
 
-    timer.Next();
-    int total = width * height;
-    for (int x = 0; x < width; x++) for (int y = 0; y < height; y++) {
-      biomes[x, y] = //TODO ?
-      if (timer.Elapsed) { timer.SetDetail(x * height + y, total); yield return null; }
+    Timer.Next();
+    int total = width * width;
+    for (int x = 0; x < width; x++) for (int y = 0; y < width; y++) {
+      biomes[x, y] = (Biome)mapData.MapData.GetPixel(x, y).b; //TODO ?
+      if (Timer.Elapsed) { Timer.SetDetail(x * width + y, total); yield return null; }
     }
     // SplamapTerrain data is stored internally as a 3d array of floats, so declare a new empty array ready for your custom splamapTerrain data:
-    timer.Next();
-    float[,,] splamapTerrainData = new float[width, height, data.alphamapLayers];
+    Timer.Next();
+    float[,,] splatmap = new float[width, width, data.alphamapLayers];
     
-    for (int y = 0; y < data.alphamapHeight; y++) {
-      for (int x = 0; x < data.alphamapWidth; x++) {        
+    for (int y = 0; y < width; y++) {
+      for (int x = 0; x < width; x++) {        
         float[] cellData = biomes[y, x] switch { //TODO Fill Weights properly (sum=1)
-          //? Note this :                   Map  Ocean Grass Sand  Rock  Snow  Muddy Dark
-          Biome.Ocean     => new float[] { .00f, .50f, .00f, .00f, .00f, .00f, .00f, .50f },
-          Biome.Marsh     => new float[] { .00f, .20f, .80f, .00f, .00f, .00f, .00f, .00f },
-          Biome.Lake      => new float[] { .01f, .99f, .00f, .00f, .00f, .00f, .00f, .00f },
-          Biome.Beach     => new float[] { .00f, .20f, .20f, .60f, .00f, .00f, .00f, .00f },
-          Biome.Snow      => new float[] { .00f, .01f, .00f, .00f, .00f, .99f, .00f, .00f },
-          Biome.Tundra    => new float[] { .00f, .08f, .59f, .00f, .00f, .43f, .00f, .00f },
-          Biome.Bare      => new float[] { .00f, .00f, .10f, .10f, .80f, .00f, .00f, .00f },
-          Biome.Scorched  => new float[] { .00f, .00f, .30f, .20f, .00f, .00f, .00f, .50f },
-          Biome.Taiga     => new float[] { .00f, .01f, .50f, .00f, .00f, .50f, .00f, .00f },
-          Biome.Shrubland => new float[] { .00f, .00f, .50f, .50f, .00f, .00f, .00f, .00f },
-          Biome.TemperatD => new float[] { .00f, .00f, .30f, .70f, .00f, .00f, .00f, .00f },
-          Biome.TempRainF => new float[] { .00f, .20f, .70f, .05f, .05f, .00f, .00f, .00f },
-          Biome.TempDeciF => new float[] { .10f, .10f, .60f, .10f, .10f, .00f, .00f, .00f },
-          Biome.Grassland => new float[] { .01f, .00f, .99f, .00f, .00f, .00f, .00f, .00f },
-          Biome.TropRainF => new float[] { .00f, .30f, .60f, .00f, .10f, .00f, .00f, .00f },
-          Biome.TropSeasF => new float[] { .00f, .30f, .40f, .20f, .10f, .00f, .00f, .00f },
-          Biome.SubTropiD => new float[] { .00f, .05f, .05f, .90f, .00f, .00f, .00f, .00f },
-          _               => new float[] { .00f, .00f, .00f, .00f, .00f, .00f, .00f, .00f }
+          //? Note this :                                   Grass  Dirt  Sand  Snow  Lush Bleak  Dark  Water
+          BiomeEnum.Ice                     => new float[] {    0,    0,    0, .70f,    0,    0,    0, .30f },
+          BiomeEnum.Lake                    => new float[] {    0,    0,    0,    0,    0,    0,    0,    1 },
+          BiomeEnum.Bare                    => new float[] { .05f, .75f,    0,    0,    0, .10f, .10f,    0 },
+          BiomeEnum.Snow                    => new float[] {    0,    0,    0,    1,    0,    0,    0,    0 },
+          BiomeEnum.Ocean                   => new float[] {    0,    0,    0,    0,    0,    0, .20f, .80f },
+          BiomeEnum.Beach                   => new float[] {    0, .15f, .70f,    0,    0,    0, .15f,    0 },
+          BiomeEnum.Marsh                   => new float[] {    0, .60f,    0,    0,    0, .10f, .30f,    0 },
+          BiomeEnum.Taiga                   => new float[] { .25f, .25f,    0, .40f, .10f,    0,    0,    0 },
+          BiomeEnum.Tundra                  => new float[] {    0, .45f,    0, .45f, .10f,    0,    0,    0 },
+          BiomeEnum.Scorched                => new float[] {    0, .40f, .10f,    0,    0, .50f,    0,    0 },
+          BiomeEnum.Grassland               => new float[] {    1,    0,    0,    0,    0,    0,    0,    0 },
+          BiomeEnum.Shrubland               => new float[] { .40f, .10f,    0,    0, .50f,    0,    0,    0 },
+          BiomeEnum.TemperateDesert         => new float[] {    0,    0, .90f,    0,    0, .10f,    0,    0 },
+          BiomeEnum.SubtropicalDesert       => new float[] {    0, .20f, .70f,    0,    0, .10f,    0,    0 },
+          BiomeEnum.TropicalRainyForest     => new float[] {    0, .30f, .60f,    0, .10f,    0,    0,    0 },
+          BiomeEnum.TemperateRainyForest    => new float[] {    0, .50f,    0,    0, .50f,    0,    0,    0 },
+          BiomeEnum.TropicalSeasonForest    => new float[] { .30f, .20f, .10f,    0, .40f,    0,    0,    0 },
+          BiomeEnum.TemperateDecidousForest => new float[] { .40f,    0,    0,    0, .60f,    0,    0,    0 },
+          _                                 => new float[] {    0,    0,    0,    0,    0,    0,    0,    0 }
         };
-        for (int i = 0; i < 8; i++) splamapTerrainData[x, y, i] = cellData[i]; // Write to array
-        if (timer.Elapsed) { timer.SetDetail(y * data.alphamapHeight + x, total); yield return null; }
+        for (int i = 0; i < 8; i++) splatmap[x, y, i] = cellData[i]; // Write to array
+        if (Timer.Elapsed) { Timer.SetDetail(y * data.alphamapHeight + x, total); yield return null; }
       }
     }
-    data.SetAlphamaps(0, 0, splamapTerrainData);
-  }*/
+    data.SetAlphamaps(0, 0, splatmap);
+  }
 }
 }
 #endif

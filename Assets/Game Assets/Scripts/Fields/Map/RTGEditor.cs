@@ -38,12 +38,13 @@ namespace Rair.Field.Maps
 
         useSample = EditorGUILayout.Toggle("Use Sample", useSample);
         if (useSample) {
-          GUI.enabled = randomConfig = inst.fixedSeed = false;
-          inst.seed = 1167937052;
+          randomConfig = false;
+          inst.fixedSeed = true;
+          inst.seed = 2103673821;// 1167937052;
           inst.mapSize = Size.s4;
-          inst.landRatio = 0.4142049f;
-          inst.lakeThreshold = 0.08866274f;
-          inst.riverCount = 11;
+          inst.landRatio = 0.3864051f;// 0.4142049f;
+          inst.lakeThreshold = 0.545457f;// 0.08866274f;
+          inst.riverCount = 6;// 11;
         }
 
         GUI.enabled = !useSample;
@@ -63,7 +64,7 @@ namespace Rair.Field.Maps
             inst.riverCount = EditorGUILayout.IntSlider("River Amount", inst.riverCount, 0, (int)((int)inst.mapSize/16 * inst.landRatio));
           GUI.enabled = true;
           EditorGUI.indentLevel--;
-        
+        // EditorGUILayout.ObjectField(inst.terrainVariables.props);
         EditorGUI.indentLevel--;
       //* Progress Indiators
       EditorGUILayout.LabelField("Progress", bold);

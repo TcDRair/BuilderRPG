@@ -10,6 +10,7 @@ namespace Rair.Field.Maps {
   {
     public RandomTextureGenerator generator;
     public Player player;
+    public Texture2D mapData;
 
     public GameObject Blue, Red;
 
@@ -20,8 +21,7 @@ namespace Rair.Field.Maps {
 
     protected void Start() { InitGrid(); }
     public void InitGrid() {
-      var h = Resources.Load<Texture2D>("Sprites/Map/heightMoisture");
-      grid = new(h.width, h.GetPixels().Select(p => (Values.Occupy)p.a), 4);
+      grid = new(mapData.width, mapData.GetPixels().Select(p => (Values.Occupy)p.a), 4);
     }
     protected void Update() { if (Input.GetKeyDown(KeyCode.G)) GenerateGrid(); }
 
