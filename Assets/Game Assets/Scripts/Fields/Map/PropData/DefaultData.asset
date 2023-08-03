@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 473823baa80abb249b23f356574798df, type: 3}
+  m_Name: DefaultData
+  m_EditorClassIdentifier: 
+  props:
+  - name: Grass
+    prefabs:
+    - {fileID: 398929321252300881, guid: 9be3458bf9f06cc409565f86ff23287d, type: 3}
+    - {fileID: 1245006558584958560, guid: 91ff7c751cd4d614a9a09d036b257c5c, type: 3}
+    - {fileID: 6846659341408791651, guid: ce16d9b9d787e3147937e92fed85d134, type: 3}
+    - {fileID: 5443344685879028270, guid: 5d4e93bb0fb31d945a71a7df24181bdb, type: 3}
+    conditions:
+    - biome:
+        Value: 9
+      scale: 0.127
+      density: 0.356
+    - biome:
+        Value: 11
+      scale: 0.07
+      density: 0.084
+  - name: Dry Grass
+    prefabs:
+    - {fileID: 8486787402013068894, guid: 0dc4bceb445dd484aa433cd40ce8611f, type: 3}
+    - {fileID: 1718442328122675833, guid: 58dab8fb26d201f498b77726817a2767, type: 3}
+    - {fileID: 5138664864039170994, guid: e6eedaba54336b34e8a947c2e59a0cf5, type: 3}
+    conditions:
+    - biome:
+        Value: 13
+      scale: 0.064
+      density: 0.155
+  - name: Pebble
+    prefabs: []
+    conditions: []
+  - name: Tree
+    prefabs: []
+    conditions: []

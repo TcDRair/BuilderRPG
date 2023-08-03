@@ -39,18 +39,17 @@ namespace Rair.Field.Maps
         useSample = EditorGUILayout.Toggle("Use Sample", useSample);
         if (useSample) {
           randomConfig = false;
-          inst.fixedSeed = true;
+          inst.fixSeed = true;
           inst.seed = 2103673821;// 1167937052;
           inst.mapSize = Size.s4;
           inst.landRatio = 0.3864051f;// 0.4142049f;
-          inst.lakeThreshold = 0.545457f;// 0.08866274f;
           inst.riverCount = 6;// 11;
         }
 
         GUI.enabled = !useSample;
         GUILayout.BeginHorizontal();
-          inst.fixedSeed = EditorGUILayout.Toggle("Fix Seed", inst.fixedSeed);
-          GUI.enabled = !inst.fixedSeed;
+          inst.fixSeed = EditorGUILayout.Toggle("Fix Seed", inst.fixSeed);
+          GUI.enabled = !inst.fixSeed;
           inst.seed = EditorGUILayout.IntField(inst.seed);
           GUI.enabled = !useSample;
         GUILayout.EndHorizontal();
@@ -60,7 +59,6 @@ namespace Rair.Field.Maps
           EditorGUI.indentLevel++;
           GUI.enabled = !randomConfig && !useSample;
             inst.landRatio = EditorGUILayout.Slider("Land Ratio", inst.landRatio, 0.25f, 0.75f);
-            inst.lakeThreshold = EditorGUILayout.Slider("Lake Threshold", inst.lakeThreshold, 0f, 0.7f);
             inst.riverCount = EditorGUILayout.IntSlider("River Amount", inst.riverCount, 0, (int)((int)inst.mapSize/16 * inst.landRatio));
           GUI.enabled = true;
           EditorGUI.indentLevel--;
@@ -70,13 +68,16 @@ namespace Rair.Field.Maps
       EditorGUILayout.LabelField("Progress", bold);
         EditorGUI.indentLevel++;
         if (inst.IsRunning()) {
-          var m = inst.MapGraph;
+          var m = inst.MapInst;
+          var g = inst.TerrainGenerator;
           (var p, int step) =
             m.Timer.Finished is not true
               ? ((IProgressTimerProvider)m, 1)
             : m.Graph.Timer.Finished is not true
               ? (m.Graph, 2)
-            : (inst.MapTexture, 3);
+            : m.MapTexture.Timer.Finished is not true
+              ? (m.MapTexture, 3)
+              : (g, 4);
           EditorGUI.ProgressBar(
             Indented,
             progress = p.Timer.CurrentRatio,
@@ -110,7 +111,6 @@ namespace Rair.Field.Maps
           if (GUI.Button(Indented, "Create New Island")) {
             if (randomConfig) {
               inst.landRatio = Random.Range(.25f, .75f);
-              inst.lakeThreshold = Random.Range(0, .7f);
               inst.riverCount = Random.Range(0, (int)((int)inst.mapSize/16 * inst.landRatio));
             }
             initial = false;

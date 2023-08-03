@@ -47,12 +47,12 @@ namespace Rair.Field.Values
     Vector2 worldScale;
     public void SetWorldPivot(Terrain terrain) {
       basis = terrain.transform.position; // offset
+      basis.y = 0;
       worldScale = terrain.terrainData.size.XZ();
       Debug.Log($"[OccupyGrid] {basis} {worldScale}");
     }
     public Vector3 GetWorldPos(Vector2Int pos, float randomRatio = 0, float yOffset = 0) {
-      float o1 = Random.Range(-randomRatio, randomRatio), o2 = Random.Range(-randomRatio, randomRatio);
-      var offsetPos = pos + new Vector2(o1, o2);
+      var offsetPos = pos + Random.insideUnitCircle * randomRatio;
       return basis + (offsetPos * worldScale / size).XZToX0Z() + Vector3.up * yOffset;
     }
     public Occupy this[Vector3 worldPos] =>
