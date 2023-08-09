@@ -20,27 +20,58 @@ MonoBehaviour:
     - {fileID: 6846659341408791651, guid: ce16d9b9d787e3147937e92fed85d134, type: 3}
     - {fileID: 5443344685879028270, guid: 5d4e93bb0fb31d945a71a7df24181bdb, type: 3}
     conditions:
-    - biome:
-        Value: 9
+    - biome: 9
       scale: 0.127
-      density: 0.356
-    - biome:
-        Value: 11
-      scale: 0.07
-      density: 0.084
+      density: 0.1777
+    - biome: 10
+      scale: 0.013
+      density: 0.037
+    - biome: 14
+      scale: 0.0508
+      density: 0.0729
+    - biome: 15
+      scale: 0.0508
+      density: 0.0729
+    - biome: 16
+      scale: 0.0508
+      density: 0.0729
+    - biome: 17
+      scale: 0.0508
+      density: 0.0729
   - name: Dry Grass
     prefabs:
     - {fileID: 8486787402013068894, guid: 0dc4bceb445dd484aa433cd40ce8611f, type: 3}
     - {fileID: 1718442328122675833, guid: 58dab8fb26d201f498b77726817a2767, type: 3}
     - {fileID: 5138664864039170994, guid: e6eedaba54336b34e8a947c2e59a0cf5, type: 3}
     conditions:
-    - biome:
-        Value: 13
-      scale: 0.064
-      density: 0.155
+    - biome: 13
+      scale: 0.0356
+      density: 0.0995
+    - biome: 10
+      scale: 0.107
+      density: 0.0526
   - name: Pebble
-    prefabs: []
-    conditions: []
-  - name: Tree
-    prefabs: []
-    conditions: []
+    prefabs:
+    - {fileID: 1883348433365764, guid: 6b77e427378867f41a9804274fbc9965, type: 3}
+    conditions:
+    - biome: 12
+      scale: 0.09
+      density: 0.0306
+    - biome: 13
+      scale: 0.09
+      density: 0.0183
+  - name: Rock
+    prefabs:
+    - {fileID: 9032936889209960353, guid: fd66acba5edbc5944820be80d81fa8f2, type: 3}
+    - {fileID: 7901056077792958689, guid: 28f4a83c121f5fd478253a11ef66fc43, type: 3}
+    - {fileID: 5422831372402764909, guid: d2d85887f79854e408ef2ac6f880915b, type: 3}
+    conditions:
+    - biome: 12
+      scale: 0.0546
+      density: 0.0111
+    - biome: 13
+      scale: 0.055
+      density: 0.05
+    - biome: 3
+      scale: 0.103
+      density: 0.085

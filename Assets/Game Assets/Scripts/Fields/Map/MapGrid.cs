@@ -22,46 +22,68 @@ namespace Rair.Field.Values
   }
   
   public class OccupyGrid {
-    public readonly int size, scale;
+    public int Size { get; private set; }
+    public int Scale { get; private set; }
+    public Terrain Terrain { get; private set; }
     public Occupy[] Grid { get; private set; }
     public readonly RectInt bounds;
+    public int TerrainScale => Terrain.terrainData.heightmapResolution / Size; //! Need to be checked
     
-    public OccupyGrid(int originalSize, IEnumerable<Occupy> data, int scale = 1) {
-      this.scale = scale;
-      size = originalSize / scale;
-      bounds = new(0, 0, size, size);
+    public OccupyGrid(Terrain terrain, int originalSize, IEnumerable<Occupy> data, int scale = 1) {
+      Terrain = terrain;
+      Scale = scale;
+      Size = originalSize / scale;
+      bounds = new(0, 0, Size, Size);
       if (scale == 1) Grid = data.ToArray();
-      else Grid = Scale(data, scale);
+      else Grid = ApplyScale(data, scale);
+      SetWorldPivot(terrain);
+    }
+    private void SetWorldPivot(Terrain terrain) {
+      basis = terrain.transform.position; // offset
+      worldScale = terrain.terrainData.size.XZ();
     }
 
-    private Occupy[] Scale(IEnumerable<Occupy> data, int scale) {
-      int width = size * scale;
-      var newGrids = new Occupy[size * size];
-      for (int i = 0; i < size * size; i++) {
-        RectInt rect = new(i % size * scale, i / size * scale, scale, scale);
+    private Occupy[] ApplyScale(IEnumerable<Occupy> data, int scale) {
+      int width = Size * scale;
+      var newGrids = new Occupy[Size * Size];
+      for (int i = 0; i < Size * Size; i++) {
+        RectInt rect = new(i % Size * scale, i / Size * scale, scale, scale);
         foreach (var p in rect.allPositionsWithin) newGrids[i] &= data.ElementAt(p.x + p.y * width);
       }
       return newGrids;
     }
     Vector3 basis;
     Vector2 worldScale;
-    public void SetWorldPivot(Terrain terrain) {
-      basis = terrain.transform.position; // offset
-      basis.y = 0;
-      worldScale = terrain.terrainData.size.XZ();
-      Debug.Log($"[OccupyGrid] {basis} {worldScale}");
+    #region Get Methods
+    public Vector2Int GetGridPos(Vector3 pos) {
+      var gridPos = Vector2Int.FloorToInt((pos.XZ() - basis.XZ()) / worldScale * Size);
+      return bounds.Contains(gridPos) ? gridPos : Vector2Int.zero;
     }
-    public Vector3 GetWorldPos(Vector2Int pos, float randomRatio = 0, float yOffset = 0) {
-      var offsetPos = pos + Random.insideUnitCircle * randomRatio;
-      return basis + (offsetPos * worldScale / size).XZToX0Z() + Vector3.up * yOffset;
+    public Vector3 GetWorldPos(Vector2 pos, float randomRange = 0) {
+      var offsetPos = pos + Random.insideUnitCircle * randomRange;
+      return basis + (offsetPos * worldScale / Size).XZToX0Z();
     }
+    public Rect GetWorldArea(Vector2Int pos) {
+      var worldPos = GetWorldPos(pos);
+      return new(worldPos, worldScale.XZToX0Z());
+    }
+    public Rect GetWorldArea(RectInt rect) {
+      var worldPos = GetWorldPos(rect.min);
+      return new(worldPos, rect.size * worldScale);
+    }
+    public float GetWorldHeight(Vector2 pos, bool relative = true)
+      => relative
+        ? Terrain.SampleHeight(GetWorldPos(pos + basis.XZ())) + basis.y
+        : Terrain.SampleHeight(GetWorldPos(pos)) + basis.y;
+    #endregion
+
     public Occupy this[Vector3 worldPos] =>
-      this[Vector2Int.FloorToInt((worldPos.XZ() - basis.XZ()) / worldScale * size)];
+      this[Vector2Int.FloorToInt((worldPos.XZ() - basis.XZ()) / worldScale * Size)];
     public Occupy this[Vector2Int pos, bool unscaled = false] =>
       unscaled
-        ? this[pos / scale, false]
+        ? this[pos / Scale, false]
       : bounds.Contains(pos)
-        ? Grid[pos.x + pos.y * size]
+        ? Grid[pos.x + pos.y * Size]
         : Occupy.FULL;
   }
 }

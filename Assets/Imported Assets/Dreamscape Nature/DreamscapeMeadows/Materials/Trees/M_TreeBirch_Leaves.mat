@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_TreeBirch_Leaves
   m_Shader: {fileID: 4800000, guid: 3183693b08ea2c3498466aeab483a701, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -17,6 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -87,7 +90,7 @@ Material:
     - _ColorMask: 0.033
     - _ColorMaskFade: -0.206
     - _Contrast: 0.2
-    - _Cutoff: 0.5
+    - _Cutoff: 0.299
     - _DetailNormalMapScale: 1
     - _DirectLightInt: 1.18
     - _DstBlend: 0
@@ -101,7 +104,7 @@ Material:
     - _IndirectLightningIntensity: 2.55
     - _InteractionAlpha: 1
     - _LightOffset: 1
-    - _MaskClipValue: 0.5
+    - _MaskClipValue: 0.438
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -126,7 +129,7 @@ Material:
     - _WIndSwayFrequency: 1
     - _WIndSwayIntensity: 1
     - _WindIntensity: 4.5
-    - _WindJitterSpeed: 0.233
+    - _WindJitterSpeed: 0.293
     - _WindOffsetIntensity: 0.3
     - _WindRustleSize: 0.11
     - _WindScale: 2
@@ -143,8 +146,8 @@ Material:
     - _ColorBottom: {r: 0.37178555, g: 0.6603774, b: 0.04049486, a: 0}
     - _ColorTop: {r: 0.6954966, g: 0.7254902, b: 0.039215665, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoliageColorBottom: {r: 0.29356545, g: 0.46226418, b: 0.006541462, a: 1}
-    - _FoliageColorTop: {r: 0.40962893, g: 0.5283019, b: 0.12709148, a: 1}
+    - _FoliageColorBottom: {r: 0.29356542, g: 0.46226412, b: 0.0065414626, a: 1}
+    - _FoliageColorTop: {r: 0.4096289, g: 0.5283019, b: 0.12709144, a: 1}
     - _Speed: {r: 0.16, g: 0.29, b: 0, a: 0}
     - _WindSwayDirection: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
