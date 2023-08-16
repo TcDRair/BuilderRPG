@@ -202,6 +202,7 @@ public class MapGenerator : MonoBehaviour {
   public void LateUpdate() {
     // UI상의 조작으로 건설 프리뷰 모드에 돌입. 해당 모드에서 수행할 동작을 정의합니다.
     if (false) {
+      /*
       // 현재 프레임에 [선택된 셀]에 [선택된 구조물]을 설치할 수 있는지 판단하고 그에 따른 오버레이를 생성합니다.
       (int x, int y)? _cell = GetCurrentCell();
       if (_cell == null) {
@@ -224,7 +225,7 @@ public class MapGenerator : MonoBehaviour {
       }
 
       if (Input.GetKeyDown(KeyCode.E)) RotateBuilding(currentBuilding, true);
-      else if (Input.GetKeyDown(KeyCode.Q)) RotateBuilding(currentBuilding, false);
+      else if (Input.GetKeyDown(KeyCode.Q)) RotateBuilding(currentBuilding, false);*/
     }
     else if (overlayParent.childCount != 0) overlayParent.RemoveAllChildren();
   }
@@ -517,7 +518,7 @@ public class MapGenerator : MonoBehaviour {
 
   #region Buildable 관련 메서드
   /// <summary>현재 플레이어가 주어진 셀 위에 있으면 <see langword="true"/>를 반환합니다.</summary>
-  bool IsPlayerInside((int, int) pos) => GetCell(Player.Instance.tr.position) == pos;
+  bool IsPlayerInside((int, int) pos) => GetCell(Rair.Field.Player.Instance.tr.position) == pos;
 
   /// <summary>
   /// 해당 위치의 셀에 주어진 플래그를 가진 구조물을 추가할 수 있는지 판단합니다.<br/>

@@ -75,7 +75,7 @@ public abstract class Recipe
     }
 
     /// <summary>레시피를 이용할 조건이 갖추어졌는지 확인합니다.</summary>
-    public abstract UsableType CanUseRecipe(Player player, ItemT[] items);
+    public abstract UsableType CanUseRecipe(Rair.Field.Player player, ItemT[] items);
     /// <summary>레시피를 가동하고 결과물을 반환합니다.</summary>
     public abstract ItemT[] RunRecipe(ItemT[] items);
     

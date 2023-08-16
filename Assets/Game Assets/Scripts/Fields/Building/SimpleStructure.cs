@@ -8,10 +8,4 @@ using UnityEngine;
 public class SimpleStructure : BuildingMono
 {
   public override bool Interactable => true; // 장식 건물은 항상 상호작용이 가능합니다.
-  public override InteractSlot[] Slots => building.state switch {
-    Building.Progress.NeedMaterials => new[] { building.DefaultBuildingInfo, building.DefaultFillMaterials, building.DefaultCancelBuild },
-    Building.Progress.Constructing => new[] { building.DefaultBuildingInfo, building.DefaultBuild, building.DefaultCancelBuild },
-    Building.Progress.Complete => new[] { building.DefaultBuildingInfo, building.DefaultDestroy },
-    _ => new InteractSlot[0]
-  };
 }

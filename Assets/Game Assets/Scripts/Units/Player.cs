@@ -3,7 +3,9 @@ using UnityEngine.AI;
 using TMPro;
 
 using static MainSetting;
+using Rair.Field.Interact;
 
+namespace Rair.Field {
 /// <summary>게임 플레이어가 조작하는 개체에 부착되어 동작하는 기능들이 포함됩니다.</summary>
 public class Player : MonoBehaviour
 {
@@ -16,20 +18,20 @@ public class Player : MonoBehaviour
   public Animator animator;
   public Rigidbody rigidBody;
 
-  InteractSlot slot = null;
+  Prop slot = null;
   Building _b = null;
   public void StartBuild(Building building) {
     _b = building;
     animator.SetTrigger("Build");
   }
-  public void SetTarget(InteractSlot target) {
+  public void SetTarget(Prop target) {
     if (ReferenceEquals(slot, target)) return; // 이미 타겟이 설정되어 있어 동작 중이므로 무시해도 괜찮습니다.
     slot = target;
     GoToTarget();
   }
   public void GoToTarget() {
     UI.Instance.ClearInteractions();
-    agent.SetDestination(slot.body.GetPosition());
+    // agent.SetDestination(slot.body.GetPosition());
   }
   public bool IsTargetReached => agent.remainingDistance <= agent.stoppingDistance;
   public bool Immovable => false;
@@ -87,4 +89,5 @@ public class Player : MonoBehaviour
   void OnAnimatorMove() {
     tr.position = agent.nextPosition;
   }
+}
 }

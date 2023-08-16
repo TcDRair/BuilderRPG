@@ -22,7 +22,7 @@ public class MainCamera : MonoBehaviour
   public static MainCamera Instance;
   public Transform T { get; private set; }
   public Transform target;
-  public IInteractable trackTarget;
+  public Rair.Field.Interact.Prop trackTarget;
   
   public Vector3 RelativePos;
 

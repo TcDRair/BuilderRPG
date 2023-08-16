@@ -7563,6 +7563,69 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352323790}
   m_Mesh: {fileID: 4300000, guid: 95c06121a3f5d524c8cad4ff4e302950, type: 2}
+--- !u!1 &355353232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 355353234}
+  - component: {fileID: 355353233}
+  m_Layer: 0
+  m_Name: Sample Prop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &355353233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355353232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd9cbade5416a44aa1a7ee5b96eb278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: "\uC791\uC5C5\uB300"
+  level: 25
+  slots:
+  - {fileID: 1315864125}
+  events:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1246645206}
+        m_TargetAssemblyTypeName: Rair.Field.UI, Assembly-CSharp
+        m_MethodName: ClearInteractions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &355353234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355353232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 182.60764, y: 0.8336487, z: 336.21948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &355810006
 GameObject:
   m_ObjectHideFlags: 0
@@ -20597,6 +20660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1578950299}
+  trackTarget: {fileID: 0}
   RelativePos: {x: 24, y: 20, z: -24}
 --- !u!114 &963194230
 MonoBehaviour:
@@ -25863,7 +25927,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246645205}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3726476252260c24d9cd90d3c840d521, type: 3}
   m_Name: 
@@ -27741,6 +27805,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314995855}
   m_Mesh: {fileID: 4300000, guid: 255522b0d4257624f93e110d4a6135ed, type: 2}
+--- !u!114 &1315864125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcfd68c235fa724438c4503ee70dcb8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattleSprite: {fileID: 21300000, guid: c25e0bbe981edf9418173ae4659f9ba0, type: 3}
+  ConstructSprite: {fileID: 21300000, guid: 8cda26dae3c507c439d92891f75022dc, type: 3}
+  sprite: {fileID: 21300000, guid: e839e6693c344ad40a5952853a891866, type: 3}
+  name: "\uC791\uC5C5 \uCDE8\uC18C"
+  tooltip: "\uC9C4\uD589\uC911\uC778 \uC791\uC5C5\uACFC \uB300\uAE30 \uC791\uC5C5\uC744
+    \uBAA8\uB450 \uCDE8\uC18C\uD569\uB2C8\uB2E4. \n\uC791\uC5C5\uBB3C\uC758 \uC77C\uBD80
+    \uC790\uC6D0\uC774 \uBC18\uD658\uB429\uB2C8\uB2E4."
+  level: -1
+  type: 1
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  duration: 3
+  animation: {fileID: 0}
+  specialType: 0
 --- !u!1 &1322005395
 GameObject:
   m_ObjectHideFlags: 0

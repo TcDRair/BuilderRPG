@@ -86,6 +86,7 @@ public class Building
   public void SavePosition((int x, int y) pos) { position = pos; }
 
   #region Interact Slots
+  /*
   //* 건축물 기본 지원 슬롯. SimpleStructure.cs에서 사용법 참고
   InteractSlot _DBI, _DFM, _DB, _DCB, _DD; // Lazy initialization
   /// <summary>이 건물의 간략한 정보를 보여주는 슬롯입니다.</summary>
@@ -142,6 +143,7 @@ public class Building
     slotName = "건물 철거",
     shouldApproach = true,
   };
+  */
   #endregion
 }
 
