@@ -19,18 +19,13 @@ public class Player : MonoBehaviour
   public Rigidbody rigidBody;
 
   Prop slot = null;
-  Building _b = null;
-  public void StartBuild(Building building) {
-    _b = building;
-    animator.SetTrigger("Build");
-  }
+
   public void SetTarget(Prop target) {
     if (ReferenceEquals(slot, target)) return; // 이미 타겟이 설정되어 있어 동작 중이므로 무시해도 괜찮습니다.
     slot = target;
     GoToTarget();
   }
   public void GoToTarget() {
-    UI.Instance.ClearInteractions();
     // agent.SetDestination(slot.body.GetPosition());
   }
   public bool IsTargetReached => agent.remainingDistance <= agent.stoppingDistance;

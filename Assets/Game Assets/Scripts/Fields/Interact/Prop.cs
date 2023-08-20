@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
 using UnityEditorInternal;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+
+using UltEvents;
 
 namespace Rair.Field.Interact
 {
@@ -15,26 +16,68 @@ namespace Rair.Field.Interact
 		#region Properties shown in other scripts
 		public int Level => level;
 		public virtual bool Active => slots.Count() > 0;
-		public virtual string Name => name;
+		public virtual string Name => propName;
 		#endregion
 
 		#region Properties editable in Inspector
-		[SerializeField] protected new string name;
-		[SerializeField, Range(-1, 60)] protected int level = -1;
+		[SerializeField] protected string propName;
+		[SerializeField] protected int level = -1;
+		[SerializeField] protected bool useDefaultInteractions, useDestroy, useRepair, useDismantle;
 
-		[HideInInspector] public List<Interaction> slots = new();
-		[HideInInspector] public List<UnityEvent> events = new();
+		public List<Interaction> slots = new();
+		public List<UnityEvent> triggers = new();
+		public List<UnityEvent<float>> cancellers = new();
 		#endregion
 
 		#region Properties editable in derived script
 		/// <summary>추가 UI를 표시할 필요가 있는지를 나타냅니다</summary>
 		public virtual bool HasInfo => false;
+		public (float current, float maximum) Durability { get; protected set; }
 		#endregion
 
 		protected void OnEnable()
 		{
-			for (int i = 0; i < slots.Count; i++) slots[i].onSelected = events[i];
+			for (int i = 0; i < slots.Count; i++)
+			{
+				slots[i].onTriggered = triggers[i];
+				slots[i].onCancelled = cancellers[i];
+			}
 		}
+
+		#region Default Interactions
+		public Interaction DefaultDestroyProp
+		{
+			get
+			{
+				Interaction p = new()
+				{
+					name = "파괴",
+					tooltip = "이 대상을 파괴합니다.",
+					type = Interaction.Type.Action,
+					duration = 5,
+					useCondition = false
+				};
+				// p.onTriggered.AddListener(() => Destroy(gameObject));
+				p.sprite = p.DestroySprite;
+				return p;
+			}
+		}
+		public Interaction DefaultRepairProp
+		{
+			get
+			{
+				Interaction p = new()
+				{
+					name = "수리",
+					tooltip = "구조물의 내구도를 최대치까지 수리합니다.",
+					type = Interaction.Type.Action,
+					duration = level * .5f,
+				};
+				// p.onTriggered += () => Debug.Log("수리 완료");
+				return p;
+			}
+		}
+		#endregion
 	}
 #if UNITY_EDITOR
 	[CustomEditor(typeof(Prop), true)]
@@ -45,8 +88,8 @@ namespace Rair.Field.Interact
 
 		protected void OnEnable()
 		{
-			var slots = (target as Prop).slots;
-			var events = (target as Prop).events;
+			var prop = target as Prop;
+			var slots = prop.slots;
 			rL = new(slots, typeof(Interaction))
 			{
 				drawHeaderCallback = (Rect rect) => EditorGUI.LabelField(rect, "Slots"),
@@ -99,27 +142,56 @@ namespace Rair.Field.Interact
 							break;
 					}
 					rect.x -= INDENT; rect.width += INDENT;
-					//? UnityEvent 객체는 리스트 제일 마지막에 둘 것. (rect 크기가 가변적이기 때문)
-					EditorGUI.PropertyField(rect, GetEventProperty(index), new GUIContent($"{index}번 슬롯 상호작용 시 수행할 작업"));
+					//? UnityEvent 객체는 리스트 가급적 제일 마지막에 둘 것. (rect 크기가 가변적이기 때문)
+					EditorGUI.LabelField(SetArea(ref rect), "이벤트", EditorStyles.boldLabel);
+					SerializedProperty trigger = GetEventProperty(index, EventType.Trigger),
+						canceller = GetEventProperty(index, EventType.Cancel)/*,
+						condition = GetEventProperty(index, EventType.Condition)*/;
+					EditorGUI.PropertyField(rect, trigger, new GUIContent($"기본 수행 작업"));
+					rect.y += EditorGUI.GetPropertyHeight(trigger);
+					if (i.cancelable = EditorGUI.Toggle(SetArea(ref rect), "상호작용 취소 가능", i.cancelable))
+					{
+						EditorGUI.PropertyField(rect, canceller, new GUIContent($"상호작용 취소 시 수행할 작업"));
+						rect.y += EditorGUI.GetPropertyHeight(canceller);
+					}
+					if (i.useCondition = !EditorGUI.Toggle(SetArea(ref rect), "슬롯 항상 표시", !i.useCondition))
+					{
+						/*EditorGUI.PropertyField(rect, condition, new GUIContent($"{index}번 슬롯이 표시될 조건"));
+						rect.y += EditorGUI.GetPropertyHeight(condition);*/
+						EditorGUI.HelpBox(SetArea(ref rect), "슬롯이 표시되는 조건은 아직 지원하지 않습니다.", MessageType.Warning);
+					}
+
 					serializedObject.ApplyModifiedProperties();
 					#endregion
 				},
-				elementHeightCallback = (index) => slots[index].type switch
+				elementHeightCallback = (index) =>
 				{
-					Interaction.Type.Task => LINE_HEIGHT * 10,
-					Interaction.Type.Action => LINE_HEIGHT * 11,
-					Interaction.Type.Special => LINE_HEIGHT * 14,
-					_ => 0
-				} + EditorGUI.GetPropertyHeight(GetEventProperty(index)),
+					var i = slots[index];
+					float height = i.type switch
+					{
+						Interaction.Type.Task => LINE_HEIGHT * 13,
+						Interaction.Type.Action => LINE_HEIGHT * 14,
+						Interaction.Type.Special => LINE_HEIGHT * 17,
+						_ => 0
+					};
+					height += EditorGUI.GetPropertyHeight(GetEventProperty(index, EventType.Trigger));
+					height += i.cancelable ? EditorGUI.GetPropertyHeight(GetEventProperty(index, EventType.Cancel)) : 0;
+					height += i.useCondition ? /*EditorGUI.GetPropertyHeight(GetEventProperty(index, EventType.Condition))*/ LINE_HEIGHT : 0;
+					return height;
+				},
 				onAddCallback = (ReorderableList list) =>
 				{
 					slots.Add(CreateInstance<Interaction>());
-					events.Add(new());
+					prop.triggers.Add(default);
+					prop.cancellers.Add(default);
+					// prop.conditions.Add(default);
 				},
 				onRemoveCallback = (ReorderableList list) =>
 				{
 					if (slots.Count > list.index) slots.RemoveAt(list.index);
-					if (events.Count > list.index) events.RemoveAt(list.index);
+					if (prop.triggers.Count > list.index) prop.triggers.RemoveAt(list.index);
+					if (prop.cancellers.Count > list.index) prop.cancellers.RemoveAt(list.index);
+					// if (prop.conditions.Count > list.index) prop.conditions.RemoveAt(list.index);
 				}
 			};
 		}
@@ -127,12 +199,35 @@ namespace Rair.Field.Interact
 		public override void OnInspectorGUI()
 		{
 			var prop = target as Prop;
-			base.OnInspectorGUI();
-			serializedObject.Update();
-
+			SerializedProperty name = serializedObject.FindProperty("propName"),
+				level = serializedObject.FindProperty("level"),
+				uDI = serializedObject.FindProperty("useDefaultInteractions"),
+				uDt = serializedObject.FindProperty("useDestroy"),
+				uRp = serializedObject.FindProperty("useRepair"),
+				uDm = serializedObject.FindProperty("useDismantle");
+			HorizontalFieldLayout("이름", 80, () => name.stringValue = EditorGUILayout.TextField(name.stringValue, GUILayout.Height(LINE_HEIGHT)));
+			HorizontalFieldLayout("레벨", 80, () => level.intValue = EditorGUILayout.IntSlider(level.intValue, -1, 60));
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.LabelField(new GUIContent("기본 상호작용 추가", "공통적으로 사용되는 기본 슬롯을 추가합니다.\n기능은 같으나 다른 설정을 원할 경우 해당 항목을 체크 해제하고 수동으로 추가하십시오."), GUILayout.Width(120));
+			uDI.boolValue = EditorGUILayout.Toggle(uDI.boolValue);
+			EditorGUILayout.EndHorizontal();
+			if (uDI.boolValue)
+			{
+				EditorGUI.indentLevel++;
+				EditorGUILayout.BeginHorizontal();
+				uDt.boolValue = EditorGUILayout.Toggle(uDt.boolValue, GUILayout.Width(25));
+				EditorGUILayout.LabelField("파괴", GUILayout.Width(40));
+				uRp.boolValue = EditorGUILayout.Toggle(uRp.boolValue, GUILayout.Width(25));
+				EditorGUILayout.LabelField("수리", GUILayout.Width(40));
+				uDm.boolValue = EditorGUILayout.Toggle(uDm.boolValue, GUILayout.Width(25));
+				EditorGUILayout.LabelField("철거", GUILayout.Width(40));
+				EditorGUILayout.EndHorizontal();
+				EditorGUI.indentLevel--;
+			}
 			#region Interaction Slots
+			EditorGUILayout.LabelField("상호작용 슬롯 설정", EditorStyles.boldLabel);
 			var slots = prop.slots;
-			var events = prop.events;
+			var events = prop.triggers;
 			if (GUILayout.Button(new GUIContent("Clear Slots")))
 			{
 				slots.Clear();
@@ -140,6 +235,8 @@ namespace Rair.Field.Interact
 			}
 			rL.DoLayoutList();
 			#endregion
+
+			if (serializedObject.hasModifiedProperties) serializedObject.ApplyModifiedProperties();
 		}
 
 		#region Helper Methods
@@ -176,9 +273,19 @@ namespace Rair.Field.Interact
 			if (stack.TryPop(out var r) && r.y == 0) { rect.x = r.x; rect.width = r.width; }
 			else Debug.LogError("BeginHorizontal() and EndHorizontal() must be called in pairs.");
 		}
-		private SerializedProperty GetEventProperty(int index)
-			=> serializedObject.FindProperty(nameof(Prop.events)).GetArrayElementAtIndex(index);
+		private SerializedProperty GetEventProperty(int index, EventType type)
+		{
+			string name = type switch
+			{
+				EventType.Trigger => nameof(Prop.triggers),
+				EventType.Cancel => nameof(Prop.cancellers),
+				// EventType.Condition => nameof(Prop.conditions),
+				_ => throw new ArgumentException("Invalid EventType")
+			};
+			return serializedObject.FindProperty(name).GetArrayElementAtIndex(index);
+		}
 		#endregion
+		private enum EventType { Trigger, Cancel/*, Condition*/ }
 	}
 #endif
 }
