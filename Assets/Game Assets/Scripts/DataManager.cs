@@ -6,8 +6,6 @@ using UnityEngine.UI;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 
-using Newtonsoft.Json;
-
 namespace Rair.Field.Values
 {
   public class DataManager : MonoBehaviour

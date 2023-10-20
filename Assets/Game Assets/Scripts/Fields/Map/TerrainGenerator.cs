@@ -181,7 +181,7 @@ public class TerrainGenerator : IProgressTimerProvider
         Biome.TemperateRainyForest    => new float[] {    0, .50f,    0,    0, .50f,    0,    0,    0 },
         Biome.TropicalSeasonForest    => new float[] { .30f, .20f, .10f,    0, .40f,    0,    0,    0 },
         Biome.TemperateDecidousForest => new float[] { .40f,    0,    0,    0, .60f,    0,    0,    0 },
-        _                                 => new float[] {    0,    0,    0,    0,    0,    0,    0,    0 }
+        _                             => new float[] {    0,    0,    0,    0,    0,    0,    0,    0 }
       };
       splatmap[x, y] = cellData;
       if (Timer.Elapsed) { Timer.SetDetail(y * MapTData.alphamapHeight + x, total); yield return null; }

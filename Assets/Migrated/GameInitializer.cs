@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Newtonsoft.Json;
 
 using Data;
 public class GameInitializer : MonoBehaviour
@@ -26,14 +25,14 @@ public class GameInitializer : MonoBehaviour
     T data;
     while ((index = GetFirstItemWithinBracket(text, index, out var item)) > 0) {
       count++;
-      try { data = JsonConvert.DeserializeObject<T>(item); }
+      /*try { data = JsonConvert.DeserializeObject<T>(item); }
       catch (System.Exception e) {
         Debug.Log($"Error Occured while loading {typeof(T)} Data");
         Debug.LogError($"Json Error : {e.Message}\n{e.StackTrace}\n{item}");
         jsonProblem = true;
         yield break;
       }
-      action?.Invoke(data);
+      action?.Invoke(data);*/
       if (Tick) { LoadingText.text = $"Loaded {count} {typeof(T).Name}..."; yield return null; }
     }
   }

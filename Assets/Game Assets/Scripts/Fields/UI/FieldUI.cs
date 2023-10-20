@@ -1,8 +1,6 @@
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 using static MainSetting;
 
@@ -13,9 +11,21 @@ namespace Rair.Field
 	{
 		public static FieldUI Instance;
 
+		[SerializeField] protected FieldInteractionMenu interactionMenu;
+
 		protected void Awake()
 		{
 			Instance = this;
 		}
-	}
+
+		public void UISpaceClicked()
+		{
+			if (Input.GetMouseButtonUp(0)) {
+				if (interactionMenu.Current != null && interactionMenu.inputInterval <= 0)
+				{
+					FieldInteractionMenu.Instance.HideInteractions();
+				}
+			}
+		}
+  }
 }
