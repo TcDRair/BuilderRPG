@@ -123,7 +123,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4709251567512419837}
         m_TargetAssemblyTypeName: Rair.Field.Interact.InteractSlotUI, Assembly-CSharp
-        m_MethodName: AddTask
+        m_MethodName: AddTaskForPlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -359,8 +359,12 @@ MonoBehaviour:
   duration: {fileID: 799469814601968030}
   amount: {fileID: 0}
   cellNameRect: {fileID: 8745958249946418877}
+  add: {fileID: 0}
+  cancel: {fileID: 0}
   detail: {fileID: 6933025264726938303}
   prop: {fileID: 0}
+  active: 0
+  rect: {fileID: 0}
   interaction: {fileID: 0}
 --- !u!1 &4780262111302204141
 GameObject:

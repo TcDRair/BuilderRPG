@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System.Linq;
 
 namespace Rair.Field.Interact
 {
@@ -22,34 +23,42 @@ namespace Rair.Field.Interact
 		public void Init(Prop prop, Interaction interaction)
 		{
 			this.prop = prop;
-			rect = GetComponent<RectTransform>();
 			this.interaction = interaction;
-			cellName.text = interaction.name;
-			duration.text = interaction.duration.ToColonNotation();
-			image.sprite = interaction.sprite;
-
+			rect = GetComponent<RectTransform>();
+			Clear();
 			//TODO Detail Button
 		}
 
-    protected void Update()
+    protected void LateUpdate()
     {
-      //TODO Add Button <-> Cancel Button
-			// 이왕이면 애니메이션(컴포넌트 회전)도 해주면 좋겠어~
+			//TODO Add Button <-> Cancel Button
+			// 이왕이면 UI 애니메이션도
+			if (prop == null) FieldInteractionMenu.Instance.HideInteractions();
     }
 
-    public void TaskUpdate(Task task)
+    public void TaskUpdate(IATask task)
     {
       if (task.interaction == interaction)
 			{
-				float remain = interaction.duration - task.elapsedTime;
+				float dur = interaction.progress[task.current].duration;
+				float remain = dur - task.elapsedTime;
 				duration.text = remain.ToColonNotation();
-				progress.fillAmount = remain / interaction.duration;
+				progress.fillAmount = remain / dur;
 			}
     }
-
-		public void AddTask()
+		public void Clear()
 		{
-			if (Player.Instance.moveTask.i == interaction) return;
+			cellName.text = interaction.name;
+			var dur = interaction.progress.Sum(p => p.duration);
+			duration.text = dur.ToColonNotation();
+			image.sprite = interaction.sprite;
+		}
+
+		public void AddTaskForPlayer()
+		{
+			//TODO waitingTask에 있으면 추가 안 되던데 동일 조건 파악하자
+			//TODO 중복 가능한 작업(수확 등)과 아닌 것(파괴, 수리 등)을 구분하자
+			if (interaction == Player.Instance.moveTask_Approaching.i) return;
 			prop.TryAddTask(Player.Instance, interaction);
 		}
 	}

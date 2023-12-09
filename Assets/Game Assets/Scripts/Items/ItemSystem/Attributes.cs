@@ -11,8 +11,8 @@ namespace Rair.Items
 	/// <summary>모든 아이템에 공통적으로 존재하는 속성 정보를 담습니다.</summary>
 	public class Attributes
 	{
-		public int ID { get; init; } = -1;
-		public Item Reference { get; init; }
+		public int ID { get; set; } = -1;
+		public Item Reference { get; set; }
 
 		#region 생성자 / 초기화
 		/// <summary>가능한 경우 속성 정보를 초기화합니다.</summary>
@@ -55,10 +55,10 @@ namespace Rair.Items
 		#endregion
 
 		#region 기본 - 모든 아이템이 가지고 있는 명시 속성
-		public string Name { get; init; } = "이름 없음";
+		public string Name { get; set; } = "이름 없음";
 		/// <summary>속성 정보가 올바르게 초기화되었는지를 나타냅니다.</summary>
 		public bool Initialized { get; private set; } = false;
-		public bool Mergable { get; init; } = false;
+		public bool Mergable { get; set; } = false;
 		/// <summary>내구도 - 아이템이 파괴되기 전까지 사용할 수 있는 정도를 나타냅니다.</summary>
 		public readonly EFloat durability = new(0);
 		/// <summary>가공 가능 횟수 - Recipe 재료로 사용될 수 있는 한도를 지정합니다.</summary>
@@ -71,13 +71,13 @@ namespace Rair.Items
 			public readonly EFloat mass = new(1, MergeType.Sum);
 			public readonly EFloat volume = new(1, MergeType.Sum);
 			public readonly EFloat temperature = new(0, MergeType.None);
-			public float Hardness { get; init; } = 1; // 경도(고체) : 1 ~ 
-			public float Viscosity { get; init; } = 1; // 점도(액체) : 0 ~ 100,000
-			public float SpecificHeat { get; init; } = .5f; // 비열 : 0 ~ 1
+			public float Hardness { get; set; } = 1; // 경도(고체) : 1 ~ 
+			public float Viscosity { get; set; } = 1; // 점도(액체) : 0 ~ 100,000
+			public float SpecificHeat { get; set; } = .5f; // 비열 : 0 ~ 1
 			public float HeatCapacity => mass * SpecificHeat; // 열용량 : 0 ~
-			public float Conductivity { get; init; } = 0; // 열전도율 : 0 ~
-			public float HeatTransfer { get; init; } = 0; // 열전달율 : 0 ~
-			public Phase Phase { get; init; }
+			public float Conductivity { get; set; } = 0; // 열전도율 : 0 ~
+			public float HeatTransfer { get; set; } = 0; // 열전달율 : 0 ~
+			public Phase Phase { get; set; }
 			public float Density => mass / volume;
 		}
 		public Property property = new();

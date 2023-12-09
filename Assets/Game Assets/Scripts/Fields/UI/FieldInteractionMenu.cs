@@ -15,9 +15,10 @@ namespace Rair.Field
 		[SerializeField] protected RectTransform buttonArea, taskArea;
 		[SerializeField] protected CanvasGroup interactionUI;
 		[SerializeField] protected GameObject slotUI, taskUI;
+		[SerializeField] protected Animator animator;
 		[SerializeField] protected Text titleText;
 		private readonly Dictionary<Interaction, InteractSlotUI> slots = new();
-		private readonly Dictionary<Task, InteractTaskUI> tasks = new();
+		private readonly Dictionary<IATask, InteractTaskUI> tasks = new();
 
 		private float _slotInterval, _taskInterval;
 		[HideInInspector] public float inputInterval = 0;
@@ -40,8 +41,7 @@ namespace Rair.Field
       if (!enable) // 메뉴 활성화
 			{
 				enable = true;
-				interactionUI.alpha = 1;
-				interactionUI.blocksRaycasts = true;
+				animator.SetTrigger("Open"); // alpha 및 blocksRaycasts 조정 포함
 			}
 			else if (ReferenceEquals(prop, Current)) return; // 이미 활성화된 메뉴
 			else // 메뉴 변경
@@ -82,7 +82,7 @@ namespace Rair.Field
       #endregion
 
       #region 대기 작업 갱신
-			var waitingTasks = Current.tasks.Skip(1);
+			var waitingTasks = Current.waitingTasks;
       foreach (var t in waitingTasks)
 			{
 				if (!tasks.TryGetValue(t, out var ui))
@@ -106,10 +106,11 @@ namespace Rair.Field
       #endregion
 
       #region 진행 작업 갱신
-			if (Current.tasks.TryPeek(out var task))
+			if (Current.CurrentTask is var task && task != default)
 			{
 				slots[task.interaction].TaskUpdate(task);
 			}
+			else foreach (var s in slots.Values) s.Clear();
       #endregion
     }
 
@@ -127,8 +128,7 @@ namespace Rair.Field
 			if (enable)
 			{
 				enable = false;
-				interactionUI.alpha = 0;
-				interactionUI.blocksRaycasts = false;
+				animator.SetTrigger("Close"); // alpha 및 blocksRaycasts 조정 포함
 				buttonArea.RemoveAllChildren();
 				taskArea.RemoveAllChildren();
 				slots.Clear();

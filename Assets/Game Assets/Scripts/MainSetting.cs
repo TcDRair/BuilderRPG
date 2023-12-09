@@ -34,8 +34,6 @@ public static class MainSetting
 		emptyColor2 = new(0x00, 0x00, 0x00, 0xFF)
 	;
 	#endregion
-
-
 }
 
 public static class TransformMethods

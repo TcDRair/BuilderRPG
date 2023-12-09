@@ -28,4 +28,7 @@ public static class StringExtensions
 	public static string ToNiceString(this Vector2Int vec) => $"({vec.x}/{vec.y})";
 	public static string ToColonNotation(this float time)
 		=> $"{(int)(time/3600):D1}:{(int)(time/60)%60:D2}:{(int)time%60:D2}";
+
+
+	public static string Rich(this string str) => $"<color=#bbbbbb><b><u>{str}</u></b></color>";
 }

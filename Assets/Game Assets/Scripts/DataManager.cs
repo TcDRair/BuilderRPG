@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 
-namespace Rair.Field.Values
+namespace Rair.Core
 {
   public class DataManager : MonoBehaviour
   {
@@ -26,7 +26,6 @@ namespace Rair.Field.Values
     public readonly float Interval = .02f;
     float m_prev = 0;
     bool Elapsed => (m_prev + Interval > Time.time) && (m_prev = Time.time) > 0;
-    
   }
 
   public static class Storage {
@@ -36,6 +35,7 @@ namespace Rair.Field.Values
 
 [InitializeOnLoad]
 public static class EditorSceneShortcutUtil {
+  static EditorSceneShortcutUtil() { }
   [MenuItem("Edit/Play from Loading Scene %1")]
   public static void PlayFromPrelaunchScene() {
     if (EditorApplication.isPlaying is false) {

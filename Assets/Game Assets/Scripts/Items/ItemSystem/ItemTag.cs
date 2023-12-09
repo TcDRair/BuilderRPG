@@ -7,11 +7,11 @@ namespace Rair.Items
 	public enum TagType { Requirement, Category, Event }
 	public class ItemTag
 	{
-		public string Name { get; init; }
-		public string Description { get; init; }
-		public int ID { get; init; }
-		public TagType Type { get; init; }
-		public Action<Item> OnAdded { get; init; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public int ID { get; set; }
+		public TagType Type { get; set; }
+		public Action<Item> OnAdded { get; set; }
 
 		internal ItemTag() { }
 

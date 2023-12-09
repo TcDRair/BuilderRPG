@@ -1,0 +1,4 @@
+repository "BuilderRPG@whong0012@cloud"
+  path "/"
+    br "/main"
+    co "/main"

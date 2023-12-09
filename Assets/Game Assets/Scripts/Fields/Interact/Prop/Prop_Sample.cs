@@ -10,6 +10,7 @@ namespace Rair.Field.Interact
 		protected void Awake()
 		{
 			#region Repair
+			/*
 			Interaction repair = new()
 			{
 				name = "¼ö¸®",
@@ -38,10 +39,12 @@ namespace Rair.Field.Interact
 			});
 			repair.onCondition = () => Durability.current < Durability.maximum;
 			slots.Add(repair);
+			*/
 			#endregion
+
 		}
 
-		public void OnPropClicked()
+		public override void OnPropClicked()
 		{
 			if (Input.GetMouseButtonUp(0))
 				FieldInteractionMenu.Instance.ShowPropMenu(this);

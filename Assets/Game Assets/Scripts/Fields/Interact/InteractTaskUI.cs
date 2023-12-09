@@ -11,8 +11,8 @@ namespace Rair.Field.Interact
 
     [HideInInspector] public Prop prop;
     [HideInInspector] public RectTransform rect;
-    [HideInInspector] public Task task;
-		public void Init(Prop prop, Task task)
+    [HideInInspector] public IATask task;
+		public void Init(Prop prop, IATask task)
 		{
 			this.prop = prop;
 			rect = GetComponent<RectTransform>();
@@ -21,6 +21,6 @@ namespace Rair.Field.Interact
 		}
 
 		public void Cancel()
-			=> prop.CancelTasks();
+			=> prop.CancelCurrentTask();
   }
 }

@@ -12,11 +12,10 @@ public class Knowledge {
 }
 
 public class Keyword {
-    public string Name { get; init; }
-    public KeywordString[] Description { get; init; }
-    public Keyword[] Relevant { get; init; } = new Keyword[0];
-    public KeywordString RewardInfo { get; init; }
-
+    public string Name { get; set; }
+    public KeywordString[] Description { get; set; }
+    public Keyword[] Relevant { get; set; } = new Keyword[0];
+    public KeywordString RewardInfo { get; set; }
 
     public override bool Equals(object obj) => obj is Keyword kwd && kwd.Name == Name;
     public override int GetHashCode() => Name.GetHashCode();

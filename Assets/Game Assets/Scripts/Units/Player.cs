@@ -1,66 +1,83 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 using static MainSetting;
 using Rair.Field.Interact;
 using Rair.Items;
+using Rair.Skill;
 
 namespace Rair.Field
 {
-	/// <summary>게임 플레이어가 조작하는 개체에 부착되어 동작하는 기능들이 포함됩니다.</summary>
-	public class Player : FieldUnit
-	{
-		public MainCamera cam;
+  /// <summary>게임 플레이어가 조작하는 개체에 부착되어 동작하는 기능들이 포함됩니다.</summary>
+  public class Player : FieldUnit
+  {
+    public MainCamera cam;
 
-		public bool Immovable => false;
+    public bool Immovable => false;
 
-		public static Player Instance;
-		protected void Awake() { Instance = this; }
+    public static Player Instance;
+    protected override void Awake() {
+      Instance = this;
+      stat = new(100, 1, 50, 10, 2, 5, 25, 25, 100);
+      info = new(true);
 
-		List<Item> inventory;
-		protected void Start()
-		{
-			agent.updatePosition = false;
+      base.Awake();
+    }
 
-			// var p = new Item("얼음");
-		}
+    public readonly List<Item> inventory = new();
+    protected override void Start() {
+      base.Start();
+      agent.updatePosition = false;
+      DBGLBRA = new Skill.AbilityStorage.LowerBodyReinforcementAlpha(1);
+    }
 
-		protected void Update()
-		{
-			//* 이동 제어
-			//** 1. 이동 조건 미충족 시
-			agent.isStopped = Immovable;
-      //** 2. 이동 조작 입력 시
+    public override bool RunIntent => Input.GetKey(KeyCode.LeftShift);
+    protected override void Update() {
+      Tick();
+
+      #region 이동
       if (MainCamera.Cam.ClickRaycast(out var hit, 100, floorMask))
-      {
-				if (moveTask != default) {
-					StopCoroutine(moveTask.c);
-					moveTask = default;
-				}
-				agent.SetDestination(hit.point);
-			}
+        Move(hit.point);
+      #endregion
 
-			//** X. 카메라 조정
-			cam.SmoothUpdatePos(tr.position);
+      //* X. 카메라 조정
+      cam.SmoothUpdatePos(tr.position);
 
-			//* 다른 제어
+      //* 디버그
+      if (Input.GetKeyDown(KeyCode.F4))
+        stat.Load += 10;
+      if (Input.GetKeyDown(KeyCode.F5))
+        stat.Load -= 10;
+      if (Input.GetKeyDown(KeyCode.F6))
+        Debug.Log(stat);
+      if (Input.GetKeyDown(KeyCode.F7)) {
+        //todo: 나중에 정식으로 만들 땐 아래의 UI 작동 로직도 그대로 옮길 것
+        //todo: 물론 ShowAbility를 다수의 효과에 대해 적합하게 바꿔야겠지
+        DBGLBRA.ToggleOn(this);
+        FieldUI.Instance.ShowAbility(DBGLBRA);
+      }
+      if (Input.GetKeyDown(KeyCode.F8)) {
+        DBGLBRA.ToggleOff(this);
+        FieldUI.Instance.HideAbility(DBGLBRA);
+      }
 
-			//TODO 애니메이션 제어
-			//? if (_b is not null && _b.ShowConstructingModel()) { animator.SetTrigger("Build End"); _b = null; }
-		}
+      //TODO 애니메이션 제어
+      //? if (_b is not null && _b.ShowConstructingModel()) { animator.SetTrigger("Build End"); _b = null; }
+    }
+    Ability DBGLBRA;
 
-		private Quaternion previousRotation;
-		const float VELOCITY_MODULAR = .25f, ANGULAR_MODULAR = .25f;
-		void LateUpdate()
-		{
-			// 애니메이션 제어
-			animator.SetFloat("Forward", agent.velocity.GetHorizontalMagnitude() * VELOCITY_MODULAR);
-			animator.SetFloat("Turn", tr.rotation.GetAngularSpeed(previousRotation) * ANGULAR_MODULAR);
-			previousRotation = tr.rotation;
-		}
+    public bool Enable_Run = true;
 
-		void OnAnimatorMove()
-			=> tr.position = agent.nextPosition;
-	}
+    private Quaternion previousRotation;
+    const float VELOCITY_MODULAR = .25f, ANGULAR_MODULAR = .25f;
+    void LateUpdate() {
+      // 애니메이션 제어
+      animator.SetFloat("Forward", agent.velocity.GetHorizontalMagnitude() * VELOCITY_MODULAR);
+      animator.SetFloat("Turn", tr.rotation.GetAngularSpeed(previousRotation) * ANGULAR_MODULAR);
+      previousRotation = tr.rotation;
+    }
+
+    void OnAnimatorMove()
+      => tr.position = agent.nextPosition;
+  }
 }

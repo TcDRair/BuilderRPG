@@ -9,8 +9,8 @@ namespace Rair.Events
 	public abstract class EventProperty<T> where T : struct
 	{
 		protected T value;
-		protected MergeType Option { get; init; }
-		protected bool AllowDefault { get; init; }
+		protected MergeType Option { get; set; }
+		protected bool AllowDefault { get; set; }
 
 		#region events
 		public delegate void ValueAction(T oldValue, T newValue);
