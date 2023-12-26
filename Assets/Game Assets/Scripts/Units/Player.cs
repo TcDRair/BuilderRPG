@@ -28,7 +28,8 @@ namespace Rair.Field
     protected override void Start() {
       base.Start();
       agent.updatePosition = false;
-      DBGLBRA = new Skill.AbilityStorage.LowerBodyReinforcementAlpha(1);
+      MRB = new Skill.AbilityStorage.RunnersHigh(1);
+      MRG = new Skill.AbilityStorage.IronStep(3);
     }
 
     public override bool RunIntent => Input.GetKey(KeyCode.LeftShift);
@@ -53,18 +54,18 @@ namespace Rair.Field
       if (Input.GetKeyDown(KeyCode.F7)) {
         //todo: 나중에 정식으로 만들 땐 아래의 UI 작동 로직도 그대로 옮길 것
         //todo: 물론 ShowAbility를 다수의 효과에 대해 적합하게 바꿔야겠지
-        DBGLBRA.ToggleOn(this);
-        FieldUI.Instance.ShowAbility(DBGLBRA);
+        MRG.ToggleOn(this);
+        FieldUI.Instance.ShowAbility(MRG);
       }
       if (Input.GetKeyDown(KeyCode.F8)) {
-        DBGLBRA.ToggleOff(this);
-        FieldUI.Instance.HideAbility(DBGLBRA);
+        MRG.ToggleOff(this);
+        FieldUI.Instance.HideAbility(MRG);
       }
 
       //TODO 애니메이션 제어
       //? if (_b is not null && _b.ShowConstructingModel()) { animator.SetTrigger("Build End"); _b = null; }
     }
-    Ability DBGLBRA;
+    Ability MRG, MRB;
 
     public bool Enable_Run = true;
 

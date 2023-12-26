@@ -13,7 +13,8 @@ namespace Rair.Skill.AbilityStorage
   public enum Abil
   {
     None = 0,
-    LowerBodyReinforcementAlpha,
-    LowerBodyReinforcementBeta,
+    MovementReinforcement_Alpha,
+    MovementReinforcement_Beta,
+    MovementReinforcement_Gamma,
   }
 }

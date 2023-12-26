@@ -21,14 +21,12 @@ namespace Rair.Field
     [SerializeField] protected Image HP, SP, HPRes, SPRes;
     [SerializeField] protected TextMeshProUGUI Load, Shift;
 
-    protected Player Player => Player.Instance;
-
     protected void Awake() {
       Instance = this;
     }
 
     protected void Update() {
-      var s = Player.stat;
+      var s = Player.Instance.stat;
       HP.fillAmount = s.HP.Value / s.HPMax.Value;
       HPRes.fillAmount = s.HPRCR.Value / s.HPMax.Value;
       SP.fillAmount = s.SP.Value / s.SPMax.Value;

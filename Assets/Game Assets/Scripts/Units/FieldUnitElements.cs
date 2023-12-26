@@ -57,11 +57,12 @@ namespace Rair.Field
     public RVFloat SPRegen_Light, SPRegen_Heavy;
     public RVFloat RunSpeed_Light, WalkSpeed_Heavy;
     public RVFloat RunSPCost_Light, WalkSPCost_Heavy;
+    public RVFloat Fatigue_Run, Fatigue_Walk, Fatigue_Idle, Fatigue_Sit;
 
     public UnitInfo(bool player = false) {
-      Load_Light = new(.75f, .01f, .75f); // 0% ~ 75% (cap 75%)
-      Load_Average = new(1, .75f, 1.5f); // 75% ~ 150% (cap 150%)
-      Load_Heavy = new(1.5f, 1.5f, 10); // 150% ~ 1000% (cap 1000%)
+      Load_Light = new(.75f, .01f, .75f); // 0% ~ 75%
+      Load_Average = new(1, .75f, 1.5f); // 75% ~ 150%
+      Load_Heavy = new(1.5f, 1.5f, 10); // 150% ~ 1000%
 
       SPRegen_Light = new(.15f, 0, 1); // +15%
       SPRegen_Heavy = new(-.2f, -1, 0); // -20%
@@ -69,6 +70,11 @@ namespace Rair.Field
       WalkSpeed_Heavy = new(-.75f, -1, 0); // -75%
       RunSPCost_Light = new(.15f, 0, 1); // +15%
       WalkSPCost_Heavy = new(.9f, 0, 1); // +90%
+
+      Fatigue_Run = new(3, 0);
+      Fatigue_Walk = new(1, 0);
+      Fatigue_Idle = new(0);
+      Fatigue_Sit = new(-1, max: 0);
     }
 
     public readonly override string ToString() =>
@@ -95,6 +101,8 @@ namespace Rair.Field
     public RVEFloat LoadMax;
     public RFloat Load;
 
+    public RVFloat Fatigue;
+
     public UnitStat(float hpMax, float hpRegen, float spMax, float spRegen, float walkSpeed, float runSpeed, float walkSPCost, float runSPCost, float loadMax) {
       HPMax = new(hpMax, 1);
       HPRegen = new(hpRegen, 0);
@@ -117,6 +125,8 @@ namespace Rair.Field
 
       LoadMax = new(loadMax, 0);
       Load = new(0, 0);
+
+      Fatigue = new(0, 0, 100);
 
       Debug.Log(this);
     }
