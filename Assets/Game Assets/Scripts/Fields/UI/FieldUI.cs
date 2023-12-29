@@ -18,8 +18,8 @@ namespace Rair.Field
     [SerializeField] protected FieldInteractionMenu interactionMenu;
     [SerializeField] protected RectTransform PlayerUI;
     [SerializeField] protected GameObject AbilityUI;
-    [SerializeField] protected Image HP, SP, HPRes, SPRes;
-    [SerializeField] protected TextMeshProUGUI Load, Shift;
+    [SerializeField] protected Image HP, SP, HPRes, SPRes, Fatigue;
+    [SerializeField] protected TextMeshProUGUI Load, Shift, FatigueLog;
 
     protected void Awake() {
       Instance = this;
@@ -31,6 +31,8 @@ namespace Rair.Field
       HPRes.fillAmount = s.HPRCR.Value / s.HPMax.Value;
       SP.fillAmount = s.SP.Value / s.SPMax.Value;
       SPRes.fillAmount = s.SPRCR.Value / s.SPMax.Value;
+      Fatigue.fillAmount = s.Fatigue.Value / s.Fatigue.Max.Value;
+      FatigueLog.text = $"Fatigue: {s.Fatigue.Value:F1} / {s.Fatigue.Max.Value:F0}\n{Player.Instance.FatigueTick:F1} / min";
       float load = s.Load.Value, loadMax = s.LoadMax.Value;
       Load.text = $"Load : {(load > loadMax ? $"<color=red>{load}</color>" : load)} / {loadMax:F0}";
       Shift.text = "Shift : " + (Input.GetKey(KeyCode.LeftShift) ? "On" : "Off");

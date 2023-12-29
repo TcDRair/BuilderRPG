@@ -101,7 +101,8 @@ namespace Rair.Field
     public RVEFloat LoadMax;
     public RFloat Load;
 
-    public RVFloat Fatigue;
+    public RVEFloat FatigueMax;
+    public RVMFloat Fatigue;
 
     public UnitStat(float hpMax, float hpRegen, float spMax, float spRegen, float walkSpeed, float runSpeed, float walkSPCost, float runSPCost, float loadMax) {
       HPMax = new(hpMax, 1);
@@ -126,7 +127,8 @@ namespace Rair.Field
       LoadMax = new(loadMax, 0);
       Load = new(0, 0);
 
-      Fatigue = new(0, 0, 100);
+      FatigueMax = new(300, 0);
+      Fatigue = new(0, 0, FatigueMax);
 
       Debug.Log(this);
     }
@@ -151,6 +153,6 @@ namespace Rair.Field
   public struct UnitStatus
   {
     public float speed;
-    public bool moving, running;
+    public bool moving, running, sitting;
   }
 }

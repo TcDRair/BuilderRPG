@@ -26,6 +26,7 @@ namespace Rair.Skill
     public string Name { get; protected set; }
     public string Description { get; protected set; }
     public int Level { get; protected set; } = -1;
+    public int Stack { get; protected set; } = -1;
     public struct RichText // 임시
     {
       public string text;

@@ -17,6 +17,28 @@ namespace Rair.Skill.AbilityStorage {
       ID = Fld.Travel;
     }
   }
+
+  public class LightBreeze : Ability
+  {
+    public LightBreeze(int level) {
+      Level = Mathf.Clamp(level, 1, 3);
+      Name = "산들바람" + Level;
+      Description = "하체의 균형으로 가벼운 보폭을 유지합니다.";
+      Effect = new RichText[] {
+      new("", Color.clear),
+      };
+      FieldID = Fld.Travel;
+      ID = Abil.MovementReinforcement_Alpha;
+      Icon = Resources.Load<Sprite>("");
+      Toggleable = false;
+    }
+
+    public override void Invoke(FieldUnit unit) { }
+    public override void ToggleOn(FieldUnit unit) { }
+    public override void ToggleOff(FieldUnit unit) { }
+  }
+
+
   public class RunnersHigh : Ability
   {
     public RunnersHigh(int level)
@@ -33,7 +55,7 @@ namespace Rair.Skill.AbilityStorage {
         new($"{"피로".Rich()} 상태 시 강제 해제", Color.yellow),
         new($"<i>\"즐기는 자에게 한계란 없는 법.\"</i>", Color.clear)
       };
-      // Icon = Resources.Load<Sprite>("");
+      Icon = Resources.Load<Sprite>("Sprites/Flaticon/running");
     } 
     float FatigueMod => Level switch { 1 => 4, 2 => 4, _ => 3 };
     float FatigueStackMod => Level switch { 1 => .02f, 2 => .04f, _ => .06f };
@@ -51,11 +73,10 @@ namespace Rair.Skill.AbilityStorage {
       unit.effects.Remove(ID);
     }
 
-    int stack = 0;
     bool trigger = false;
     float elapsed = 0, prevFat = 1, prevSP = 1;
     void Reset() {
-      stack = 0;
+      Stack = 0;
       trigger = false;
       elapsed = 0;
       prevFat = 1;
@@ -68,7 +89,7 @@ namespace Rair.Skill.AbilityStorage {
       if (unit.status.running) {
         if (trigger) { // 계속 달리는 중
           if (elapsed >= 1) {
-            stack = Mathf.Clamp(stack + 1, 0, MaxStack);
+            Stack = Mathf.Clamp(Stack + 1, 0, MaxStack);
             elapsed = 0;
           }
         } else { // 스택을 잃거나 없는 상태에서 질주 시작
@@ -78,21 +99,21 @@ namespace Rair.Skill.AbilityStorage {
       } else {
         if (trigger) { // 직전까지 달림
           trigger = false;
-          elapsed = -1;
+          elapsed = 0;
         } else { // 달리지 않음
           if (elapsed >= 1) {
-            stack = Mathf.Clamp(stack - (int)(MaxStack * 0.8f), 0, MaxStack);
+            Stack = Mathf.Clamp(Stack - (int)(MaxStack * 0.2f), 0, MaxStack);
             elapsed = 0;
           }
         }
       }
       //* 피로 연산
-      float fatigue = FatigueMod - stack * FatigueStackMod;
-      float sp = 1 - SPMod * stack;
+      float fatigue = FatigueMod - Stack * FatigueStackMod;
+      float sp = 1 - SPMod * Stack;
       unit.info.Fatigue_Run /= prevFat;
       unit.info.Fatigue_Run *= fatigue;
-      unit.stat.RunSPCost.value *= sp;
       unit.stat.RunSPCost.value /= prevSP;
+      unit.stat.RunSPCost.value *= sp;
 
       prevFat = fatigue;
       prevSP = sp;

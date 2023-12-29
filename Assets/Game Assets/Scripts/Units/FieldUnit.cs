@@ -82,9 +82,7 @@ namespace Rair.Field
     }
 
     protected void Tick() {
-      stat.HP.Value += (stat.HPRegen.Value - stat.HPCost.Value) * Time.deltaTime;
-      stat.SP.Value += (stat.SPRegen.Value - stat.SPCost.Value) * Time.deltaTime;
-
+      //* 이동 상태 갱신
       int move = Movement_Available();
       status.speed = agent.velocity.magnitude;
       status.moving = status.speed > .05f && move >= 1;
@@ -94,11 +92,27 @@ namespace Rair.Field
         ? stat.RunSpeed.Value
         : (move >= 1 ? stat.WalkSpeed.Value : 0);
 
+      //* 회복/감소 연산
+      stat.HP.Value += (stat.HPRegen.Value - stat.HPCost.Value) * Time.deltaTime;
+      if (status.running)
+        stat.SP.Value -= stat.SPCost.Value * Time.deltaTime;
+      else
+        stat.SP.Value += stat.SPRegen.Value * Time.deltaTime;
+
+      //* 피로 연산
+      stat.Fatigue.Value += FatigueTick * Time.deltaTime / 60; // 분당 피로
+
+      //* 효과 적용
       foreach (var e in hiddenEffects.Values)
         e?.Invoke(this);
       foreach (var e in effects.Values)
         e?.Invoke(this);
     }
+    public float FatigueTick =>
+      status.running ? info.Fatigue_Run.Value :
+      status.moving ? info.Fatigue_Walk.Value :
+      status.sitting ? info.Fatigue_Sit.Value :
+      info.Fatigue_Idle.Value;
     #endregion
 
     /// <summary>

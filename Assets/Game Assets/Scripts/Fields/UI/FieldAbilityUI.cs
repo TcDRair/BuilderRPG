@@ -14,7 +14,7 @@ namespace Rair.Field
   public class FieldAbilityUI : MonoBehaviour
   {
     [SerializeField] protected Image Icon;
-    [SerializeField] protected TextMeshProUGUI Name;
+    [SerializeField] protected TextMeshProUGUI Name, Stack;
     [SerializeField] protected CanvasGroup Description;
     [SerializeField] protected GameObject TextBox;
 
@@ -33,6 +33,10 @@ namespace Rair.Field
         var text = $"<mark=#{boxColor.ToHexString()}>{line.text}</color>";
         box.text = text;
       }
+    }
+
+    protected void Update() {
+      Stack.text = (ability.Stack != -1) ? ability.Stack.ToString() : "";
     }
 
     public void Toggle()

@@ -18,7 +18,7 @@ namespace Rair.Field
     public static Player Instance;
     protected override void Awake() {
       Instance = this;
-      stat = new(100, 1, 50, 10, 2, 5, 25, 25, 100);
+      stat = new(100, 1, 100, 5, 2, 5, 6, 6, 100);
       info = new(true);
 
       base.Awake();
@@ -28,7 +28,7 @@ namespace Rair.Field
     protected override void Start() {
       base.Start();
       agent.updatePosition = false;
-      MRB = new Skill.AbilityStorage.RunnersHigh(1);
+      MRB = new Skill.AbilityStorage.RunnersHigh(3);
       MRG = new Skill.AbilityStorage.IronStep(3);
     }
 
@@ -60,6 +60,14 @@ namespace Rair.Field
       if (Input.GetKeyDown(KeyCode.F8)) {
         MRG.ToggleOff(this);
         FieldUI.Instance.HideAbility(MRG);
+      }
+      if (Input.GetKeyDown(KeyCode.F9)) {
+        MRB.ToggleOn(this);
+        FieldUI.Instance.ShowAbility(MRB);
+      }
+      if (Input.GetKeyDown(KeyCode.F10)) {
+        MRB.ToggleOff(this);
+        FieldUI.Instance.HideAbility(MRB);
       }
 
       //TODO 애니메이션 제어
