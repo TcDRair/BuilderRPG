@@ -23,12 +23,12 @@ namespace Rair.Skill.AbilityStorage {
     public LightBreeze(int level) {
       Level = Mathf.Clamp(level, 1, 3);
       Name = "산들바람" + Level;
-      Description = "하체의 균형으로 가벼운 보폭을 유지합니다.";
-      Effect = new RichText[] {
+      Summary = "하체의 균형으로 가벼운 보폭을 유지합니다.";
+      /*EffectText = new RichText[] {
       new("", Color.clear),
-      };
+      };*/
       FieldID = Fld.Travel;
-      ID = Abil.MovementReinforcement_Alpha;
+      AbilID = Abil.MovementReinforcement_Alpha;
       Icon = Resources.Load<Sprite>("");
       Toggleable = false;
     }
@@ -41,42 +41,45 @@ namespace Rair.Skill.AbilityStorage {
 
   public class RunnersHigh : Ability
   {
-    public RunnersHigh(int level)
-    {
+    public RunnersHigh(int level) {
       Level = Mathf.Clamp(level, 1, 3);
       Name = "러너스 하이 " + Level;
-      Description = "달리는 기쁨을 받아들입니다.";
+      Summary = "달리는 기쁨을 받아들입니다.";
       FieldID = Fld.Travel;
-      ID = Abil.MovementReinforcement_Beta;
+      AbilID = Abil.MovementReinforcement_Beta;
       Toggleable = true;
-      Effect = new RichText[] {
-        new($"질주 시 피로 증가", Color.red),
-        new($"지속적으로 질주 시 피로 및 SP 소모 감소", Color.clear),
-        new($"{"피로".Rich()} 상태 시 강제 해제", Color.yellow),
-        new($"<i>\"즐기는 자에게 한계란 없는 법.\"</i>", Color.clear)
-      };
       Icon = Resources.Load<Sprite>("Sprites/Flaticon/running");
-    } 
-    float FatigueMod => Level switch { 1 => 4, 2 => 4, _ => 3 };
+
+      Effect = new() {
+        Name = Name,
+        MaxStack = MaxStack,
+        OnTick = FatigueStack,
+        Icon = Icon,
+        DurationText = _ => $"{"피로".Interested()} 전까지 지속",
+        Description = new EffectText[] {
+          _ => "질주 시 피로 " + $"{Fatigue-1:P0} 증가".Colored(Color.red) + $"\n(지속 질주로 {FatigueMod+1-Fatigue:P0} 감소)".Colored(Color.gray),
+          _ => "질주 시 SP 소모 " + $"{1-SP:P0} 감소".Colored(Color.green),
+          _ => "<i>\"즐기는 자에게 한계란 없는 법.\"</i>".Colored(Color.gray)
+        }
+      };
+    }
+    float FatigueMod => Level switch { 1 => 3, 2 => 3, _ => 2 };
     float FatigueStackMod => Level switch { 1 => .02f, 2 => .04f, _ => .06f };
     float SPMod => Level switch { 1 => .01f, 2 => .02f, _ => .04f };
     int MaxStack => Level switch { 1 => 100, 2 => 50, _ => 25 };
 
     public override void Invoke(FieldUnit unit) { }
     public override void ToggleOn(FieldUnit unit)
-    {
-      unit.effects[ID] = FatigueStack;
-    }
-    public override void ToggleOff(FieldUnit unit)
-    {
+      => unit.ApplyEffect(ID, Effect);
+    public override void ToggleOff(FieldUnit unit) {
       Reset();
-      unit.effects.Remove(ID);
+      unit.RemoveEffect(ID);
     }
 
     bool trigger = false;
     float elapsed = 0, prevFat = 1, prevSP = 1;
     void Reset() {
-      Stack = 0;
+      Effect.Stack = 0;
       trigger = false;
       elapsed = 0;
       prevFat = 1;
@@ -89,7 +92,7 @@ namespace Rair.Skill.AbilityStorage {
       if (unit.status.running) {
         if (trigger) { // 계속 달리는 중
           if (elapsed >= 1) {
-            Stack = Mathf.Clamp(Stack + 1, 0, MaxStack);
+            Effect.Stack = Mathf.Clamp(Effect.Stack + 1, 0, MaxStack);
             elapsed = 0;
           }
         } else { // 스택을 잃거나 없는 상태에서 질주 시작
@@ -102,22 +105,24 @@ namespace Rair.Skill.AbilityStorage {
           elapsed = 0;
         } else { // 달리지 않음
           if (elapsed >= 1) {
-            Stack = Mathf.Clamp(Stack - (int)(MaxStack * 0.2f), 0, MaxStack);
+            Effect.Stack = Mathf.Clamp(Effect.Stack - (int)(MaxStack * 0.2f), 0, MaxStack);
             elapsed = 0;
           }
         }
       }
       //* 피로 연산
-      float fatigue = FatigueMod - Stack * FatigueStackMod;
-      float sp = 1 - SPMod * Stack;
       unit.info.Fatigue_Run /= prevFat;
-      unit.info.Fatigue_Run *= fatigue;
+      unit.info.Fatigue_Run *= Fatigue;
       unit.stat.RunSPCost.value /= prevSP;
-      unit.stat.RunSPCost.value *= sp;
+      unit.stat.RunSPCost.value *= SP;
 
-      prevFat = fatigue;
-      prevSP = sp;
+      prevFat = Fatigue;
+      prevSP = SP;
     }
+    /// <summary>활성화 중 적용되는 질주 피로 배율</summary>
+    float Fatigue => 1 + FatigueMod - Effect.Stack * FatigueStackMod;
+    /// <summary>활성화 중 적용되는 질주 SP 배율</summary>
+    float SP => 1 - SPMod * Effect.Stack;
   }
 
   public class IronStep : Ability
@@ -126,15 +131,15 @@ namespace Rair.Skill.AbilityStorage {
     public IronStep(int level) {
       Level = Mathf.Clamp(level, 1, 3);
       Name = "무쇠걸음 " + Level;
-      Description = "다리의 힘을 한계까지 끌어냅니다.";
-      Effect = new RichText[] {
-        new($"SP {"재생 불가".Rich()}", Color.red),
-        new($"이동 거리 비례 {"HP 제한".Rich()}", Color.red),
-        new($"중량 {"보행속도 감소".Rich()} 완화", Color.clear),
+      Summary = "다리의 힘을 한계까지 끌어냅니다.";
+      /*DescriptionText = new RichText[] {
+        new($"SP {"재생 불가".Interested()}", Color.red),
+        new($"이동 거리 비례 {"HP 제한".Interested()}", Color.red),
+        new($"중량 {"보행속도 감소".Interested()} 완화", Color.clear),
         new($"<i>진정한 힘은 통제된 동작에서 피어납니다.</i>", Color.clear)
-      };
+      };*/
       FieldID = Fld.Travel;
-      ID = Abil.MovementReinforcement_Gamma;
+      AbilID = Abil.MovementReinforcement_Gamma;
       Icon = Resources.Load<Sprite>("Sprites/Flaticon/hiking"); // 임시
       Toggleable = true;
     }
@@ -165,13 +170,13 @@ namespace Rair.Skill.AbilityStorage {
     };
     public override void Invoke(FieldUnit unit) { }
     public override void ToggleOn(FieldUnit unit) {
-      unit.effects[ID] = HPRestriction;
+      // unit.ApplyEffect(ID, HPRestriction);
       unit.Movement_Available = MoveInt(unit);
       unit.stat.SPRegen.value.Nullify = true; // SP Regen Disabled
       unit.info.WalkSpeed_Heavy *= WalkSpdMod;
     }
     public override void ToggleOff(FieldUnit unit) {
-      unit.effects.Remove(ID);
+      // unit.effects.Remove(AbilID);
       unit.Movement_Available = unit.MoveInt;
       unit.stat.SPRegen.value.Nullify = false; // SP Regen Enabled
       unit.info.WalkSpeed_Heavy /= WalkSpdMod;

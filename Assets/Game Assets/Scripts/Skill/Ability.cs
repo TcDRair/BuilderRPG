@@ -21,26 +21,19 @@ namespace Rair.Skill
     public Prof ProfID { get; protected set; }
     public Fld ID { get; protected set; }
   }
-  public abstract class Ability
-  {
+  public abstract class Ability {
     public string Name { get; protected set; }
-    public string Description { get; protected set; }
+    public string Summary { get; protected set; }
     public int Level { get; protected set; } = -1;
-    public int Stack { get; protected set; } = -1;
-    public struct RichText // 임시
-    {
-      public string text;
-      public Color boxColor;
-      public RichText(string text, Color boxColor)
-      {
-        this.text = text;
-        this.boxColor = boxColor;
-      }
-    }
-    public RichText[] Effect { get; protected set; }
+    public UnitEffect Effect { get; protected set; }
+    /// <summary>
+    /// 능력의 상세 효과 텍스트<br/>
+    /// 레벨, 스택 등 상황에 따라 효과가 달라질 경우 모두 표시합니다.
+    /// </summary>
+    public string Description { get; protected set; }
     public string Flavor { get; protected set; }
     public Fld FieldID { get; protected set; }
-    public Abil ID { get; protected set; }
+    public Abil AbilID { get; protected set; }
     public Sprite Icon { get; protected set; }
     
     public bool Toggleable { get; protected set; } = false;
@@ -49,10 +42,7 @@ namespace Rair.Skill
     public abstract void ToggleOn(FieldUnit unit);
     public abstract void ToggleOff(FieldUnit unit);
 
-    public static void Init()
-    {
-
-    }
+    public int ID => (FieldID, AbilID).GetHashCode();
   }
 
   public class Abilities

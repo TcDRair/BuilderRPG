@@ -6924,7 +6924,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Fatigue : 0/300
+  m_text: 'Fatigue : 0 / 300
 
     0 / min'
   m_isRightToLeft: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 using Rair.Field.Interact;
+using Rair.Skill;
 using Rair.Skill.AbilityStorage;
 
 namespace Rair.Field
@@ -61,8 +62,27 @@ namespace Rair.Field
   => (stat.Load.Value / stat.LoadMax.Value, info.Load_Light.Value, info.Load_Average.Value, info.Load_Heavy.Value);
     #endregion
 
-    /// <summary>전문기술 중 실시간 동작하는 효과들을 할당합니다</summary>
-    public readonly Dictionary<Abil, Action<FieldUnit>> effects = new(), hiddenEffects = new();
+    #region Effect
+    /// <summary>실시간 동작하는 효과들을 할당합니다</summary>
+    readonly Dictionary<int, UnitEffect> effects = new(), hiddenEffects = new();
+    public void ApplyEffect(int id, UnitEffect effect) {
+      if (effects.TryGetValue(id, out var e)) {
+        //todo 효과 중첩 or 갱신 or 덮어쓰기.
+        //todo Effect 내에서 수행할 것
+      } else {
+        effects.Add(id, effect);
+        effect.OnApply(this);
+      }
+    }
+    public void RemoveEffect(int id, int stack = -1) {
+      if (stack < 0) {
+        effects.Remove(id);
+      }
+      else if (effects.TryGetValue(id, out var e)) {
+        //todo 효과 중첩 제거. Effect 내에서 수행할 것
+      }
+    }
+    #endregion
 
     #region Unity Events + Tick
     protected virtual void Awake() {
@@ -100,19 +120,20 @@ namespace Rair.Field
         stat.SP.Value += stat.SPRegen.Value * Time.deltaTime;
 
       //* 피로 연산
-      stat.Fatigue.Value += FatigueTick * Time.deltaTime / 60; // 분당 피로
+      status.fatigueTick =
+        status.running ? info.Fatigue_Run.Value :
+        status.moving ? info.Fatigue_Walk.Value :
+        status.sitting ? info.Fatigue_Sit.Value :
+        info.Fatigue_Idle.Value;
+      stat.Fatigue.Value += status.fatigueTick * Time.deltaTime / 60; // 분당 피로
 
       //* 효과 적용
       foreach (var e in hiddenEffects.Values)
-        e?.Invoke(this);
+        e.OnTick(this);
       foreach (var e in effects.Values)
-        e?.Invoke(this);
+        e.OnTick(this);
     }
-    public float FatigueTick =>
-      status.running ? info.Fatigue_Run.Value :
-      status.moving ? info.Fatigue_Walk.Value :
-      status.sitting ? info.Fatigue_Sit.Value :
-      info.Fatigue_Idle.Value;
+    
     #endregion
 
     /// <summary>

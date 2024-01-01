@@ -1,4 +1,7 @@
 ﻿using System.Collections;
+
+using Unity.VisualScripting;
+
 using UnityEngine;
 
 public static class StringExtensions
@@ -28,7 +31,26 @@ public static class StringExtensions
 	public static string ToNiceString(this Vector2Int vec) => $"({vec.x}/{vec.y})";
 	public static string ToColonNotation(this float time)
 		=> $"{(int)(time/3600):D1}:{(int)(time/60)%60:D2}:{(int)time%60:D2}";
+}
 
+public static class RichTextExtensions
+{
+	/// <summary>
+	/// 텍스트를 강조하여 설명이 제공됨을 나타냅니다.<br/>
+	/// 강조 색상은 <see cref="MainSetting"/>에서 설정할 수 있습니다.
+	/// </summary>
+	public static string Interested(this string str) => $"<color={MainSetting.TextColor_Interested}><b><u>{str}</u></b></color>";
 
-	public static string Rich(this string str) => $"<color=#bbbbbb><b><u>{str}</u></b></color>";
+	/// <summary>
+	/// 텍스트를 어둡게 표시하여 비활성화/무시 상태임을 나타냅니다.<br/>
+	/// 무시 색상은 <see cref="MainSetting"/>에서 설정할 수 있습니다.
+	/// </summary>
+	public static string Ignored(this string str) => $"<color={MainSetting.TextColor_Ignored}>{str}</color>";
+	public static string Ignored(this string str, bool ignore) => ignore ? str.Ignored() : str;
+
+	public static string Colored(this string str, Color color) => $"<color=#{color.ToHexString()}>{str}</color>";
+	public static string Boxed(this string str, Color color) {
+		color.a = Mathf.Min(.25f, color.a);
+		return $"<mark=#{color.ToHexString()}>{str}</mark>";
+	}
 }

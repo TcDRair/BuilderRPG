@@ -154,5 +154,7 @@ namespace Rair.Field
   {
     public float speed;
     public bool moving, running, sitting;
+
+    public float fatigueTick;
   }
 }

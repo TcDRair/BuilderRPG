@@ -4,14 +4,14 @@ using UnityEngine;
 
 public static class MainSetting
 {
-	public static int buildLayer = LayerMask.NameToLayer("Building");
-	public static int buildMask = 1 << buildLayer;
-	public static int mapLayer = LayerMask.NameToLayer("Map");
-	public static int mapMask = 1 << mapLayer;
-	public static int floorLayer = LayerMask.NameToLayer("Map Floor");
-	public static int floorMask = 1 << floorLayer;
+	public static readonly int buildLayer = LayerMask.NameToLayer("Building");
+	public static readonly int buildMask = 1 << buildLayer;
+	public static readonly int mapLayer = LayerMask.NameToLayer("Map");
+	public static readonly int mapMask = 1 << mapLayer;
+	public static readonly int floorLayer = LayerMask.NameToLayer("Map Floor");
+	public static readonly int floorMask = 1 << floorLayer;
 
-	public static int interactableMask = buildMask; //TODO | natureMask | creatureMask;
+	public static readonly int interactableMask = buildMask; //TODO | natureMask | creatureMask;
 
 	#region Map Color
 	public static readonly Color32 floorColor = new(0xFF, 0xFF, 0xFF, 0xFF),
@@ -33,7 +33,12 @@ public static class MainSetting
 		emptyColor = new(0x00, 0x00, 0x00, 0x00),
 		emptyColor2 = new(0x00, 0x00, 0x00, 0xFF)
 	;
-	#endregion
+  #endregion
+
+  #region Text Color
+	public static readonly string TextColor_Interested = "#bbbbbb",
+		TextColor_Ignored = "#808080";
+  #endregion
 }
 
 public static class TransformMethods

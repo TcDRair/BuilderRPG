@@ -3,17 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Rair.Field;
+using System;
+using Unity.VisualScripting;
 namespace Rair.Skill
 {
-  public abstract class UnitEffect
+  public delegate void EffectAction(FieldUnit unit);
+  public delegate string EffectText(FieldUnit unit);
+  public class UnitEffect
   {
-    public int ID { get; protected set; }
-    public int Duration { get; protected set; } = -1;
-    public bool Sustained { get; protected set; } = false;
-    public bool Stackable { get; protected set; } = false;
+    #region Logic
+    public int Duration = -1;
+    public int Stack = -1, MaxStack = -1;
+    public EffectAction OnApply = _ => { };
+    public EffectAction OnTick = _ => { };
+    public EffectAction OnRemove = _ => { };
+    public EffectAction OnEnd = _ => { };
+    #endregion
 
-    public abstract void OnApply(FieldUnit unit);
-    public abstract void OnRemove(FieldUnit unit);
-    public abstract void OnEnd(FieldUnit unit);
+    #region UI
+    public string Name = "";
+    public Sprite Icon;
+    // new() : blank string
+    public EffectText DurationText;
+    public EffectText MaxStackText;
+    public EffectText[] Description = new EffectText[0];
+    #endregion
+  }
+
+  public struct RichText
+  {
+    public string text;
+    public Color boxColor;
+    public Color textColor;
+    public RichText(string text, Color boxColor = default, Color textColor = default) {
+      this.text = text;
+      this.boxColor = boxColor;
+      this.boxColor.a = Mathf.Min(.25f, boxColor.a);
+      this.textColor = textColor;
+      m_instantiated = true;
+    }
+    private readonly bool m_instantiated;
+
+    public readonly override string ToString() {
+      if (!m_instantiated) return "";
+      return $"<mark=#{boxColor.ToHexString()}><color=#{textColor.ToHexString()}>{text}</color></mark>";
+    }
   }
 }
