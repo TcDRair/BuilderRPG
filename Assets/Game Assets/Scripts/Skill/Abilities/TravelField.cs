@@ -6,60 +6,99 @@ using Rair.Field;
 namespace Rair.Skill.AbilityStorage {
   public class Survival : Profession
   {
-    //todo ÀüÃ¼ partial class·Î ¹­À» °Í (»ı°¢ÇØº¸´Ï ¾ê°¡ µ¶ÀÚÀûÀ¸·Î ¹» ÇÏÁö ¾Ê´Â´Ù)
+    //todo ì „ì²´ partial classë¡œ ë¬¶ì„ ê²ƒ (ìƒê°í•´ë³´ë‹ˆ ì–˜ê°€ ë…ìì ìœ¼ë¡œ ë­˜ í•˜ì§€ ì•ŠëŠ”ë‹¤)
     public Survival() { ID = Prof.Survival; }
   }
   public class Travel : Field
   {
-    //todo ¾êµµ
+    //todo ì–˜ë„
     public Travel() {
       ProfID = Prof.Survival;
       ID = Fld.Travel;
     }
   }
 
-  public class LightBreeze : Ability
-  {
+  public class LightBreeze : Ability {
     public LightBreeze(int level) {
       Level = Mathf.Clamp(level, 1, 3);
-      Name = "»êµé¹Ù¶÷" + Level;
-      Summary = "ÇÏÃ¼ÀÇ ±ÕÇüÀ¸·Î °¡º­¿î º¸ÆøÀ» À¯ÁöÇÕ´Ï´Ù.";
-      /*EffectText = new RichText[] {
-      new("", Color.clear),
-      };*/
+      Name = "ì‚°ë“¤ë°”ëŒ " + Level;
+      Summary = "í•˜ì²´ì˜ ê· í˜•ìœ¼ë¡œ ê°€ë²¼ìš´ ë³´í­ì„ ìœ ì§€í•©ë‹ˆë‹¤.";
+      Description = "";
+      Toggleable = true;
       FieldID = Fld.Travel;
       AbilID = Abil.MovementReinforcement_Alpha;
-      Icon = Resources.Load<Sprite>("");
-      Toggleable = false;
+      Icon = Resources.Load<Sprite>("Sprites/Flaticon/running");
+
+      Effect = new(this) {
+        DurationText = _ => $"",
+        OnApply = (FieldUnit u) => {
+          u.stat.RunSpeed *= 1 + RunSpeedMod;
+          u.stat.RunSPCost *= 1 - SPReduction;
+          u.stat.LoadMax *= (1 - Overload);
+          u.LoadStatusDecision = LoadStatusDecision;
+          u.LoadRatioRelativeDecision = LoadRatioRelativeDecision;
+        },
+        OnRemove = u => {
+          u.stat.RunSpeed /= 1 + RunSpeedMod;
+          u.stat.RunSPCost /= 1 - SPReduction;
+          u.stat.LoadMax /= (1 - Overload);
+          u.LoadStatusDecision = u.Default_LoadStatusDecision;
+          u.LoadRatioRelativeDecision = u.Default_LoadRatioRelative;
+        },
+        Description = new EffectText[] {
+          _ => "ì§ˆì£¼ ì†ë„ " + $"{RunSpeedMod:P0} ì¦ê°€".Color(Color.green),
+          _ => "ì§ˆì£¼ SP ì†Œëª¨ " + $"{SPReduction:P0} ê°ì†Œ".Color(Color.green),
+          u => "ìµœëŒ€ í•˜ì¤‘ " + $"{Overload:P0} ê°ì†Œ".Color(Color.red) + $"\ní•˜ì¤‘ ìƒíƒœê°€ {"ê²½ëŸ‰".Color(Color.white, Light(u))}/{"ê³¼ì ".Color(Color.white, Over(u))}ìœ¼ë¡œ ì œí•œë¨".Ignore(),
+          _ => "í•˜ì²´ì˜ ê· í˜•ìœ¼ë¡œ ê°€ë²¼ìš´ ë³´í­ì„ ìœ ì§€í•©ë‹ˆë‹¤.".Flavor()
+        }
+      };
     }
+    float RunSpeedMod => Level switch { 1 => .10f, 2 => .20f, _ => .30f };
+    float SPReduction => .5f;
+    float Overload => Level switch { 1 => .80f, 2 => .85f, _ => .90f };
+
+    bool Light(FieldUnit u) => u.status.load == LoadStatus.Lightweight;
+    bool Over(FieldUnit u) => u.status.load == LoadStatus.Overburdened;
+    float LoadRatioRelativeDecision(FieldUnit.LoadRatio lr)
+      => Mathf.Min(lr.ratio / lr.heavy, 1);
+    LoadStatus LoadStatusDecision(FieldUnit.LoadRatio lr)
+      => lr.ratio <= lr.heavy ? LoadStatus.Lightweight : LoadStatus.Overburdened;
 
     public override void Invoke(FieldUnit unit) { }
-    public override void ToggleOn(FieldUnit unit) { }
-    public override void ToggleOff(FieldUnit unit) { }
+    public override void ToggleOn(FieldUnit unit)
+      => unit.ApplyEffect(Effect);
+    public override void ToggleOff(FieldUnit unit)
+      => unit.RemoveEffect(Effect);
   }
 
 
-  public class RunnersHigh : Ability
-  {
+  public class RunnersHigh : Ability {
     public RunnersHigh(int level) {
       Level = Mathf.Clamp(level, 1, 3);
-      Name = "·¯³Ê½º ÇÏÀÌ " + Level;
-      Summary = "´Ş¸®´Â ±â»İÀ» ¹Ş¾ÆµéÀÔ´Ï´Ù.";
+      Name = "ëŸ¬ë„ˆìŠ¤ í•˜ì´ " + Level;
+      Summary = "ë‹¬ë¦¬ëŠ” ê¸°ì¨ì„ ë°›ì•„ë“¤ì…ë‹ˆë‹¤.";
+      Description = ""; //todo ???
       FieldID = Fld.Travel;
       AbilID = Abil.MovementReinforcement_Beta;
       Toggleable = true;
       Icon = Resources.Load<Sprite>("Sprites/Flaticon/running");
 
-      Effect = new() {
-        Name = Name,
+      Effect = new(this) {
         MaxStack = MaxStack,
+        OnApply = u => {
+          u.info.Fatigue_Run.Apply += ApplyFatigue;
+          u.stat.RunSPCost.Apply += ApplySP;
+        },
+        OnRemove = u => {
+          u.info.Fatigue_Run.Apply -= ApplyFatigue;
+          u.stat.RunSPCost.Apply -= ApplySP;
+        },
         OnTick = FatigueStack,
-        Icon = Icon,
-        DurationText = _ => $"{"ÇÇ·Î".Interested()} Àü±îÁö Áö¼Ó",
+        DurationText = _ => $"{"í”¼ë¡œ".Highlight()} ì „ê¹Œì§€ ì§€ì†",
         Description = new EffectText[] {
-          _ => "ÁúÁÖ ½Ã ÇÇ·Î " + $"{Fatigue-1:P0} Áõ°¡".Colored(Color.red) + $"\n(Áö¼Ó ÁúÁÖ·Î {FatigueMod+1-Fatigue:P0} °¨¼Ò)".Colored(Color.gray),
-          _ => "ÁúÁÖ ½Ã SP ¼Ò¸ğ " + $"{1-SP:P0} °¨¼Ò".Colored(Color.green),
-          _ => "<i>\"Áñ±â´Â ÀÚ¿¡°Ô ÇÑ°è¶õ ¾ø´Â ¹ı.\"</i>".Colored(Color.gray)
+          _ => "ì§ˆì£¼ ì‹œ í”¼ë¡œ " + $"{Fatigue-1:P0} ì¦ê°€".Color(Color.red) + $"\n(ì§€ì† ì§ˆì£¼ë¡œ {FatigueMod+1-Fatigue:P0} ê°ì†Œ)".Color(Color.gray),
+          _ => "ì§ˆì£¼ ì‹œ SP ì†Œëª¨ " + $"{1-SP:P0} ê°ì†Œ".Color(Color.green),
+          _ => "ì¦ê¸°ëŠ” ìì—ê²Œ í•œê³„ë€ ì—†ëŠ” ë²•".Flavor()
         }
       };
     }
@@ -70,118 +109,145 @@ namespace Rair.Skill.AbilityStorage {
 
     public override void Invoke(FieldUnit unit) { }
     public override void ToggleOn(FieldUnit unit)
-      => unit.ApplyEffect(ID, Effect);
+      => unit.ApplyEffect(Effect);
     public override void ToggleOff(FieldUnit unit) {
       Reset();
-      unit.RemoveEffect(ID);
+      unit.RemoveEffect(Effect);
     }
 
     bool trigger = false;
-    float elapsed = 0, prevFat = 1, prevSP = 1;
+    float elapsed = 0;
     void Reset() {
       Effect.Stack = 0;
       trigger = false;
       elapsed = 0;
-      prevFat = 1;
-      prevSP = 1;
     }
 
+    RVFloat ApplyFatigue(RVFloat f) => f *= Fatigue;
+    RVFloat ApplySP(RVFloat f) => f *= SP;
     void FatigueStack(FieldUnit unit) {
       elapsed += Time.deltaTime;
-      //* ÁßÃ¸ ¿¬»ê
-      if (unit.status.running) {
-        if (trigger) { // °è¼Ó ´Ş¸®´Â Áß
+      //* ì¤‘ì²© ì—°ì‚°
+      if (unit.status.Running) {
+        if (trigger) { // ê³„ì† ë‹¬ë¦¬ëŠ” ì¤‘
           if (elapsed >= 1) {
             Effect.Stack = Mathf.Clamp(Effect.Stack + 1, 0, MaxStack);
             elapsed = 0;
           }
-        } else { // ½ºÅÃÀ» ÀÒ°Å³ª ¾ø´Â »óÅÂ¿¡¼­ ÁúÁÖ ½ÃÀÛ
+        } else { // ìŠ¤íƒì„ ìƒê±°ë‚˜ ì—†ëŠ” ìƒíƒœì—ì„œ ì§ˆì£¼ ì‹œì‘
           trigger = true;
           elapsed = 0;
         }
       } else {
-        if (trigger) { // Á÷Àü±îÁö ´Ş¸²
+        if (trigger) { // ì§ì „ê¹Œì§€ ë‹¬ë¦¼
           trigger = false;
           elapsed = 0;
-        } else { // ´Ş¸®Áö ¾ÊÀ½
+        } else { // ë‹¬ë¦¬ì§€ ì•ŠìŒ
           if (elapsed >= 1) {
             Effect.Stack = Mathf.Clamp(Effect.Stack - (int)(MaxStack * 0.2f), 0, MaxStack);
             elapsed = 0;
           }
         }
       }
-      //* ÇÇ·Î ¿¬»ê
-      unit.info.Fatigue_Run /= prevFat;
-      unit.info.Fatigue_Run *= Fatigue;
-      unit.stat.RunSPCost.value /= prevSP;
-      unit.stat.RunSPCost.value *= SP;
-
-      prevFat = Fatigue;
-      prevSP = SP;
     }
-    /// <summary>È°¼ºÈ­ Áß Àû¿ëµÇ´Â ÁúÁÖ ÇÇ·Î ¹èÀ²</summary>
+    /// <summary>í™œì„±í™” ì¤‘ ì ìš©ë˜ëŠ” ì§ˆì£¼ í”¼ë¡œ ë°°ìœ¨</summary>
     float Fatigue => 1 + FatigueMod - Effect.Stack * FatigueStackMod;
-    /// <summary>È°¼ºÈ­ Áß Àû¿ëµÇ´Â ÁúÁÖ SP ¹èÀ²</summary>
+    /// <summary>í™œì„±í™” ì¤‘ ì ìš©ë˜ëŠ” ì§ˆì£¼ SP ë°°ìœ¨</summary>
     float SP => 1 - SPMod * Effect.Stack;
   }
 
-  public class IronStep : Ability
-  {
-    //TODO ±¸ÇöºÎ¿Í µ¥ÀÌÅÍºÎ¸¦ ºĞ¸®ÇÒ °Í. ±¸ÇöºÎ¸¸ InstantiateµÉ ¼ö ÀÖ°Ô
-    public IronStep(int level) {
-      Level = Mathf.Clamp(level, 1, 3);
-      Name = "¹«¼è°ÉÀ½ " + Level;
-      Summary = "´Ù¸®ÀÇ ÈûÀ» ÇÑ°è±îÁö ²ø¾î³À´Ï´Ù.";
-      /*DescriptionText = new RichText[] {
-        new($"SP {"Àç»ı ºÒ°¡".Interested()}", Color.red),
-        new($"ÀÌµ¿ °Å¸® ºñ·Ê {"HP Á¦ÇÑ".Interested()}", Color.red),
-        new($"Áß·® {"º¸Çà¼Óµµ °¨¼Ò".Interested()} ¿ÏÈ­", Color.clear),
-        new($"<i>ÁøÁ¤ÇÑ ÈûÀº ÅëÁ¦µÈ µ¿ÀÛ¿¡¼­ ÇÇ¾î³³´Ï´Ù.</i>", Color.clear)
-      };*/
-      FieldID = Fld.Travel;
-      AbilID = Abil.MovementReinforcement_Gamma;
-      Icon = Resources.Load<Sprite>("Sprites/Flaticon/hiking"); // ÀÓ½Ã
-      Toggleable = true;
-    }
+
+  public class IronStep : Ability {
+    float rcr = 0;
+    bool hp_trigger = false;
     float HpResMod => Level switch { 1 => 1.25f, 2 => 1.75f, _ => 2.5f };
     float WalkSpdMod => Level switch { 1 => .50f, 2 => .25f, _ => 0 };
+    const float MIN_HP_RATIO = .10f;
 
-    float rcr = 0; // Restricted amount of HP Recovery
-    bool hp_trigger = false;
+    public IronStep(int level) {
+      Level = Mathf.Clamp(level, 1, 3);
+      Name = "ë¬´ì‡ ê±¸ìŒ " + Level;
+      Summary = "ë‹¤ë¦¬ì˜ í˜ì„ í•œê³„ê¹Œì§€ ëŒì–´ëƒ…ë‹ˆë‹¤.";
+      Description = ""; //todo ???
+      FieldID = Fld.Travel;
+      AbilID = Abil.MovementReinforcement_Gamma;
+      Toggleable = true;
+      Icon = Resources.Load<Sprite>("Sprites/Flaticon/hiking");
+
+      Effect = new(this) {
+        ID =  new(ID, 0),
+        DurationText = (unit) => "HPê°€ ì†Œì§„ë˜ê¸° ì „ê¹Œì§€ ì§€ì†",
+        // MaxStackText = (unit) => "",
+        Description = new EffectText[] {
+          u => "SP ì†Œì§„ ì‹œ HPë¥¼ ì†Œëª¨í•˜ì—¬ ë³´í–‰ ê°€ëŠ¥" + $"\n(í˜„ì¬ {rcr/u.stat.HPMax.Value:P0} / ìµœëŒ€ {1-MIN_HP_RATIO:P0})".Ignore(),
+          _ => $"ì¤‘ëŸ‰ {"ë³´í–‰ì†ë„ ê°ì†Œ".Highlight()} " + $"{1-WalkSpdMod:P0} ì™„í™”".Color(Color.green),
+          _ => "ì§„ì •í•œ í˜ì€ í†µì œëœ ë™ì‘ì—ì„œ í”¼ì–´ë‚©ë‹ˆë‹¤.".Flavor()
+        },
+
+        OnApply = unit => {
+          unit.MovementDecision = MovementDecision;
+          unit.stat.SPRegen.Nullify = true; // SP Regen Disabled
+          unit.info.WalkSpeedM_Heavy *= WalkSpdMod;
+        },
+        OnTick = HPRestriction,
+        OnRemove = unit => {
+          unit.MovementDecision = unit.Default_MovementDecision;
+          unit.stat.SPRegen.Nullify = false; // SP Regen Enabled
+          unit.info.WalkSpeedM_Heavy /= WalkSpdMod;
+          unit.ApplyEffect(HPRestoration);
+        }
+      };
+    }
     void HPRestriction(FieldUnit u) {
+      if (u.stat.HPRatio <= MIN_HP_RATIO) {
+        ToggleOff(u);
+        return;
+      }
+
       float amt = 0;
-      if (hp_trigger && u.status.moving)
+      if (hp_trigger && u.status.Moving)
         amt = u.status.speed * HpResMod * Time.deltaTime;
       rcr += amt;
-      u.stat.HPRCR.Value += amt;
+      u.stat.HPRCR += amt;
     }
-    Func<int> MoveInt(FieldUnit u) => () => {
-      var (lr, _, la, lh) = u.LoadVariables();
-      float spRatio = u.stat.SP.Value / u.stat.SPMax.Value,
-      hpRatio = u.stat.HP.Value / u.stat.HPMax.Value;
-      if (hp_trigger = spRatio <= 0) { // Consume HP
-        if (lr <= lh && hpRatio > .01f) return 1;
-        else return 0;
-      } else { // Consume SP
-        if (lr <= la) return 2;
-        else if (lr <= lh) return 1;
-        else return 0;
-      }
+    UnitEffect HPRestoration => new(this) {
+      ID = new(ID, 1),
+      Visible = false,
+      Name = "ë¬´ì‡ ê±¸ìŒ: í”¼ë¡œ íšŒë³µ",
+      DurationText = _ => "ì†Œëª¨ë¶„ ì™„ì „ íšŒë³µ ì‹œ í•´ì œ",
+      Description = new EffectText[] {
+        _ => "ì œí•œëœ HP ìì—° íšŒë³µì¤‘" + $"\nì”ì—¬ íšŒë³µëŸ‰: {rcr:F0}".Ignore(),
+      },
+      OnTick = unit => {
+        var amt = unit.stat.HPRegen.Value * Time.deltaTime;
+        if (rcr <= amt) {
+          unit.stat.HPRCR -= rcr;
+          rcr = 0;
+          unit.RemoveEffect(HPRestoration);
+        } else {
+          rcr -= amt;
+          unit.stat.HPRCR -= amt;
+        }
+      },
     };
-    public override void Invoke(FieldUnit unit) { }
-    public override void ToggleOn(FieldUnit unit) {
-      // unit.ApplyEffect(ID, HPRestriction);
-      unit.Movement_Available = MoveInt(unit);
-      unit.stat.SPRegen.value.Nullify = true; // SP Regen Disabled
-      unit.info.WalkSpeed_Heavy *= WalkSpdMod;
-    }
-    public override void ToggleOff(FieldUnit unit) {
-      // unit.effects.Remove(AbilID);
-      unit.Movement_Available = unit.MoveInt;
-      unit.stat.SPRegen.value.Nullify = false; // SP Regen Enabled
-      unit.info.WalkSpeed_Heavy /= WalkSpdMod;
 
-      unit.stat.HPRCR.Value -= rcr;
+    MovementStatus MovementDecision(FieldUnit u) {
+      if (hp_trigger = u.stat.SPRatio <= 0) // Consume HP
+        return u.status.load switch {
+          LoadStatus.Overburdened => MovementStatus.Idle,
+          _ => u.stat.HPRatio > MIN_HP_RATIO ? MovementStatus.Walkable : MovementStatus.Idle
+        };
+      else return u.status.load switch { // Consume SP
+          LoadStatus.Lightweight => MovementStatus.Runnable,
+          LoadStatus.Standard => MovementStatus.Runnable,
+          LoadStatus.Heavyweight => MovementStatus.Walkable,
+          _ => MovementStatus.Idle
+        };
     }
+    public override void Invoke(FieldUnit unit) { }
+    public override void ToggleOn(FieldUnit unit)
+      => unit.ApplyEffect(Effect);
+    public override void ToggleOff(FieldUnit unit)
+      => unit.RemoveEffect(Effect);
   }
 }

@@ -1,4 +1,4 @@
-﻿namespace Everloop {
+namespace Everloop {
 	using UnityEngine;
 
 	public class AudioSourceReference : MonoBehaviour

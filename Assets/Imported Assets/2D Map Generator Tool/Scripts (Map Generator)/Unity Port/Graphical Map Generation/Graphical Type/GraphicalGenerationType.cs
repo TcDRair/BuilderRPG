@@ -1,4 +1,4 @@
-﻿namespace MapGeneratorTool.UnityPort
+namespace MapGeneratorTool.UnityPort
 {
     public enum GraphicalGenerationType
     {

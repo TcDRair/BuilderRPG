@@ -8,118 +8,118 @@ using UnityEngine.Assertions.Must;
 
 namespace Rair.Items
 {
-	/// <summary>¸ğµç ¾ÆÀÌÅÛ¿¡ °øÅëÀûÀ¸·Î Á¸ÀçÇÏ´Â ¼Ó¼º Á¤º¸¸¦ ´ã½À´Ï´Ù.</summary>
+	/// <summary>ëª¨ë“  ì•„ì´í…œì— ê³µí†µì ìœ¼ë¡œ ì¡´ì¬í•˜ëŠ” ì†ì„± ì •ë³´ë¥¼ ë‹´ìŠµë‹ˆë‹¤.</summary>
 	public class Attributes
 	{
 		public int ID { get; set; } = -1;
 		public Item Reference { get; set; }
 
-		#region »ı¼ºÀÚ / ÃÊ±âÈ­
-		/// <summary>°¡´ÉÇÑ °æ¿ì ¼Ó¼º Á¤º¸¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.</summary>
+		#region ìƒì„±ì / ì´ˆê¸°í™”
+		/// <summary>ê°€ëŠ¥í•œ ê²½ìš° ì†ì„± ì •ë³´ë¥¼ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.</summary>
 		public static implicit operator bool(Attributes ip)
 		{
 			if (ip is null) return false;
 			if (ip.Initialized is false) { ip.Initialize(); ip.Initialized = true; }
 			return true;
 		}
-		/// <summary>±âº»°ªÀ¸·Î ÃÊ±âÈ­µÈ »õ ¼Ó¼ºÀ» »ı¼ºÇÕ´Ï´Ù.</summary>
+		/// <summary>ê¸°ë³¸ê°’ìœ¼ë¡œ ì´ˆê¸°í™”ëœ ìƒˆ ì†ì„±ì„ ìƒì„±í•©ë‹ˆë‹¤.</summary>
 		public Attributes(Item item)
 		{
 			Reference = item;
 			durability.OnValueChanged += this.DestroyItem;
 		}
-		/// <summary>¿©·¯ ¼Ó¼º¿¡¼­ º´ÇÕ °¡´ÉÇÑ ¿ä¼Ò¸¸À» ÇÕÄ£ »õ ¼Ó¼ºÀ» »ı¼ºÇÕ´Ï´Ù.</summary>
+		/// <summary>ì—¬ëŸ¬ ì†ì„±ì—ì„œ ë³‘í•© ê°€ëŠ¥í•œ ìš”ì†Œë§Œì„ í•©ì¹œ ìƒˆ ì†ì„±ì„ ìƒì„±í•©ë‹ˆë‹¤.</summary>
 		public void Merge(IEnumerable<Attributes> items)
 		{
-			if (!Mergable) throw new InvalidOperationException("º´ÇÕÇÒ ¼ö ¾ø´Â ¾ÆÀÌÅÛÀÔ´Ï´Ù.");
-			// ÀÚµ¿ º´ÇÕÀÌ °¡´ÉÇÑ ¼Ó¼º Ã³¸®
+			if (!Mergable) throw new InvalidOperationException("ë³‘í•©í•  ìˆ˜ ì—†ëŠ” ì•„ì´í…œì…ë‹ˆë‹¤.");
+			// ìë™ ë³‘í•©ì´ ê°€ëŠ¥í•œ ì†ì„± ì²˜ë¦¬
 			for (int i = 0; i < Bools.Length; i++)
 				Bools[i].Merge(items.Select(s => s.Bools[i]));
 			for (int i = 0; i < Ints.Length; i++)
 				Ints[i].Merge(items.Select(s => s.Ints[i]));
 			for (int i = 0; i < Floats.Length; i++)
 				Floats[i].Merge(items.Select(s => s.Floats[i]));
-			// ¿Âµµ : ¿­¿ë·® ±âÁØ °è»ê
+			// ì˜¨ë„ : ì—´ìš©ëŸ‰ ê¸°ì¤€ ê³„ì‚°
 			var temSum = items.Sum(s => s.property.mass * s.property.temperature);
 			property.temperature.Value = temSum / property.mass;
-			// ¼Ó¼º Á¤ÇÕ¼ºÀ» ÆÇ´ÜÇÕ´Ï´Ù.
+			// ì†ì„± ì •í•©ì„±ì„ íŒë‹¨í•©ë‹ˆë‹¤.
 			Initialize();
 		}
 
-		/// <summary>¼Ó¼º Á¤º¸¸¦ ÃÊ±âÈ­ÇÏ°í Ãæµ¹ Á¤º¸¸¦ Ç¥½ÃÇÕ´Ï´Ù.</summary>
+		/// <summary>ì†ì„± ì •ë³´ë¥¼ ì´ˆê¸°í™”í•˜ê³  ì¶©ëŒ ì •ë³´ë¥¼ í‘œì‹œí•©ë‹ˆë‹¤.</summary>
 		public void Initialize()
 		{
 			//! DEBUG
-			Debug.Log("ÃÊ±âÈ­ ¿Ï·á");
+			Debug.Log("ì´ˆê¸°í™” ì™„ë£Œ");
 		}
 		#endregion
 
-		#region ±âº» - ¸ğµç ¾ÆÀÌÅÛÀÌ °¡Áö°í ÀÖ´Â ¸í½Ã ¼Ó¼º
-		public string Name { get; set; } = "ÀÌ¸§ ¾øÀ½";
-		/// <summary>¼Ó¼º Á¤º¸°¡ ¿Ã¹Ù¸£°Ô ÃÊ±âÈ­µÇ¾ú´ÂÁö¸¦ ³ªÅ¸³À´Ï´Ù.</summary>
+		#region ê¸°ë³¸ - ëª¨ë“  ì•„ì´í…œì´ ê°€ì§€ê³  ìˆëŠ” ëª…ì‹œ ì†ì„±
+		public string Name { get; set; } = "ì´ë¦„ ì—†ìŒ";
+		/// <summary>ì†ì„± ì •ë³´ê°€ ì˜¬ë°”ë¥´ê²Œ ì´ˆê¸°í™”ë˜ì—ˆëŠ”ì§€ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</summary>
 		public bool Initialized { get; private set; } = false;
 		public bool Mergable { get; set; } = false;
-		/// <summary>³»±¸µµ - ¾ÆÀÌÅÛÀÌ ÆÄ±«µÇ±â Àü±îÁö »ç¿ëÇÒ ¼ö ÀÖ´Â Á¤µµ¸¦ ³ªÅ¸³À´Ï´Ù.</summary>
+		/// <summary>ë‚´êµ¬ë„ - ì•„ì´í…œì´ íŒŒê´´ë˜ê¸° ì „ê¹Œì§€ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ” ì •ë„ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</summary>
 		public readonly EFloat durability = new(0);
-		/// <summary>°¡°ø °¡´É È½¼ö - Recipe Àç·á·Î »ç¿ëµÉ ¼ö ÀÖ´Â ÇÑµµ¸¦ ÁöÁ¤ÇÕ´Ï´Ù.</summary>
+		/// <summary>ê°€ê³µ ê°€ëŠ¥ íšŸìˆ˜ - Recipe ì¬ë£Œë¡œ ì‚¬ìš©ë  ìˆ˜ ìˆëŠ” í•œë„ë¥¼ ì§€ì •í•©ë‹ˆë‹¤.</summary>
 		public readonly EInt recipeCount = new(0, MergeType.Min);
 		#endregion
 
-		#region Æ¯¼º - ÇüÅÂ, ¼ºÁú µî ¾ÆÀÌÅÛÀÇ Á¤º¸¸¦ ³ªÅ¸³»´Â ¼Ó¼º
+		#region íŠ¹ì„± - í˜•íƒœ, ì„±ì§ˆ ë“± ì•„ì´í…œì˜ ì •ë³´ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ì†ì„±
 		public class Property
 		{
 			public readonly EFloat mass = new(1, MergeType.Sum);
 			public readonly EFloat volume = new(1, MergeType.Sum);
 			public readonly EFloat temperature = new(0, MergeType.None);
-			public float Hardness { get; set; } = 1; // °æµµ(°íÃ¼) : 1 ~ 
-			public float Viscosity { get; set; } = 1; // Á¡µµ(¾×Ã¼) : 0 ~ 100,000
-			public float SpecificHeat { get; set; } = .5f; // ºñ¿­ : 0 ~ 1
-			public float HeatCapacity => mass * SpecificHeat; // ¿­¿ë·® : 0 ~
-			public float Conductivity { get; set; } = 0; // ¿­ÀüµµÀ² : 0 ~
-			public float HeatTransfer { get; set; } = 0; // ¿­Àü´ŞÀ² : 0 ~
+			public float Hardness { get; set; } = 1; // ê²½ë„(ê³ ì²´) : 1 ~ 
+			public float Viscosity { get; set; } = 1; // ì ë„(ì•¡ì²´) : 0 ~ 100,000
+			public float SpecificHeat { get; set; } = .5f; // ë¹„ì—´ : 0 ~ 1
+			public float HeatCapacity => mass * SpecificHeat; // ì—´ìš©ëŸ‰ : 0 ~
+			public float Conductivity { get; set; } = 0; // ì—´ì „ë„ìœ¨ : 0 ~
+			public float HeatTransfer { get; set; } = 0; // ì—´ì „ë‹¬ìœ¨ : 0 ~
 			public Phase Phase { get; set; }
 			public float Density => mass / volume;
 		}
 		public Property property = new();
 		#endregion
 
-		#region ºĞ·ù - ¾ÆÀÌÅÛ ´ëºĞ·ù ÁöÁ¤ ¼Ó¼º
+		#region ë¶„ë¥˜ - ì•„ì´í…œ ëŒ€ë¶„ë¥˜ ì§€ì • ì†ì„±
 		public class Category
 		{
 			/// <summary>
-			/// °ÇÃà¹°ÀÎÁö¸¦ ³ªÅ¸³À´Ï´Ù. »ı¼º ½ÃÁ¡¿¡ ÁöÁ¤ÇØ¾ß ÇÕ´Ï´Ù.<br/>
-			/// Àåºñ µî ´ëºÎºĞÀÇ ºĞ·ùº¸´Ù ¿ì¼±ÇÕ´Ï´Ù.
+			/// ê±´ì¶•ë¬¼ì¸ì§€ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤. ìƒì„± ì‹œì ì— ì§€ì •í•´ì•¼ í•©ë‹ˆë‹¤.<br/>
+			/// ì¥ë¹„ ë“± ëŒ€ë¶€ë¶„ì˜ ë¶„ë¥˜ë³´ë‹¤ ìš°ì„ í•©ë‹ˆë‹¤.
 			/// </summary>
 			public readonly EBool IsStructure = new(false);
-			/// <summary>¹«±â·Î ÀåÂø °¡´ÉÇÑ ÇüÅÂÀÎ°¡¸¦ ³ªÅ¸³À´Ï´Ù. »ı¼º ½ÃÁ¡¿¡ ÁöÁ¤ÇØ¾ß ÇÕ´Ï´Ù.</summary>
+			/// <summary>ë¬´ê¸°ë¡œ ì¥ì°© ê°€ëŠ¥í•œ í˜•íƒœì¸ê°€ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤. ìƒì„± ì‹œì ì— ì§€ì •í•´ì•¼ í•©ë‹ˆë‹¤.</summary>
 			public readonly EBool IsWeapon = new(false);
-			/// <summary>¹æ¾î±¸·Î ÀåÂø °¡´ÉÇÑ ÇüÅÂÀÎ°¡¸¦ ³ªÅ¸³À´Ï´Ù. »ı¼º ½ÃÁ¡¿¡ ÁöÁ¤ÇØ¾ß ÇÕ´Ï´Ù.</summary>
+			/// <summary>ë°©ì–´êµ¬ë¡œ ì¥ì°© ê°€ëŠ¥í•œ í˜•íƒœì¸ê°€ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤. ìƒì„± ì‹œì ì— ì§€ì •í•´ì•¼ í•©ë‹ˆë‹¤.</summary>
 			public readonly EBool IsArmor = new(false);
-			/// <summary>½Ä¿ë °¡´É ¿©ºÎ¸¦ ³ªÅ¸³À´Ï´Ù.</summary>
+			/// <summary>ì‹ìš© ê°€ëŠ¥ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</summary>
 			public readonly EBool Edible = new(false);
 		}
 		public Category category = new();
 		#endregion
 
-		#region ¿ëµµ - ¾ÆÀÌÅÛ ÇÏÀ§ ºĞ·ù ÁöÁ¤ ¼Ó¼º
+		#region ìš©ë„ - ì•„ì´í…œ í•˜ìœ„ ë¶„ë¥˜ ì§€ì • ì†ì„±
 		public class Usage
 		{
-			/// <summary>¿­·® - ¼·Ãë ½Ã È¹µæ ¿­·®À» ³ªÅ¸³À´Ï´Ù. ¼·Ãë ¿©ºÎ¿Í ¹«°üÇÕ´Ï´Ù.</summary>
+			/// <summary>ì—´ëŸ‰ - ì„­ì·¨ ì‹œ íšë“ ì—´ëŸ‰ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤. ì„­ì·¨ ì—¬ë¶€ì™€ ë¬´ê´€í•©ë‹ˆë‹¤.</summary>
 			public readonly EFloat calorie = new(0, MergeType.Sum);
-			/// <summary>°ø°İ·Â - ¹«±â ÀåÂø °¡´É ¿©ºÎ ÀåÂø ½Ã ±âº» °ø°İ·ÂÀ» ³ªÅ¸³À´Ï´Ù.</summary>
+			/// <summary>ê³µê²©ë ¥ - ë¬´ê¸° ì¥ì°© ê°€ëŠ¥ ì—¬ë¶€ ì¥ì°© ì‹œ ê¸°ë³¸ ê³µê²©ë ¥ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</summary>
 			public readonly EFloat attack = new(0);
-			/// <summary>¹æ¾î·Â - ¹æ¾î±¸ ÀåÂø °¡´É ¿©ºÎ¿Í ÀåÂø ½Ã ±âº» ¹æ¾î·ÂÀ» ³ªÅ¸³À´Ï´Ù.</summary>
+			/// <summary>ë°©ì–´ë ¥ - ë°©ì–´êµ¬ ì¥ì°© ê°€ëŠ¥ ì—¬ë¶€ì™€ ì¥ì°© ì‹œ ê¸°ë³¸ ë°©ì–´ë ¥ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</summary>
 			public readonly EFloat defense = new(0);
-			/// <summary>°ø°İ ¼Óµµ - ±âº» °ø°İ ¼Óµµ¸¦ ³ªÅ¸³À´Ï´Ù.</summary>
+			/// <summary>ê³µê²© ì†ë„ - ê¸°ë³¸ ê³µê²© ì†ë„ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</summary>
 			public readonly EFloat attackSpeed = new(1);
-			/// <summary>ÀÛ¾÷ ¼Óµµ - µµ±¸ »ç¿ë °¡´É ¿©ºÎ¿Í ÀåÂø ½Ã ±âº» ÀÛ¾÷ ¼Óµµ¸¦ ³ªÅ¸³À´Ï´Ù.</summary>
+			/// <summary>ì‘ì—… ì†ë„ - ë„êµ¬ ì‚¬ìš© ê°€ëŠ¥ ì—¬ë¶€ì™€ ì¥ì°© ì‹œ ê¸°ë³¸ ì‘ì—… ì†ë„ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</summary>
 			public readonly EFloat workSpeed = new(0);
 		}
 		public Usage usage = new();
 		#endregion
 
 
-		//* ¼±ÅÃ ¼Ó¼º - ÀçÁú(Material)
+		//* ì„ íƒ ì†ì„± - ì¬ì§ˆ(Material)
 
 		#region Properties
 		public EBool[] Bools => new EBool[] { category.IsStructure, category.IsWeapon, category.IsArmor, category.Edible };

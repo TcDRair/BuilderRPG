@@ -35,8 +35,8 @@ namespace CraftingAnims
 			OnStrike.Invoke();
 		}
 
-		// Used for animations that contain root motion to drive the character’s
-		// position and rotation using the “Motion” node of the animation file.
+		// Used for animations that contain root motion to drive the characterë­©
+		// position and rotation using the ë° otion?node of the animation file.
 		void OnAnimatorMove()
 		{
 			if (animator) {

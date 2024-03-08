@@ -1,4 +1,4 @@
-﻿The following code is OPTIONAL and not required for Unity. If you are using Xamarin, it will allow you to use all the gestures in a Xamarin Android project.
+癤풲he following code is OPTIONAL and not required for Unity. If you are using Xamarin, it will allow you to use all the gestures in a Xamarin Android project.
 --------------------
 Xamarin Android Touch Adapter Code:
 

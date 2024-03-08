@@ -1,4 +1,4 @@
-﻿//  Modification of the noise function code, developed by Ken Perlin
+//  Modification of the noise function code, developed by Ken Perlin
 //  Source: https://mrl.nyu.edu/~perlin/noise/
 
 using System;

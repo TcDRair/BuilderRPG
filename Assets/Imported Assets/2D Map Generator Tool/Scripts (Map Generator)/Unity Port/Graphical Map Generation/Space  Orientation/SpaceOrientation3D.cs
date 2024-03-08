@@ -1,4 +1,4 @@
-﻿using MapGeneratorTool.DataModels;
+using MapGeneratorTool.DataModels;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

@@ -1,4 +1,4 @@
-﻿using MapGeneratorTool.DataModels;
+using MapGeneratorTool.DataModels;
 using System.Collections.Generic;
 
 namespace MapGeneratorTool.Generator

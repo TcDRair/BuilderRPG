@@ -1,4 +1,4 @@
-﻿namespace Everloop {
+namespace Everloop {
 	using UnityEngine;
 
 	[RequireComponent(typeof(AudioSource))]

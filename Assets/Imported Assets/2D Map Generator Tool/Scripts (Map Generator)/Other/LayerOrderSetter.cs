@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using MapGeneratorTool.UnityPort;
 
 public class LayerOrderSetter : MonoBehaviour

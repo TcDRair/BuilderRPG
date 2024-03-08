@@ -12,15 +12,27 @@ public class NewAbility : Ability
 {
   public NewAbility(int level) {
     Level = Mathf.Clamp(level, 1, );
-    Name = "New Ability";
+    Name = "New Ability " + Level;
+    Summary = "";
     Description = "";
-    Effect = new RichText[] {
-      new("", Color.clear),
-    };
     FieldID = Fld.;
-    ID = Abil.;
-    Icon = Resources.Load<Sprite>("");
+    AbilID = Abil.;
     Toggleable = false;
+    Icon = Resources.Load<Sprite>("");
+    
+    Effect = new(this) {
+      MaxStack = 1,
+      DurationText = (unit) => "",
+      // MaxStackText = (unit) => "",
+      Description = new EffectText[] {
+        _ => "",
+      },
+      
+      // OnApply = (unit) => {  },
+      // OnTick = (unit) => {  },
+      // OnRemove = (unit) => {  },
+      // OnEnd = (unit) => {  },
+    };
   }
   
   public override void Invoke(FieldUnit unit) {  }

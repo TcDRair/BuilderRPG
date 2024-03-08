@@ -1,4 +1,4 @@
-﻿namespace MapGeneratorTool.DataModels
+namespace MapGeneratorTool.DataModels
 {
     /// <summary>
     /// Complete data for map tile.

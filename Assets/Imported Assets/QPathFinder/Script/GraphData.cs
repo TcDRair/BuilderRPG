@@ -1,4 +1,4 @@
-﻿#define ONE_WAY_LOGIC
+#define ONE_WAY_LOGIC
 
 using UnityEngine;
 using System.Collections;

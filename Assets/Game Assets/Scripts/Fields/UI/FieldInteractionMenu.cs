@@ -37,14 +37,14 @@ namespace Rair.Field
 
 		public void ShowPropMenu(Prop prop)
 		{
-      #region ÃßÀû ´ë»ó È®ÀÎ
-      if (!enable) // ¸Ş´º È°¼ºÈ­
+      #region ì¶”ì  ëŒ€ìƒ í™•ì¸
+      if (!enable) // ë©”ë‰´ í™œì„±í™”
 			{
 				enable = true;
-				animator.SetTrigger("Open"); // alpha ¹× blocksRaycasts Á¶Á¤ Æ÷ÇÔ
+				animator.SetTrigger("Open"); // alpha ë° blocksRaycasts ì¡°ì • í¬í•¨
 			}
-			else if (ReferenceEquals(prop, Current)) return; // ÀÌ¹Ì È°¼ºÈ­µÈ ¸Ş´º
-			else // ¸Ş´º º¯°æ
+			else if (ReferenceEquals(prop, Current)) return; // ì´ë¯¸ í™œì„±í™”ëœ ë©”ë‰´
+			else // ë©”ë‰´ ë³€ê²½
 			{
 				buttonArea.RemoveAllChildren();
 				taskArea.RemoveAllChildren();
@@ -58,16 +58,16 @@ namespace Rair.Field
 		private void ShowInteractionSlots()
 		{
 			float y1 = 0, y2 = 0;
-      #region ½½·Ô °»½Å
+      #region ìŠ¬ë¡¯ ê°±ì‹ 
       foreach (var i in Current.slots)
 			{
 				if (!slots.TryGetValue(i, out var ui))
-				{ // UI°¡ ¾ø´Â ½½·ÔÀº UI »ı¼º
+				{ // UIê°€ ì—†ëŠ” ìŠ¬ë¡¯ì€ UI ìƒì„±
 					ui = Instantiate(slotUI, buttonArea).GetComponent<InteractSlotUI>();
 					ui.Init(Current, i);
 					slots.Add(i, ui);
 				}
-				// ½½·Ô À§Ä¡ Á¶Á¤(¶Ç´Â À¯Áö)
+				// ìŠ¬ë¡¯ ìœ„ì¹˜ ì¡°ì •(ë˜ëŠ” ìœ ì§€)
 				ui.rect.anchoredPosition = new(0, y1);
 				y1 -= _slotInterval;
 			}
@@ -75,23 +75,23 @@ namespace Rair.Field
 			foreach (var kp in slots.ToList())
 			{
 				if (Current.slots.Contains(kp.Key)) continue;
-				// ½½·ÔÀÌ »ç¶óÁø °æ¿ì Á¦°Å
+				// ìŠ¬ë¡¯ì´ ì‚¬ë¼ì§„ ê²½ìš° ì œê±°
 				Destroy(kp.Value.gameObject);
 				slots.Remove(kp.Key);
 			}
       #endregion
 
-      #region ´ë±â ÀÛ¾÷ °»½Å
+      #region ëŒ€ê¸° ì‘ì—… ê°±ì‹ 
 			var waitingTasks = Current.waitingTasks;
       foreach (var t in waitingTasks)
 			{
 				if (!tasks.TryGetValue(t, out var ui))
-				{ // UI°¡ ¾ø´Â ´ë±â ÀÛ¾÷Àº UI »ı¼º
+				{ // UIê°€ ì—†ëŠ” ëŒ€ê¸° ì‘ì—…ì€ UI ìƒì„±
           ui = Instantiate(taskUI, taskArea).GetComponent<InteractTaskUI>();
 					ui.Init(Current, t);
           tasks[t] = ui;
         }
-				// ´ë±â ÀÛ¾÷ À§Ä¡ Á¶Á¤(¶Ç´Â À¯Áö)
+				// ëŒ€ê¸° ì‘ì—… ìœ„ì¹˜ ì¡°ì •(ë˜ëŠ” ìœ ì§€)
 				ui.rect.anchoredPosition = new(0, y2);
 				y2 -= _taskInterval;
 			}
@@ -99,13 +99,13 @@ namespace Rair.Field
 			foreach(var kp in tasks.ToList())
 			{
 				if (waitingTasks.Contains(kp.Key)) continue;
-				// ´ë±â ÀÛ¾÷ÀÌ »ç¶óÁø °æ¿ì Á¦°Å
+				// ëŒ€ê¸° ì‘ì—…ì´ ì‚¬ë¼ì§„ ê²½ìš° ì œê±°
 				Destroy(kp.Value.gameObject);
 				tasks.Remove(kp.Key);
 			}
       #endregion
 
-      #region ÁøÇà ÀÛ¾÷ °»½Å
+      #region ì§„í–‰ ì‘ì—… ê°±ì‹ 
 			if (Current.CurrentTask is var task && task != default)
 			{
 				slots[task.interaction].TaskUpdate(task);
@@ -128,7 +128,7 @@ namespace Rair.Field
 			if (enable)
 			{
 				enable = false;
-				animator.SetTrigger("Close"); // alpha ¹× blocksRaycasts Á¶Á¤ Æ÷ÇÔ
+				animator.SetTrigger("Close"); // alpha ë° blocksRaycasts ì¡°ì • í¬í•¨
 				buttonArea.RemoveAllChildren();
 				taskArea.RemoveAllChildren();
 				slots.Clear();

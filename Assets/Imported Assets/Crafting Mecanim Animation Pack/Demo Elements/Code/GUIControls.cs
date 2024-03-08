@@ -1,4 +1,4 @@
-﻿using CraftingAnims;
+using CraftingAnims;
 using UnityEngine;
 
 public class GUIControls:MonoBehaviour

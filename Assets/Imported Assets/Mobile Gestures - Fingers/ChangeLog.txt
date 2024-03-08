@@ -1,4 +1,4 @@
-﻿Changelog
+癤풠hangelog
 --------------------
 3.0.7	(2022-04-02)
 - Fix a bug with component scripts where gestures to execute with or require to fail would be null.

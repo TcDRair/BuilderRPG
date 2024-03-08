@@ -18,7 +18,7 @@ namespace Rair.Field
     public static Player Instance;
     protected override void Awake() {
       Instance = this;
-      stat = new(100, 1, 100, 5, 2, 5, 6, 6, 100);
+      stat = new(100, 100, 2, 5, 6, 6, 100);
       info = new(true);
 
       base.Awake();
@@ -28,13 +28,14 @@ namespace Rair.Field
     protected override void Start() {
       base.Start();
       agent.updatePosition = false;
-      MRB = new Skill.AbilityStorage.RunnersHigh(3);
-      MRG = new Skill.AbilityStorage.IronStep(3);
+      MRA = new Skill.AbilityStorage.LightBreeze(2);
+      MRB = new Skill.AbilityStorage.RunnersHigh(2);
+      MRG = new Skill.AbilityStorage.IronStep(2);
     }
 
     public override bool RunIntent => Input.GetKey(KeyCode.LeftShift);
     protected override void Update() {
-      Tick();
+      base.Update();
 
       #region 이동
       if (MainCamera.Cam.ClickRaycast(out var hit, 100, floorMask))
@@ -45,35 +46,30 @@ namespace Rair.Field
       cam.SmoothUpdatePos(tr.position);
 
       //* 디버그
+      if (Input.GetKeyDown(KeyCode.F1)) { Debug.Log(stat); Debug.Log(status); Debug.Log(info); }
+      if (Input.GetKeyDown(KeyCode.F2))
+        Debug.Log(Load);
+      if (Input.GetKeyDown(KeyCode.F3))
+        stat.Load += .1f * stat.LoadMax.Value;
       if (Input.GetKeyDown(KeyCode.F4))
-        stat.Load += 10;
+        stat.Load -= .1f * stat.LoadMax.Value;
       if (Input.GetKeyDown(KeyCode.F5))
-        stat.Load -= 10;
+        MRA.ToggleOn(this);
       if (Input.GetKeyDown(KeyCode.F6))
-        Debug.Log(stat);
-      if (Input.GetKeyDown(KeyCode.F7)) {
-        //todo: 나중에 정식으로 만들 땐 아래의 UI 작동 로직도 그대로 옮길 것
-        //todo: 물론 ShowAbility를 다수의 효과에 대해 적합하게 바꿔야겠지
+        MRA.ToggleOff(this);
+      if (Input.GetKeyDown(KeyCode.F7))
         MRG.ToggleOn(this);
-        FieldUI.Instance.ShowAbility(MRG);
-      }
-      if (Input.GetKeyDown(KeyCode.F8)) {
+      if (Input.GetKeyDown(KeyCode.F8)) 
         MRG.ToggleOff(this);
-        FieldUI.Instance.HideAbility(MRG);
-      }
-      if (Input.GetKeyDown(KeyCode.F9)) {
+      if (Input.GetKeyDown(KeyCode.F9)) 
         MRB.ToggleOn(this);
-        FieldUI.Instance.ShowAbility(MRB);
-      }
-      if (Input.GetKeyDown(KeyCode.F10)) {
+      if (Input.GetKeyDown(KeyCode.F10))
         MRB.ToggleOff(this);
-        FieldUI.Instance.HideAbility(MRB);
-      }
 
       //TODO 애니메이션 제어
       //? if (_b is not null && _b.ShowConstructingModel()) { animator.SetTrigger("Build End"); _b = null; }
     }
-    Ability MRG, MRB;
+    Ability MRG, MRB, MRA;
 
     public bool Enable_Run = true;
 

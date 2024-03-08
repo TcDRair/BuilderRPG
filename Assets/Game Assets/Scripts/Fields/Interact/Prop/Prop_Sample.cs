@@ -13,8 +13,8 @@ namespace Rair.Field.Interact
 			/*
 			Interaction repair = new()
 			{
-				name = "¼ö¸®",
-				tooltip = "±¸Á¶¹°ÀÇ ³»±¸µµ¸¦ ÃÖ´ëÄ¡±îÁö È¸º¹ÇÕ´Ï´Ù.",
+				name = "ìˆ˜ë¦¬",
+				tooltip = "êµ¬ì¡°ë¬¼ì˜ ë‚´êµ¬ë„ë¥¼ ìµœëŒ€ì¹˜ê¹Œì§€ íšŒë³µí•©ë‹ˆë‹¤.",
 				type = Interaction.Type.Action,
 				sprite = DefaultRepairProp.sprite,
 				duration = level / 2f,

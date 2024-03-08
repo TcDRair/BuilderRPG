@@ -1,4 +1,4 @@
-﻿namespace QuantumTek.QuantumDialogue
+namespace QuantumTek.QuantumDialogue
 {
     [System.Serializable]
     public enum QD_KnobType

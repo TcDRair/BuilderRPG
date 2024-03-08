@@ -6,8 +6,6 @@ using Rair.Skill;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using TMPro.EditorUtilities;
-using Unity.VisualScripting;
 
 namespace Rair.Field
 {
@@ -19,18 +17,20 @@ namespace Rair.Field
     [SerializeField] protected GameObject TextBox;
 
     UnitEffect effect;
+    public UnitEffect.IDSet EffectID => effect.ID;
+    public RectTransform Rect;
     FieldUnit unit;
 
     readonly List<TextMeshProUGUI> boxes = new();
-    public void Init(UnitEffect effect, FieldUnit unit)
-    {
+    public void Init(UnitEffect effect, FieldUnit unit) {
+      Rect = GetComponent<RectTransform>();
+
       this.effect = effect;
       this.unit = unit;
-      // check ability.toggleable?
+
       Name.text = effect.Name;
       Icon.sprite = effect.Icon;
-      for (int _ = 0; _ < effect.Description.Length; _++)
-      {
+      for (int _ = 0; _ < effect.Description.Length; _++) {
         var box = Instantiate(TextBox, Description.transform).transform.GetComponent<TextMeshProUGUI>();
         boxes.Add(box);
       }
@@ -38,7 +38,7 @@ namespace Rair.Field
 
     protected void Update() {
       MaxStack.text = (effect.MaxStack == -1) ? ""
-        : effect.MaxStackText?.Invoke(unit).ToString() ?? $"ÃÖ´ë ÁßÃ¸ {effect.MaxStack}";
+        : effect.MaxStackText?.Invoke(unit).ToString() ?? $"ìµœëŒ€ ì¤‘ì²© {effect.MaxStack}";
       Stack.text = (effect.Stack == -1) ? "" : $"{effect.Stack}";
       Duration.text = effect.DurationText?.Invoke(unit).ToString() ?? "";
       for (int i = 0; i < boxes.Count; i++)

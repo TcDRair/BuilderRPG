@@ -1,4 +1,4 @@
-﻿namespace MapGeneratorTool.DataModels
+namespace MapGeneratorTool.DataModels
 {
     public class GroundNoiseMapParametersModel : NoiseMapParametersModel
     {

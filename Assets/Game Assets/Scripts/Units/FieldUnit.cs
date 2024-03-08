@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System;
 
 using UnityEngine;
@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using Rair.Field.Interact;
 using Rair.Skill;
 using Rair.Skill.AbilityStorage;
+using System.Linq;
 
 namespace Rair.Field
 {
@@ -21,32 +22,33 @@ namespace Rair.Field
     public UnitInfo info;
     public UnitStatus status;
 
+    //todo Decision 愿???⑥닔瑜?臾띠쓣 寃?
+
     #region Tick Events
     public delegate RFloat ValueTick(FieldUnit unit);
     public event ValueTick HPVTick, HPRCRVTick, SPVTick, LoadVTick;
     #endregion
 
-    #region Stat Appliers
+    #region Movement
     /// <summary>
-    /// 상황에 따라 유닛이 달리거나 걸을 수 있는지 판단합니다.
+    /// 상황에 따라 유닛이 달리거나 걸을 수 있는지 판단합니다. 湲곕낯?곸쑝濡?<see cref="Default_MovementDecision"/>媛 ?좊떦?⑸땲??
     /// </summary>
-    /// <returns>0: 보행 불가, 1: 보행 가능, 2: 주행 가능</returns>
-    public Func<int> Movement_Available { get; set; }
-    public virtual int MoveInt() {
-      var (lr, _, la, lh) = LoadVariables();
-      float spRatio = stat.SP.Value / stat.SPMax.Value;
-      if (spRatio <= .01f) move_trigger = true; // regenerating phase start
+    public Func<FieldUnit, MovementStatus> MovementDecision { get; set; }
 
-      if (move_trigger) { // regenerating phase
-        if (spRatio >= .25f) move_trigger = false; // regenerating phase end
-        if (lr <= la) return 1;
-        else return 0;
-      }
-      return (lr <= la)
-        ? 2
-        : (lr <= lh ? 1 : 0);
+    protected bool regenTrigger = false;
+    /// <summary>
+    /// ?좊떅???대룞 媛?μ꽦???먮떒?섎뒗 湲곕낯 ?⑥닔?낅땲??
+    /// </summary>
+    public virtual MovementStatus Default_MovementDecision(FieldUnit u) {
+      u.regenTrigger = (u.regenTrigger && u.stat.SPRatio < .25f) || (!u.regenTrigger && u.stat.SPRatio <= .01f);
+
+      return u.status.load switch {
+        LoadStatus.Lightweight => u.regenTrigger ? MovementStatus.Walkable : MovementStatus.Runnable,
+        LoadStatus.Standard => u.regenTrigger ? MovementStatus.Walkable : MovementStatus.Runnable,
+        LoadStatus.Heavyweight => u.regenTrigger ? MovementStatus.Idle : MovementStatus.Walkable,
+        _ => MovementStatus.Idle
+      };
     }
-    protected bool move_trigger = false;
     #endregion
 
     #region LEGACY
@@ -58,28 +60,56 @@ namespace Rair.Field
     public virtual bool RunIntent => true;
 
     #region Load
-    public (float ratio, float light, float average, float heavy) LoadVariables()
-  => (stat.Load.Value / stat.LoadMax.Value, info.Load_Light.Value, info.Load_Average.Value, info.Load_Heavy.Value);
+    public struct LoadRatio { public float ratio, light, standard, heavy; }
+    public LoadRatio Load { get; private set; }
+    public Func<LoadRatio, LoadStatus> LoadStatusDecision;
+    public LoadStatus Default_LoadStatusDecision(LoadRatio lr) {
+      if (lr.ratio <= lr.light)
+        return LoadStatus.Lightweight;
+      else if (lr.ratio <= lr.standard)
+        return LoadStatus.Standard;
+      else if (lr.ratio <= lr.heavy)
+        return LoadStatus.Heavyweight;
+      else
+        return LoadStatus.Overburdened;
+    }
+    public Func<LoadRatio, float> LoadRatioRelativeDecision;
+    public float Default_LoadRatioRelative(LoadRatio lv) {
+      if (lv.ratio <= lv.light)
+        return lv.ratio / lv.light;
+      else if (lv.ratio <= lv.standard)
+        return (lv.ratio - lv.light) / (lv.standard - lv.light);
+      else if (lv.ratio <= lv.heavy)
+        return (lv.ratio - lv.standard) / (lv.heavy - lv.standard);
+      else
+        return 1;
+    }
+    /// <summary>?섏쨷 援ш컙 ?댁뿉?쒖쓽 鍮꾩쑉???섑??낅땲??</summary>
+    public float LoadRatioRelative => LoadRatioRelativeDecision(Load);
     #endregion
 
     #region Effect
-    /// <summary>실시간 동작하는 효과들을 할당합니다</summary>
-    readonly Dictionary<int, UnitEffect> effects = new(), hiddenEffects = new();
-    public void ApplyEffect(int id, UnitEffect effect) {
-      if (effects.TryGetValue(id, out var e)) {
+    /// <summary>실시간 동작하는 효과들을 할당합니다/summary>
+    readonly Dictionary<UnitEffect.IDSet, UnitEffect> effects = new();
+    /// <summary>?꾩옱 ?곸슜以묒씤 ?④낵瑜??섑??낅땲?? ?ш린???붿냼瑜?蹂?붿떆耳쒕룄 ?ㅼ젣 ?④낵?먮뒗 ?곹뼢??二쇱? ?딆뒿?덈떎.</summary>
+    public List<UnitEffect> Effects => effects.Values.ToList();
+    public void ApplyEffect(UnitEffect effect) {
+      if (effects.TryGetValue(effect.ID, out var e)) {
         //todo 효과 중첩 or 갱신 or 덮어쓰기.
-        //todo Effect 내에서 수행할 것
+        //todo Effect 내에서 수행할 것?
       } else {
-        effects.Add(id, effect);
+        effects.Add(effect.ID, effect);
         effect.OnApply(this);
       }
     }
-    public void RemoveEffect(int id, int stack = -1) {
-      if (stack < 0) {
-        effects.Remove(id);
-      }
-      else if (effects.TryGetValue(id, out var e)) {
+    public void RemoveEffect(UnitEffect effect, int stack = -1) {
+      if (!effects.TryGetValue(effect.ID, out var e)) return;
+      if (stack < 0){
+        e.OnRemove(this);
+        effects.Remove(e.ID);
+      } else {
         //todo 효과 중첩 제거. Effect 내에서 수행할 것
+        //todo 以묒꺽 ?쒓굅 ??留뚮즺?섎뒗 寃??덇퀬 ?꾨땶 寃??덇린 ?뚮Ц
       }
     }
     #endregion
@@ -90,50 +120,62 @@ namespace Rair.Field
     }
 
     protected virtual void Start() {
-      Movement_Available = MoveInt;
-      stat.SPRegen.Apply += Movement_SPRegen;
-      stat.SPCost.Apply += Movement_SPCost;
-      stat.RunSpeed.Apply += Movement_RunSpeed;
-      stat.WalkSpeed.Apply += Movement_WalkSpeed;
+      MovementDecision = Default_MovementDecision;
+      LoadStatusDecision = Default_LoadStatusDecision;
+      LoadRatioRelativeDecision = Default_LoadRatioRelative;
+      stat.HPRegen.Apply += Default_HPRegen;
+      stat.SPRegen.Apply += Default_SPRegen;
+      stat.SPCost.Apply += Default_SPCost;
+      stat.RunSpeed.Apply += Default_RunSpeed;
+      stat.WalkSpeed.Apply += Default_WalkSpeed;
     }
 
     protected virtual void Update() {
+      UpdateStatus();
       Tick();
+    }
+
+    protected void UpdateStatus() {
+      var movement = agent.WannaMoving() ? (RunIntent ? MovementStatus.Runnable : MovementStatus.Walkable) : MovementStatus.Immovable;
+      status.movement = (movement & (status.movable = MovementDecision(this))).MaxBit();
+      status.speed = agent.velocity.magnitude;
+
+      status.fatiguePerMinute = status.movement switch {
+        MovementStatus.Sit => info.Fatigue_Sit.Value,
+        MovementStatus.Walk => info.Fatigue_Walk.Value,
+        MovementStatus.Run => info.Fatigue_Run.Value,
+        _ => info.Fatigue_Idle.Value
+      };
+
+      Load = new() {
+        ratio = stat.Load.Value / stat.LoadMax.Value,
+        light = info.LoadLimit_Lightweight.Value,
+        standard = info.LoadLimit_Standard.Value,
+        heavy = info.LoadLimit_Heavyweight.Value
+      };
+      status.load = LoadStatusDecision(Load);
     }
 
     protected void Tick() {
       //* 이동 상태 갱신
-      int move = Movement_Available();
-      status.speed = agent.velocity.magnitude;
-      status.moving = status.speed > .05f && move >= 1;
-      status.running = status.moving && RunIntent && move == 2;
-
-      agent.speed = RunIntent && move == 2
-        ? stat.RunSpeed.Value
-        : (move >= 1 ? stat.WalkSpeed.Value : 0);
+      agent.speed = status.movement switch {
+        MovementStatus.Run => stat.RunSpeed.Value,
+        MovementStatus.Walk => stat.WalkSpeed.Value,
+        _ => 0
+      };
 
       //* 회복/감소 연산
-      stat.HP.Value += (stat.HPRegen.Value - stat.HPCost.Value) * Time.deltaTime;
-      if (status.running)
-        stat.SP.Value -= stat.SPCost.Value * Time.deltaTime;
-      else
-        stat.SP.Value += stat.SPRegen.Value * Time.deltaTime;
+      stat.HP += (stat.HPRegen.Value - stat.HPCost.Value) * Time.deltaTime;
+      stat.SP += (stat.SPRegen.Value - stat.SPCost.Value) * Time.deltaTime;
 
       //* 피로 연산
-      status.fatigueTick =
-        status.running ? info.Fatigue_Run.Value :
-        status.moving ? info.Fatigue_Walk.Value :
-        status.sitting ? info.Fatigue_Sit.Value :
-        info.Fatigue_Idle.Value;
-      stat.Fatigue.Value += status.fatigueTick * Time.deltaTime / 60; // 분당 피로
+      stat.Fatigue += status.fatiguePerMinute * Time.deltaTime / 60; // 분당 피로
 
       //* 효과 적용
-      foreach (var e in hiddenEffects.Values)
-        e.OnTick(this);
-      foreach (var e in effects.Values)
+      foreach (var e in effects.Values.ToList())
         e.OnTick(this);
     }
-    
+
     #endregion
 
     /// <summary>

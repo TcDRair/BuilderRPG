@@ -1,4 +1,4 @@
-﻿namespace Everloop {
+namespace Everloop {
 	using UnityEngine;
 	using System.Collections;
 	

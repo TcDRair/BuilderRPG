@@ -1,123 +1,153 @@
+using System;
+
 using UnityEngine;
 
 namespace Rair.Field
 {
   public abstract partial class FieldUnit {
 
-    public virtual RVEFloat.Applier Movement_SPRegen => (RVFloat spRegen) => {
-      var (lr, ll, la, lh) = LoadVariables();
-
-      spRegen.Nullify = // SP Regen Disable when moving
-        status.moving && (lr > la || stat.SP.Value <= 0);
-
-      if (lr < ll) spRegen *= 1 + info.SPRegen_Light.Value * (lr / ll);
-      else if (lr < la) spRegen *= 1;
-      else if (lr < lh) spRegen *= 1 + info.SPRegen_Heavy.Value;
-      else spRegen.Nullify = true; // SP Regen Disabled
-
+    public virtual RVFloat Default_HPRegen(RVFloat hpRegen) {
+      hpRegen += info.HPRegen_Default.Value;
+      return hpRegen;
+    }
+    public virtual RVFloat Default_SPRegen(RVFloat spRegen) {
+      spRegen += info.SPRegen_Default.Value * status.movement switch {
+        MovementStatus.Run => 0,
+        MovementStatus.Walk => status.load <= LoadStatus.Standard ? 1 : 0,
+        _ => 1
+      };
+      spRegen *= status.load switch {
+        LoadStatus.Lightweight => 1 + info.SPRegenM_Light.Value * (1 - LoadRatioRelative),
+        LoadStatus.Standard => 1,
+        _ => 1 + info.SPRegenM_Heavy.Value
+      };
       return spRegen;
-    };
-    public virtual RVEFloat.Applier Movement_SPCost => (RVFloat spCost) => {
-      var (lr, ll, la, lh) = LoadVariables();
+    }
+    public virtual RVFloat Default_SPCost(RVFloat spCost) {
       float wC = stat.WalkSPCost.Value, rC = stat.RunSPCost.Value;
-
-      if (status.running) {
-        if (lr <= ll) spCost += rC * (0.8f + info.RunSPCost_Light.Value * (lr / ll));
-        else spCost += rC;
-      } else if (status.moving) {
-        if (lr > la) spCost += wC * (.1f + info.WalkSPCost_Heavy.Value * ((lr - la) / (lh - la)));
-      } // else : No move no cost
-
+      float rCL = info.RunSPCostM_Light.Value, wCH = info.WalkSPCostM_Heavy.Value;
+      bool light = status.load <= LoadStatus.Lightweight, heavy = status.load >= LoadStatus.Heavyweight;
+      var s = spCost;
+      spCost += status.load switch {
+        LoadStatus.Lightweight => status.movement switch {
+          MovementStatus.Run => rC * (.95f - rCL * (1 - LoadRatioRelative)),
+          _ => 0
+        },
+        LoadStatus.Standard => status.movement switch {
+          MovementStatus.Run => rC,
+          _ => 0
+        },
+        _ => status.movement switch {
+          MovementStatus.Run => rC, // If available
+          MovementStatus.Walk => wC * (.1f + wCH * LoadRatioRelative),
+          _ => 0
+        }
+      };
       return spCost;
-    };
-    public virtual RVEFloat.Applier Movement_RunSpeed => (RVFloat runSpeed) => {
-      var (lr, ll, la, lh) = LoadVariables();
-
+    }
+    public virtual RVFloat Default_RunSpeed(RVFloat runSpeed) {
       runSpeed.Nullify = false;
-      if (lr <= ll) runSpeed *= (1 + info.RunSpeed_Light.Value * (lr / ll));
-      else if (lr <= la) runSpeed *= 1;
-      else runSpeed.Nullify = true;
+      switch (status.load) {
+        case LoadStatus.Lightweight:
+          runSpeed *= 1 + info.RunSpeedM_Light.Value * (1 - LoadRatioRelative);
+          break;
+        case LoadStatus.Standard: break; // do nothing
+        default:
+          runSpeed.Nullify = true;
+          break;
+      }
       return runSpeed;
-    };
-    public virtual RVEFloat.Applier Movement_WalkSpeed => (RVFloat walkSpeed) => {
-      var (lr, _, la, lh) = LoadVariables();
-
-      if (lr <= la) return walkSpeed;
-
-      if (lr <= lh) walkSpeed *= (1 + info.WalkSpeed_Heavy.Value * ((lr - la) / (lh - la)));
-      else walkSpeed.Nullify = true;
+    }
+    public virtual RVFloat Default_WalkSpeed(RVFloat walkSpeed) {
+      switch (status.load) {
+        case LoadStatus.Heavyweight:
+          walkSpeed *= 1 + info.WalkSpeedM_Heavy.Value * LoadRatioRelative;
+          break;
+        case LoadStatus.Overburdened:
+          walkSpeed.Nullify = true;
+          break;
+      }
 
       return walkSpeed;
-    };
-
+    }
   }
-  public struct UnitInfo
-  {
-    public RVFloat Load_Light, Load_Average, Load_Heavy;
-    public RVFloat SPRegen_Light, SPRegen_Heavy;
-    public RVFloat RunSpeed_Light, WalkSpeed_Heavy;
-    public RVFloat RunSPCost_Light, WalkSPCost_Heavy;
-    public RVFloat Fatigue_Run, Fatigue_Walk, Fatigue_Idle, Fatigue_Sit;
+  public struct UnitInfo {
+    public RVFloat LoadLimit_Lightweight, LoadLimit_Standard, LoadLimit_Heavyweight;
+    public RVFloat HPRegen_Default, SPRegen_Default;
+    //todo 언젠가 배율 수치와 배가 수치를 분리하자
+    public RVFloat SPRegenM_Light, SPRegenM_Heavy;
+    public RVFloat RunSpeedM_Light, WalkSpeedM_Heavy;
+    //todo 질주 / 보행뿐만 아니라 "유보"도 구현할 것
+    public RVFloat RunSPCostM_Light, WalkSPCostM_Heavy;
+    public RAFloat Fatigue_Run, Fatigue_Walk, Fatigue_Idle, Fatigue_Sit;
 
     public UnitInfo(bool player = false) {
-      Load_Light = new(.75f, .01f, .75f); // 0% ~ 75%
-      Load_Average = new(1, .75f, 1.5f); // 75% ~ 150%
-      Load_Heavy = new(1.5f, 1.5f, 10); // 150% ~ 1000%
-
-      SPRegen_Light = new(.15f, 0, 1); // +15%
-      SPRegen_Heavy = new(-.2f, -1, 0); // -20%
-      RunSpeed_Light = new(.1f, 0, 1); // +10%
-      WalkSpeed_Heavy = new(-.75f, -1, 0); // -75%
-      RunSPCost_Light = new(.15f, 0, 1); // +15%
-      WalkSPCost_Heavy = new(.9f, 0, 1); // +90%
-
+      HPRegen_Default = new(1, 0); // 1/s
+      SPRegen_Default = new(5, 0); // 5/s
       Fatigue_Run = new(3, 0);
       Fatigue_Walk = new(1, 0);
       Fatigue_Idle = new(0);
       Fatigue_Sit = new(-1, max: 0);
+
+      LoadLimit_Lightweight = new(.75f, .01f, .75f); // 0% ~ 75%
+      LoadLimit_Standard = new(1, .75f, 1.5f); // 75% ~ 150%
+      LoadLimit_Heavyweight = new(1.5f, 1.5f, 10); // 150% ~ 1000%
+
+      SPRegenM_Light = new(.15f, 0, 1); // +15%
+      SPRegenM_Heavy = new(-.2f, -1, 0); // -20%
+      RunSpeedM_Light = new(.1f, 0, 1); // +10%
+      WalkSpeedM_Heavy = new(-.75f, -1, 0); // -75%
+      RunSPCostM_Light = new(.15f, 0, 1); // +15%
+      WalkSPCostM_Heavy = new(.9f, 0, 1); // +90%
     }
 
     public readonly override string ToString() =>
-      "Info : \n" +
-      $"Load Boundary: {Load_Light} / {Load_Average} / {Load_Heavy}";
+      "Unit Info : \n" +
+      $"Default Regen: HP {HPRegen_Default}, SP {SPRegen_Default}\n" +
+      $"Fatigue : Run {Fatigue_Run}, Walk {Fatigue_Walk}, Idle {Fatigue_Idle}, Sit {Fatigue_Sit}\n" +
+      $"Load Boundary: {LoadLimit_Lightweight} / {LoadLimit_Standard} / {LoadLimit_Heavyweight}\n" +
+      $"SP Regen Multiplier: Light {SPRegenM_Light}, Heavy {SPRegenM_Heavy}\n" +
+      $"Run Speed Multiplier: Light {RunSpeedM_Light}, Heavy {WalkSpeedM_Heavy}\n" +
+      $"SP Cost Multiplier: Light {RunSPCostM_Light}, Heavy {WalkSPCostM_Heavy}\n";
   }
-  public struct UnitStat
-  {
-    public RVEFloat HPMax;
-    public RVEFloat HPRegen;
-    public RVEFloat HPCost;
-    public RVMFloat HPRCR; // HP Restriction
-    public RVMFloat HP;
+  public struct UnitStat {
+    public RAFloat HPMax;
+    public RAFloat HPRegen;
+    public RAFloat HPCost;
+    public RMFloat HPRCR; // HP Restriction
+    public RMFloat HP;
+    public readonly float HPRatio => HP.Value / HPMax.Value;
 
-    public RVEFloat SPMax;
-    public RVEFloat SPRegen;
-    public RVEFloat SPCost;
-    public RVMFloat SPRCR; // SP Restriction
-    public RVMFloat SP;
+    public RAFloat SPMax;
+    public RAFloat SPRegen;
+    public RAFloat SPCost;
+    public RMFloat SPRCR; // SP Restriction
+    public RMFloat SP;
+    public readonly float SPRatio => SP.Value / SPMax.Value;
 
-    public RVEFloat WalkSpeed, RunSpeed;
-    public RVEFloat WalkSPCost, RunSPCost;
+    public RAFloat WalkSpeed, RunSpeed;
+    public RAFloat WalkSPCost, RunSPCost;
 
-    public RVEFloat LoadMax;
-    public RFloat Load;
+    public RAFloat LoadMax;
+    public RFloat Load; //todo : 아이템에 의한 결과값 데이터로 전환
 
-    public RVEFloat FatigueMax;
-    public RVMFloat Fatigue;
+    public RAFloat FatigueMax;
+    public RMFloat Fatigue;
 
-    public UnitStat(float hpMax, float hpRegen, float spMax, float spRegen, float walkSpeed, float runSpeed, float walkSPCost, float runSPCost, float loadMax) {
+    public UnitStat(float hpMax, float spMax, float walkSpeed, float runSpeed, float walkSPCost, float runSPCost, float loadMax) {
       HPMax = new(hpMax, 1);
-      HPRegen = new(hpRegen, 0);
+      HPRegen = new(0, 0);
       HPCost = new(0, 0);
-      RVMFloat hpRcr = new(0, 0, HPMax, v => v - 1);
+      RMFloat hpRcr = new(0, 0, refMax: HPMax, maxMod: v => v - 1);
       HPRCR = hpRcr;
-      HP = new(hpMax, 0, HPMax, v => v - hpRcr.Value);
+      HP = new(hpMax, 0, refMax: HPMax, maxMod: v => v - hpRcr.Value);
 
       SPMax = new(spMax, 1);
-      SPRegen = new(spRegen);
+      SPRegen = new(0, 0);
       SPCost = new(0, 0);
-      RVMFloat spRcr = new(0, 0, SPMax, v => v - 1);
+      RMFloat spRcr = new(0, 0, refMax: SPMax, maxMod: v => v - 1);
       SPRCR = spRcr;
-      SP = new(spMax, 0, SPMax, v => v - spRcr.Value);
+      SP = new(spMax, 0, refMax: SPMax, maxMod: v => v - spRcr.Value);
 
       WalkSpeed = new(walkSpeed, 0, 5);
       RunSpeed = new(runSpeed, 0, 20);
@@ -128,7 +158,7 @@ namespace Rair.Field
       Load = new(0, 0);
 
       FatigueMax = new(300, 0);
-      Fatigue = new(0, 0, FatigueMax);
+      Fatigue = new(0, 0, refMax: FatigueMax);
 
       Debug.Log(this);
     }
@@ -150,11 +180,34 @@ namespace Rair.Field
       $"Load Max: {LoadMax}\n" +
       $"Load : {Load}\n";
   }
-  public struct UnitStatus
-  {
-    public float speed;
-    public bool moving, running, sitting;
 
-    public float fatigueTick;
+  [Flags] public enum MovementStatus {
+    Sit  = 1 << 0,
+    Idle = 1 << 1,
+    Walk = 1 << 2,
+    Run  = 1 << 3,
+
+    Immovable = Sit | Idle,
+    Walkable = Sit | Idle | Walk,
+    Runnable = Walkable | Run,
+    Move = Walk | Run
+  }
+  public enum LoadStatus { Lightweight, Standard, Heavyweight, Overburdened }
+  public struct UnitStatus {
+    public float speed;
+    public MovementStatus movement, movable;
+    public readonly bool Moving => movement >= MovementStatus.Walk;
+    public readonly bool Running => movement >= MovementStatus.Run;
+
+    public LoadStatus load;
+
+    public float fatiguePerMinute;
+
+    public override string ToString() =>
+      "Status : \n" +
+      $"Current Speed: {speed}\n" +
+      $"Movement: {movement} / {movable}\n" +
+      $"Load Status: {load}\n" +
+      $"Fatigue Per Minute: {fatiguePerMinute}\n";
   }
 }

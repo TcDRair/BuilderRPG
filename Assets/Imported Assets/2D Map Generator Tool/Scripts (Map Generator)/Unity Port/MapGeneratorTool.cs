@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Linq;
 using MapGeneratorTool.DataModels;
 using System.Collections.Generic;

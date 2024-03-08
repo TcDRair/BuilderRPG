@@ -4,26 +4,26 @@
 namespace Rair.Items
 {
 	/// <summary>
-	/// Item °´Ã¼¸¦ Á¶ÇÕÇÏ°í °á°ú¹°À» ¹ÝÈ¯ÇÏ´Â ±â´ÉÀ» °¡Áö´Â Å¬·¡½ºÀÔ´Ï´Ù.
+	/// Item ê°ì²´ë¥¼ ì¡°í•©í•˜ê³  ê²°ê³¼ë¬¼ì„ ë°˜í™˜í•˜ëŠ” ê¸°ëŠ¥ì„ ê°€ì§€ëŠ” í´ëž˜ìŠ¤ìž…ë‹ˆë‹¤.
 	/// </summary>
 	public abstract class Recipe
 	{
-		/// <summary>·¹½ÃÇÇÀÇ »ç¿ë °¡´É ¿©ºÎ¸¦ ³ªÅ¸³À´Ï´Ù.</summary>
+		/// <summary>ë ˆì‹œí”¼ì˜ ì‚¬ìš© ê°€ëŠ¥ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</summary>
 		public enum UsableType
 		{
-			/// <summary>·¹½ÃÇÇ¸¦ »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.</summary>
+			/// <summary>ë ˆì‹œí”¼ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.</summary>
 			Valid,
-			/// <summary>¾ÆÀÌÅÛ ¼ö·®ÀÌ ºÎÁ·ÇÕ´Ï´Ù.</summary>
+			/// <summary>ì•„ì´í…œ ìˆ˜ëŸ‰ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.</summary>
 			InsufficientItem,
-			/// <summary>¾ÆÀÌÅÛÀÌ Á¶°ÇÀ» ¸¸Á·ÇÏÁö ¾Ê½À´Ï´Ù.</summary>
+			/// <summary>ì•„ì´í…œì´ ì¡°ê±´ì„ ë§Œì¡±í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.</summary>
 			InappropriateItem,
-			/// <summary>ÇÃ·¹ÀÌ¾î°¡ ·¹½ÃÇÇ »ç¿ë Á¶°ÇÀ» ¸¸Á·ÇÏÁö ¸øÇß½À´Ï´Ù.</summary>
+			/// <summary>í”Œë ˆì´ì–´ê°€ ë ˆì‹œí”¼ ì‚¬ìš© ì¡°ê±´ì„ ë§Œì¡±í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.</summary>
 			InvalidPlayer,
 		}
 
-		/// <summary>·¹½ÃÇÇ¸¦ ÀÌ¿ëÇÒ Á¶°ÇÀÌ °®Ãß¾îÁ³´ÂÁö È®ÀÎÇÕ´Ï´Ù.</summary>
+		/// <summary>ë ˆì‹œí”¼ë¥¼ ì´ìš©í•  ì¡°ê±´ì´ ê°–ì¶”ì–´ì¡ŒëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.</summary>
 		public abstract UsableType CanUseRecipe(Field.Player player, Item[] items);
-		/// <summary>·¹½ÃÇÇ¸¦ °¡µ¿ÇÏ°í °á°ú¹°À» ¹ÝÈ¯ÇÕ´Ï´Ù.</summary>
+		/// <summary>ë ˆì‹œí”¼ë¥¼ ê°€ë™í•˜ê³  ê²°ê³¼ë¬¼ì„ ë°˜í™˜í•©ë‹ˆë‹¤.</summary>
 		public abstract Item[] RunRecipe(Item[] items);
 
 	}

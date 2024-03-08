@@ -1,4 +1,4 @@
-﻿namespace MapGeneratorTool.DataModels
+namespace MapGeneratorTool.DataModels
 {
     /// <summary>
     /// Data about an abstract object waiting to generate.
