@@ -22,7 +22,7 @@ namespace Rair.Field
     public UnitInfo info;
     public UnitStatus status;
 
-    //todo Decision 愿???⑥닔瑜?臾띠쓣 寃?
+    //todo Decision 무슨 주석이었지 이거
 
     #region Tick Events
     public delegate RFloat ValueTick(FieldUnit unit);
@@ -31,13 +31,13 @@ namespace Rair.Field
 
     #region Movement
     /// <summary>
-    /// 상황에 따라 유닛이 달리거나 걸을 수 있는지 판단합니다. 湲곕낯?곸쑝濡?<see cref="Default_MovementDecision"/>媛 ?좊떦?⑸땲??
+    /// 상황에 따라 유닛이 달리거나 걸을 수 있는지 판단합니다. 할당되지 않은 경우 <see cref="Default_MovementDecision"/>를 사용합니다.
     /// </summary>
     public Func<FieldUnit, MovementStatus> MovementDecision { get; set; }
 
     protected bool regenTrigger = false;
     /// <summary>
-    /// ?좊떅???대룞 媛?μ꽦???먮떒?섎뒗 湲곕낯 ?⑥닔?낅땲??
+    /// 유닛의 기본 행동 판단을 수행합니다.
     /// </summary>
     public virtual MovementStatus Default_MovementDecision(FieldUnit u) {
       u.regenTrigger = (u.regenTrigger && u.stat.SPRatio < .25f) || (!u.regenTrigger && u.stat.SPRatio <= .01f);
@@ -84,7 +84,7 @@ namespace Rair.Field
       else
         return 1;
     }
-    /// <summary>?섏쨷 援ш컙 ?댁뿉?쒖쓽 鍮꾩쑉???섑??낅땲??</summary>
+    /// <summary>현재 하중 범위 내에서의 비율을 반환합니다.</summary>
     public float LoadRatioRelative => LoadRatioRelativeDecision(Load);
     #endregion
 
