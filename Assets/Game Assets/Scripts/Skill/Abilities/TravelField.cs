@@ -18,8 +18,8 @@ namespace Rair.Skill.AbilityStorage {
     }
   }
 
-  public class A_LightBreeze : Ability {
-    public A_LightBreeze(int level) {
+  public class LightBreeze : Ability {
+    public LightBreeze(int level) {
       Level = Mathf.Clamp(level, 1, 3);
       Name = "산들바람 " + Level;
       Summary = "하체의 균형으로 가벼운 보폭을 유지합니다.";
@@ -71,8 +71,9 @@ namespace Rair.Skill.AbilityStorage {
       => unit.RemoveEffect(Effect);
   }
 
-  public class A_RunnersHigh : Ability {
-    public A_RunnersHigh(int level) {
+
+  public class RunnersHigh : Ability {
+    public RunnersHigh(int level) {
       Level = Mathf.Clamp(level, 1, 3);
       Name = "러너스 하이 " + Level;
       Summary = "달리는 기쁨을 받아들입니다.";
@@ -155,14 +156,15 @@ namespace Rair.Skill.AbilityStorage {
     float SP => 1 - SPMod * Effect.Stack;
   }
 
-  public class A_IronStep : Ability {
+
+  public class IronStep : Ability {
     float rcr = 0;
     bool hp_trigger = false;
     float HpResMod => Level switch { 1 => 1.25f, 2 => 1.75f, _ => 2.5f };
     float WalkSpdMod => Level switch { 1 => .50f, 2 => .25f, _ => 0 };
     const float MIN_HP_RATIO = .10f;
 
-    public A_IronStep(int level) {
+    public IronStep(int level) {
       Level = Mathf.Clamp(level, 1, 3);
       Name = "무쇠걸음 " + Level;
       Summary = "다리의 힘을 한계까지 끌어냅니다.";

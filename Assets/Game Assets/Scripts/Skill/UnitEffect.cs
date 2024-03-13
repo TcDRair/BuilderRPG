@@ -66,7 +66,9 @@ namespace Rair.Skill
     }
     private readonly bool m_instantiated;
 
-    public readonly override string ToString() 
-      => m_instantiated ? text.Color(textColor).ColorBox(boxColor) : "";
+    public readonly override string ToString() {
+      if (!m_instantiated) return "";
+      return $"<mark=#{boxColor.ToHexString()}><color=#{textColor.ToHexString()}>{text}</color></mark>";
+    }
   }
 }

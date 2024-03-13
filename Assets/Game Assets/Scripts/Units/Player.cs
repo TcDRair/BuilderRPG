@@ -28,9 +28,9 @@ namespace Rair.Field
     protected override void Start() {
       base.Start();
       agent.updatePosition = false;
-      MRA = new Skill.AbilityStorage.A_LightBreeze(2);
-      MRB = new Skill.AbilityStorage.A_RunnersHigh(2);
-      MRG = new Skill.AbilityStorage.A_IronStep(2);
+      MRA = new Skill.AbilityStorage.LightBreeze(2);
+      MRB = new Skill.AbilityStorage.RunnersHigh(2);
+      MRG = new Skill.AbilityStorage.IronStep(2);
     }
 
     public override bool RunIntent => Input.GetKey(KeyCode.LeftShift);
