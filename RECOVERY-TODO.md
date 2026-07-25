@@ -1,32 +1,17 @@
 # 남은 끊긴 참조 작업 목록
 
-## Assets/Game Assets/Resources/Animation/UI/Animation.controller  (1건)
-
-| GameObject | 필드 | 종류 | GUID |
-|---|---|---|---|
-| ? | `m_Motion` | AnimationClip | `b3f8a539dc50…` |
-
-## Assets/Game Assets/Resources/Animation/UI/Interaction Menu Rect.controller  (2건)
-
-| GameObject | 필드 | 종류 | GUID |
-|---|---|---|---|
-| ? | `m_Motion` | AnimationClip | `49e5c34e5d91…` |
-| ? | `m_Motion` | AnimationClip | `4895cce78614…` |
-
 ## Assets/Game Assets/Resources/Fonts/NanumBarunGothic SDF.asset  (1건)
 
 | GameObject | 필드 | 종류 | GUID |
 |---|---|---|---|
 | ? | `m_SourceFontFile` | Cubemap | `d175f1951577…` |
 
-## Assets/Game Assets/Resources/Material/Zone Projector.mat  (4건)
+## Assets/Game Assets/Resources/Material/Zone Projector.mat  (2건)
 
 | GameObject | 필드 | 종류 | GUID |
 |---|---|---|---|
-| ? | `m_Shader` | fileID -6465566751694194690 | `42cc20c54a33…` |
 | ? | `m_Texture` | Texture2D | `8e23a03b070b…` |
 | ? | `m_Texture` | Texture2D | `dd5c956fda8e…` |
-| ? | `m_Texture` | Texture2D | `426fecd49abd…` |
 
 ## Assets/Game Assets/Resources/Models/Building/Small Wooden Shelter/Texture/Materials/PolygonFarm_Texture_01_A.mat  (1건)
 
