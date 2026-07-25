@@ -32550,7 +32550,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1578845051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 115dfe7b0938447cbbf9507076f54049, type: 3}
+  m_Script: {fileID: 11500000, guid: c9cd3ab22d48cd14fb6b98f43e65e047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 1578950299}
@@ -32687,7 +32687,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300002, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
+  m_Mesh: {fileID: -3592785139662684940, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
   m_Bones:
   - {fileID: 1578950307}
   - {fileID: 1578950335}

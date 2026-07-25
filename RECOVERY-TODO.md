@@ -1,29 +1,16 @@
 # 남은 끊긴 참조 작업 목록
 
-## Assets/Game Assets/Resources/Fonts/NanumBarunGothic SDF.asset  (1건)
-
-| GameObject | 필드 | 종류 | GUID |
-|---|---|---|---|
-| ? | `m_SourceFontFile` | Cubemap | `d175f1951577…` |
-
-## Assets/Game Assets/Resources/Material/Zone Projector.mat  (2건)
+## Assets/Game Assets/Resources/Material/Zone Projector.mat  (1건)
 
 | GameObject | 필드 | 종류 | GUID |
 |---|---|---|---|
 | ? | `m_Texture` | Texture2D | `8e23a03b070b…` |
-| ? | `m_Texture` | Texture2D | `dd5c956fda8e…` |
 
 ## Assets/Game Assets/Resources/Models/Building/Small Wooden Shelter/Texture/Materials/PolygonFarm_Texture_01_A.mat  (1건)
 
 | GameObject | 필드 | 종류 | GUID |
 |---|---|---|---|
 | ? | `m_Texture` | Texture2D | `0ee452d78a7f…` |
-
-## Assets/Game Assets/Resources/Prefabs/Building Preview/SmallWoodenShelter_Preview.prefab  (1건)
-
-| GameObject | 필드 | 종류 | GUID |
-|---|---|---|---|
-| SmallWoodenShelter_Preview | `m_Mesh` | fileID -7821041414925163209 | `de776df8e96f…` |
 
 ## Assets/Game Assets/Resources/Prefabs/Building/Small Wooden Shelter.prefab  (127건)
 
@@ -192,14 +179,11 @@
 | Wall | `m_Mesh` | fileID 4300002 | `a3dc8da8b210…` |
 | Wall | `m_Mesh` | fileID 4300002 | `a3dc8da8b210…` |
 
-## Assets/Game Assets/Resources/Prefabs/Map/Map Generator.prefab  (20건)
+## Assets/Game Assets/Resources/Prefabs/Map/Map Generator.prefab  (17건)
 
 | GameObject | 필드 | 종류 | GUID |
 |---|---|---|---|
 | Map Generator | `mapTexture` | Texture2D | `8f4881ba6ffc…` |
-| Map Generator | `overlayAllowPrefab` | fileID 8166829947786505755 | `ba53ea7c630f…` |
-| Map Generator | `overlayDenyPrefab` | fileID 8166829947786505755 | `e672a2a5bc0e…` |
-| Map Generator | `overlayAdjacentPrefab` | fileID 8166829947786505755 | `d3b7e564c9bc…` |
 | Map Generator | `overlayAcceptMat` | Material | `0824121ba71e…` |
 | Map Generator | `overlayDenyMat` | Material | `45dd9c23c569…` |
 | Map Generator | `ceiling` | fileID 1757992522787278 | `30a18c0c57a5…` |
