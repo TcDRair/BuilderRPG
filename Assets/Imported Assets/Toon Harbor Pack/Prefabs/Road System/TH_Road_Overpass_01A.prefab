@@ -190,11 +190,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (21)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -249,6 +244,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (21)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -340,11 +340,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (18)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -399,6 +394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (18)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -490,11 +490,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (30)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -549,6 +544,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (30)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -715,11 +715,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 749514272485625381, guid: 466dbd850881c9045909fd8f299cb422,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_02C (39)
-      objectReference: {fileID: 0}
     - target: {fileID: 749514272485200389, guid: 466dbd850881c9045909fd8f299cb422,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -775,6 +770,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 749514272485625381, guid: 466dbd850881c9045909fd8f299cb422,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_02C (39)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466dbd850881c9045909fd8f299cb422, type: 3}
 --- !u!4 &2021511599676831850 stripped
@@ -790,11 +790,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (20)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -850,6 +845,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (20)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
 --- !u!4 &4179309683248714635 stripped
@@ -865,11 +865,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1762889875127687679, guid: f578d3a878b9416409849206c1cb90ad,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Brace_Corner_01C (19)
-      objectReference: {fileID: 0}
     - target: {fileID: 1762889875127387615, guid: f578d3a878b9416409849206c1cb90ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -924,6 +919,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762889875127687679, guid: f578d3a878b9416409849206c1cb90ad,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Brace_Corner_01C (19)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f578d3a878b9416409849206c1cb90ad, type: 3}
@@ -1090,11 +1090,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (25)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1150,6 +1145,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (25)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &3764703036084442158 stripped
@@ -1165,11 +1165,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 749514272485625381, guid: 466dbd850881c9045909fd8f299cb422,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_02C (40)
-      objectReference: {fileID: 0}
     - target: {fileID: 749514272485200389, guid: 466dbd850881c9045909fd8f299cb422,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1225,6 +1220,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 749514272485625381, guid: 466dbd850881c9045909fd8f299cb422,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_02C (40)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466dbd850881c9045909fd8f299cb422, type: 3}
 --- !u!4 &3165434121562015692 stripped
@@ -1240,11 +1240,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (19)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1299,6 +1294,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (19)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
@@ -1390,11 +1390,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (19)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1450,6 +1445,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (19)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &3640954696157623683 stripped
@@ -1465,11 +1465,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (28)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1525,6 +1520,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (28)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &4344260452203366937 stripped
@@ -1540,11 +1540,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (12)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1599,6 +1594,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (12)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -1690,11 +1690,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (10)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1750,6 +1745,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (10)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &2694089571713779695 stripped
@@ -1765,11 +1765,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (23)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1825,6 +1820,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (23)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &2671141862927963772 stripped
@@ -1840,11 +1840,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (14)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1899,6 +1894,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (14)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -2065,11 +2065,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 946002338391752089, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Connecter_End_01C (33)
-      objectReference: {fileID: 0}
     - target: {fileID: 946002338391318969, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2124,6 +2119,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 946002338391752089, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Connecter_End_01C (33)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3223e6301977d948bc9b2e7b9f5c2d4, type: 3}
@@ -2215,11 +2215,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 946002338391752089, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Connecter_End_01C (35)
-      objectReference: {fileID: 0}
     - target: {fileID: 946002338391318969, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2275,6 +2270,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 946002338391752089, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Connecter_End_01C (35)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3223e6301977d948bc9b2e7b9f5c2d4, type: 3}
 --- !u!4 &3970205042724697333 stripped
@@ -2290,11 +2290,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (24)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2350,6 +2345,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (24)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &2918619920192375917 stripped
@@ -2365,11 +2365,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (15)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2425,6 +2420,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (15)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &6259796535073326773 stripped
@@ -2440,11 +2440,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 749514272485625381, guid: 466dbd850881c9045909fd8f299cb422,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_02C (41)
-      objectReference: {fileID: 0}
     - target: {fileID: 749514272485200389, guid: 466dbd850881c9045909fd8f299cb422,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2499,6 +2494,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 749514272485625381, guid: 466dbd850881c9045909fd8f299cb422,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_02C (41)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466dbd850881c9045909fd8f299cb422, type: 3}
@@ -2590,11 +2590,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (17)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2650,6 +2645,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (17)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &5999595982469101854 stripped
@@ -2665,11 +2665,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 946002338391752089, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Connecter_End_01C (34)
-      objectReference: {fileID: 0}
     - target: {fileID: 946002338391318969, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2724,6 +2719,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 946002338391752089, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Connecter_End_01C (34)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3223e6301977d948bc9b2e7b9f5c2d4, type: 3}
@@ -2890,11 +2890,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (29)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2949,6 +2944,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (29)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -3040,11 +3040,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (11)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3100,6 +3095,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (11)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &5163143729687531462 stripped
@@ -3115,11 +3115,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 810905599248640408, guid: bb427ed19daac8846bacd9903eea3cf1,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Connecter_Straight_01C (46)
-      objectReference: {fileID: 0}
     - target: {fileID: 810905599248217528, guid: bb427ed19daac8846bacd9903eea3cf1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3175,6 +3170,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 810905599248640408, guid: bb427ed19daac8846bacd9903eea3cf1,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Connecter_Straight_01C (46)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb427ed19daac8846bacd9903eea3cf1, type: 3}
 --- !u!4 &6822034532951600391 stripped
@@ -3190,11 +3190,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 946002338391752089, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Connecter_End_01C (36)
-      objectReference: {fileID: 0}
     - target: {fileID: 946002338391318969, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3249,6 +3244,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 946002338391752089, guid: f3223e6301977d948bc9b2e7b9f5c2d4,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Connecter_End_01C (36)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3223e6301977d948bc9b2e7b9f5c2d4, type: 3}
@@ -3340,11 +3340,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1762889875127687679, guid: f578d3a878b9416409849206c1cb90ad,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Brace_Corner_01C (17)
-      objectReference: {fileID: 0}
     - target: {fileID: 1762889875127387615, guid: f578d3a878b9416409849206c1cb90ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3400,6 +3395,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1762889875127687679, guid: f578d3a878b9416409849206c1cb90ad,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Brace_Corner_01C (17)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f578d3a878b9416409849206c1cb90ad, type: 3}
 --- !u!4 &4750125865322751207 stripped
@@ -3415,11 +3415,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (22)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3475,6 +3470,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (22)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &5737589344328042110 stripped
@@ -3490,11 +3490,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (31)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3549,6 +3544,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (31)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -3640,11 +3640,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (16)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3700,6 +3695,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (16)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &8403352932579693003 stripped
@@ -3715,11 +3715,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1762889875127687679, guid: f578d3a878b9416409849206c1cb90ad,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Brace_Corner_01C (18)
-      objectReference: {fileID: 0}
     - target: {fileID: 1762889875127387615, guid: f578d3a878b9416409849206c1cb90ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3775,6 +3770,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1762889875127687679, guid: f578d3a878b9416409849206c1cb90ad,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Brace_Corner_01C (18)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f578d3a878b9416409849206c1cb90ad, type: 3}
 --- !u!4 &8925033034767485518 stripped
@@ -3790,11 +3790,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (26)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3849,6 +3844,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (26)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -4015,11 +4015,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (20)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4074,6 +4069,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (20)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
@@ -4315,11 +4315,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (10)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4374,6 +4369,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (10)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
@@ -4465,11 +4465,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4524,6 +4519,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (8)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
@@ -4615,11 +4615,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (15)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4674,6 +4669,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (15)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
@@ -5065,11 +5065,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (16)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5125,6 +5120,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (16)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
 --- !u!4 &6699378444734058359 stripped
@@ -5140,11 +5140,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5199,6 +5194,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (7)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
@@ -5290,11 +5290,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (9)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5350,6 +5345,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (9)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
 --- !u!4 &6699378444492269008 stripped
@@ -5365,11 +5365,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (18)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5425,6 +5420,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (18)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
 --- !u!4 &6699378445035807496 stripped
@@ -5440,11 +5440,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_01D (17)
-      objectReference: {fileID: 0}
     - target: {fileID: 3360988101901156400, guid: c225d62ab12829c49a623316a8a89c15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5499,6 +5494,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360988101901392912, guid: c225d62ab12829c49a623316a8a89c15,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_01D (17)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c225d62ab12829c49a623316a8a89c15, type: 3}
@@ -5590,11 +5590,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 810905599248640408, guid: bb427ed19daac8846bacd9903eea3cf1,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Connecter_Straight_01C (47)
-      objectReference: {fileID: 0}
     - target: {fileID: 810905599248217528, guid: bb427ed19daac8846bacd9903eea3cf1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5650,6 +5645,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 810905599248640408, guid: bb427ed19daac8846bacd9903eea3cf1,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Connecter_Straight_01C (47)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb427ed19daac8846bacd9903eea3cf1, type: 3}
 --- !u!4 &9019209166363003469 stripped
@@ -5665,11 +5665,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (27)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5725,6 +5720,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (27)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &7887466609982922972 stripped
@@ -5740,11 +5740,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Walkway_Handrail_02D (13)
-      objectReference: {fileID: 0}
     - target: {fileID: 1464275184914012191, guid: cd05e28dd03697947938a75d1fae84ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5800,6 +5795,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464275184914498623, guid: cd05e28dd03697947938a75d1fae84ac,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Walkway_Handrail_02D (13)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd05e28dd03697947938a75d1fae84ac, type: 3}
 --- !u!4 &7971458344045635683 stripped
@@ -5815,11 +5815,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 749514272485625381, guid: 466dbd850881c9045909fd8f299cb422,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_02C
-      objectReference: {fileID: 0}
     - target: {fileID: 749514272485200389, guid: 466dbd850881c9045909fd8f299cb422,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5875,6 +5870,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 749514272485625381, guid: 466dbd850881c9045909fd8f299cb422,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_02C
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466dbd850881c9045909fd8f299cb422, type: 3}
 --- !u!4 &8583851787894900517 stripped
@@ -5890,11 +5890,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 342106874962983259}
     m_Modifications:
-    - target: {fileID: 1762889875127687679, guid: f578d3a878b9416409849206c1cb90ad,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Metal_Girder_Brace_Corner_01C (20)
-      objectReference: {fileID: 0}
     - target: {fileID: 1762889875127387615, guid: f578d3a878b9416409849206c1cb90ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5949,6 +5944,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762889875127687679, guid: f578d3a878b9416409849206c1cb90ad,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Metal_Girder_Brace_Corner_01C (20)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f578d3a878b9416409849206c1cb90ad, type: 3}

@@ -10,7 +10,7 @@ Material:
   m_Name: Water_1A_D
   m_Shader: {fileID: 4800000, guid: 274b90dbbcf615c4e95825e7f0094881, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 0
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -48,6 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaCutoff: 0.5
     - _CameraDepthFadeLenght: 1
     - _CameraDepthFadeOffset: 1
     - _DepthFadeDistance: 5
@@ -77,6 +78,7 @@ Material:
     m_Colors:
     - _AnimateUV1XYUV2ZW: {r: -12, g: 0, b: 8, a: 0}
     - _DeepColor: {r: 0, g: 0.4620726, b: 1, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _FoamColor: {r: 0.54089534, g: 0.5845691, b: 0.6132076, a: 0}
     - _MainColor: {r: 0.2896938, g: 0.4719233, b: 0.5849056, a: 0}
     - _ShalowColor: {r: 0.23113209, g: 0.8192287, b: 1, a: 0}

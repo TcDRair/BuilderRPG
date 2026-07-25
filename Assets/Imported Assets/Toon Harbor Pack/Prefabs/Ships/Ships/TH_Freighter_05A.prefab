@@ -204,16 +204,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 5795955244526978103, guid: 0f4f657bcb814bd49a1f1baef2ffcd9b,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Bridge_Superior_01C (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5795955244526978103, guid: 0f4f657bcb814bd49a1f1baef2ffcd9b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5795955244526491671, guid: 0f4f657bcb814bd49a1f1baef2ffcd9b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -268,6 +258,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5795955244526978103, guid: 0f4f657bcb814bd49a1f1baef2ffcd9b,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Bridge_Superior_01C (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5795955244526978103, guid: 0f4f657bcb814bd49a1f1baef2ffcd9b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4f657bcb814bd49a1f1baef2ffcd9b, type: 3}
@@ -359,11 +359,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 2371609878164049612, guid: f7183a1c632e8ab459d9fa0bec604cc2,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Ship_Interior_Instruments_01A (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 2371609878163690220, guid: f7183a1c632e8ab459d9fa0bec604cc2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -418,6 +413,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2371609878164049612, guid: f7183a1c632e8ab459d9fa0bec604cc2,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Ship_Interior_Instruments_01A (6)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7183a1c632e8ab459d9fa0bec604cc2, type: 3}
@@ -884,11 +884,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 162380408484776180, guid: bc550da7f8503254394db5daae762fa9,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Ship_Interior_Element_01A (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 162380408484287700, guid: bc550da7f8503254394db5daae762fa9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -943,6 +938,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 162380408484776180, guid: bc550da7f8503254394db5daae762fa9,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Ship_Interior_Element_01A (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc550da7f8503254394db5daae762fa9, type: 3}
@@ -1639,11 +1639,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1698,6 +1693,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
@@ -1864,11 +1864,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1924,6 +1919,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (6)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
 --- !u!4 &3806273295069841664 stripped
@@ -1939,16 +1939,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 7030614280768524515, guid: 227fd9c37e928e949a0606bae12eb523,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Foremast_01C (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030614280768524515, guid: 227fd9c37e928e949a0606bae12eb523,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7030614280768097475, guid: 227fd9c37e928e949a0606bae12eb523,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2003,6 +1993,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030614280768524515, guid: 227fd9c37e928e949a0606bae12eb523,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Foremast_01C (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030614280768524515, guid: 227fd9c37e928e949a0606bae12eb523,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 227fd9c37e928e949a0606bae12eb523, type: 3}
@@ -2319,11 +2319,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 2371609878164049612, guid: f7183a1c632e8ab459d9fa0bec604cc2,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Ship_Interior_Instruments_01A (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 2371609878163690220, guid: f7183a1c632e8ab459d9fa0bec604cc2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2379,6 +2374,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2371609878164049612, guid: f7183a1c632e8ab459d9fa0bec604cc2,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Ship_Interior_Instruments_01A (7)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7183a1c632e8ab459d9fa0bec604cc2, type: 3}
 --- !u!4 &4525319968307391052 stripped
@@ -2394,11 +2394,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (11)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2453,6 +2448,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (11)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
@@ -2624,11 +2624,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 1397850406215687410, guid: aec2ab221030654479131e6b02803831,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Hull_Element_04A (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1397850406215254226, guid: aec2ab221030654479131e6b02803831,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2684,6 +2679,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1397850406215687410, guid: aec2ab221030654479131e6b02803831,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Hull_Element_04A (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aec2ab221030654479131e6b02803831, type: 3}
 --- !u!4 &3746288648017504279 stripped
@@ -2699,11 +2699,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2758,6 +2753,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
@@ -3159,11 +3159,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 8633064992780737944, guid: 1d6ad17915537474c813dd86969526ab,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Ship_Interior_Instruments_04A (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 8633064992780435896, guid: 1d6ad17915537474c813dd86969526ab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3218,6 +3213,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633064992780737944, guid: 1d6ad17915537474c813dd86969526ab,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Ship_Interior_Instruments_04A (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d6ad17915537474c813dd86969526ab, type: 3}
@@ -3459,11 +3459,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 6037854254617412704, guid: 6c0e08de639759741a5d7d2f264fbf3d,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Ship_Interior_Instruments_02A (10)
-      objectReference: {fileID: 0}
     - target: {fileID: 6037854254617253952, guid: 6c0e08de639759741a5d7d2f264fbf3d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3518,6 +3513,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037854254617412704, guid: 6c0e08de639759741a5d7d2f264fbf3d,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Ship_Interior_Instruments_02A (10)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c0e08de639759741a5d7d2f264fbf3d, type: 3}
@@ -3684,10 +3684,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 6215827563808724374, guid: f16219e01782bd14dbdd9fde8d11437c,
+    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
         type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Lamp_01C (2)
+      propertyPath: m_LocalRotation.x
+      value: 0.13052598
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99144495
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 15.000001
       objectReference: {fileID: 0}
     - target: {fileID: 6215827563808360886, guid: f16219e01782bd14dbdd9fde8d11437c,
         type: 3}
@@ -3744,20 +3754,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
+    - target: {fileID: 6215827563808724374, guid: f16219e01782bd14dbdd9fde8d11437c,
         type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.13052598
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99144495
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 15.000001
+      propertyPath: m_Name
+      value: TH_Freighter_Lamp_01C (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f16219e01782bd14dbdd9fde8d11437c, type: 3}
@@ -3934,11 +3934,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (12)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3993,6 +3988,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (12)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
@@ -4159,11 +4159,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 6215827563808724374, guid: f16219e01782bd14dbdd9fde8d11437c,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Lamp_01C (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 6215827563808360886, guid: f16219e01782bd14dbdd9fde8d11437c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4218,6 +4213,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215827563808724374, guid: f16219e01782bd14dbdd9fde8d11437c,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Lamp_01C (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f16219e01782bd14dbdd9fde8d11437c, type: 3}
@@ -4459,11 +4459,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4518,6 +4513,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (8)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
@@ -4609,16 +4609,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 7030614280768524515, guid: 227fd9c37e928e949a0606bae12eb523,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Foremast_01C (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030614280768524515, guid: 227fd9c37e928e949a0606bae12eb523,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7030614280768097475, guid: 227fd9c37e928e949a0606bae12eb523,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4673,6 +4663,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030614280768524515, guid: 227fd9c37e928e949a0606bae12eb523,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Foremast_01C (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030614280768524515, guid: 227fd9c37e928e949a0606bae12eb523,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 227fd9c37e928e949a0606bae12eb523, type: 3}
@@ -4924,10 +4924,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 6215827563808724374, guid: f16219e01782bd14dbdd9fde8d11437c,
+    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
         type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Lamp_01C (3)
+      propertyPath: m_LocalRotation.x
+      value: 0.13052596
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0000007702153
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99144495
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 15.000001
       objectReference: {fileID: 0}
     - target: {fileID: 6215827563808360886, guid: f16219e01782bd14dbdd9fde8d11437c,
         type: 3}
@@ -4984,25 +4999,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
+    - target: {fileID: 6215827563808724374, guid: f16219e01782bd14dbdd9fde8d11437c,
         type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.13052596
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.0000007702153
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99144495
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215827563808360882, guid: f16219e01782bd14dbdd9fde8d11437c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 15.000001
+      propertyPath: m_Name
+      value: TH_Freighter_Lamp_01C (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f16219e01782bd14dbdd9fde8d11437c, type: 3}
@@ -5249,11 +5249,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (9)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5308,6 +5303,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (9)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
@@ -5399,16 +5399,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 4962340344622790113, guid: abb64d8e1f637044996e2ffbe42e1855,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Bridge_Inferior_01C (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4962340344622790113, guid: abb64d8e1f637044996e2ffbe42e1855,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4962340344622688705, guid: abb64d8e1f637044996e2ffbe42e1855,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5464,6 +5454,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4962340344622790113, guid: abb64d8e1f637044996e2ffbe42e1855,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Bridge_Inferior_01C (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962340344622790113, guid: abb64d8e1f637044996e2ffbe42e1855,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abb64d8e1f637044996e2ffbe42e1855, type: 3}
 --- !u!4 &1851263793560011025 stripped
@@ -5479,11 +5479,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 8633064992780737944, guid: 1d6ad17915537474c813dd86969526ab,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Ship_Interior_Instruments_04A (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 8633064992780435896, guid: 1d6ad17915537474c813dd86969526ab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5538,6 +5533,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633064992780737944, guid: 1d6ad17915537474c813dd86969526ab,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Ship_Interior_Instruments_04A (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d6ad17915537474c813dd86969526ab, type: 3}
@@ -5709,11 +5709,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 6037854254617412704, guid: 6c0e08de639759741a5d7d2f264fbf3d,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Ship_Interior_Instruments_02A (11)
-      objectReference: {fileID: 0}
     - target: {fileID: 6037854254617253952, guid: 6c0e08de639759741a5d7d2f264fbf3d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5768,6 +5763,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037854254617412704, guid: 6c0e08de639759741a5d7d2f264fbf3d,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Ship_Interior_Instruments_02A (11)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c0e08de639759741a5d7d2f264fbf3d, type: 3}
@@ -5934,11 +5934,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 1397850406215687410, guid: aec2ab221030654479131e6b02803831,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Hull_Element_04A (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 1397850406215254226, guid: aec2ab221030654479131e6b02803831,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5993,6 +5988,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397850406215687410, guid: aec2ab221030654479131e6b02803831,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Hull_Element_04A (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aec2ab221030654479131e6b02803831, type: 3}
@@ -6554,11 +6554,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 1397850406215687410, guid: aec2ab221030654479131e6b02803831,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Hull_Element_04A (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1397850406215254226, guid: aec2ab221030654479131e6b02803831,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6614,6 +6609,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1397850406215687410, guid: aec2ab221030654479131e6b02803831,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Hull_Element_04A (2)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aec2ab221030654479131e6b02803831, type: 3}
 --- !u!4 &6927616038962380712 stripped
@@ -6629,16 +6629,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3693413276265679281, guid: d9a179661e600ad4a88ae9c0a7082c0e,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Funnel_01C (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693413276265679281, guid: d9a179661e600ad4a88ae9c0a7082c0e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3693413276265256337, guid: d9a179661e600ad4a88ae9c0a7082c0e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6694,6 +6684,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3693413276265679281, guid: d9a179661e600ad4a88ae9c0a7082c0e,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Funnel_01C (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693413276265679281, guid: d9a179661e600ad4a88ae9c0a7082c0e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9a179661e600ad4a88ae9c0a7082c0e, type: 3}
 --- !u!4 &4626607782239087758 stripped
@@ -6709,11 +6709,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6769,6 +6764,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (7)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
 --- !u!4 &6148908359398398697 stripped
@@ -6784,11 +6784,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6844,6 +6839,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (5)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
 --- !u!4 &6320778014042069070 stripped
@@ -6859,11 +6859,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6918,6 +6913,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}
@@ -7009,11 +7009,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2307722928940264101}
     m_Modifications:
-    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
-        type: 3}
-      propertyPath: m_Name
-      value: TH_Freighter_Container_Support_01C (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 3308100240260368505, guid: 58699a349ebd66541a211e81c6f91a30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7068,6 +7063,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308100240260535385, guid: 58699a349ebd66541a211e81c6f91a30,
+        type: 3}
+      propertyPath: m_Name
+      value: TH_Freighter_Container_Support_01C (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58699a349ebd66541a211e81c6f91a30, type: 3}

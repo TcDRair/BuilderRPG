@@ -56,6 +56,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -68,6 +69,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -100,11 +102,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385959038433627299}
     m_Modifications:
-    - target: {fileID: 5294759415749970616, guid: 3fd2c352ce527b547ac0ae4e1c4fe4cb,
+    - target: {fileID: 5294759415747712120, guid: 3fd2c352ce527b547ac0ae4e1c4fe4cb,
         type: 3}
-      propertyPath: m_Name
-      value: TH_Coffee_Pot_01A
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: cef37f647864478488d8bf2ba0eced6d, type: 2}
     - target: {fileID: 5294759415749613208, guid: 3fd2c352ce527b547ac0ae4e1c4fe4cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -160,11 +162,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5294759415747712120, guid: 3fd2c352ce527b547ac0ae4e1c4fe4cb,
+    - target: {fileID: 5294759415749970616, guid: 3fd2c352ce527b547ac0ae4e1c4fe4cb,
         type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: cef37f647864478488d8bf2ba0eced6d, type: 2}
+      propertyPath: m_Name
+      value: TH_Coffee_Pot_01A
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fd2c352ce527b547ac0ae4e1c4fe4cb, type: 3}
 --- !u!4 &6590688977248682243 stripped
