@@ -1,0 +1,35 @@
+# Unity YAML 에셋은 줄바꿈 변환을 타면 안 된다.
+# 변환되면 diff 가 통째로 뒤집혀 실제 변경을 분간할 수 없고,
+# 병합 시 Unity 가 파일을 깨뜨릴 수 있다.
+
+* text=auto
+
+*.cs        text diff=csharp
+
+*.unity              -text
+*.prefab             -text
+*.asset              -text
+*.mat                -text
+*.anim               -text
+*.controller         -text
+*.overrideController -text
+*.physicMaterial     -text
+*.terrainlayer       -text
+*.playable           -text
+*.mask               -text
+*.meta               -text
+*.shadergraph        -text
+*.shadersubgraph     -text
+
+# 바이너리
+*.fbx    binary
+*.blend  binary
+*.png    binary
+*.jpg    binary
+*.tga    binary
+*.psd    binary
+*.tiff   binary
+*.otf    binary
+*.ttf    binary
+*.mp4    binary
+*.unitypackage binary
