@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [CreateAssetMenu(menuName = "Map Generator/Fence")]
     public class FenceModel : ScriptableObject, IDataModelValidation

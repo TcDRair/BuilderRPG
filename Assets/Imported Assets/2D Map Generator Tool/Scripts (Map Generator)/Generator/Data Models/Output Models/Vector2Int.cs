@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace MapGeneratorTool
+namespace MapGenerator
 {
     public struct Vector2Int
     {

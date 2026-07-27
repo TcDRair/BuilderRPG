@@ -1,4 +1,4 @@
-namespace MapGeneratorTool.UnityPort
+﻿namespace MapGenerator.UnityPort
 {
     public static class SortingLayers
     {

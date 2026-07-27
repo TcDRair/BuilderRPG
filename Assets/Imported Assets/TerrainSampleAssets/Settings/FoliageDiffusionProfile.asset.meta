@@ -1,8 +1,15 @@
 fileFormatVersion: 2
-guid: 2c01244723d921e4483dc25f563e44e7
+guid: a4f9b0b21cfa10140b76854ccb395dcf
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 0
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 145808
+  packageName: Terrain Sample Asset Pack
+  packageVersion: 2.0.1
+  assetPath: Assets/TerrainSampleAssets/Settings/FoliageDiffusionProfile.asset
+  uploadId: 511657

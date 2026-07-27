@@ -1,9 +1,9 @@
-//  Modification of the noise function code, developed by Ken Perlin
+﻿//  Modification of the noise function code, developed by Ken Perlin
 //  Source: https://mrl.nyu.edu/~perlin/noise/
 
 using System;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     public static class ImprovedNoise
     {

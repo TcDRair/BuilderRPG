@@ -1,2 +1,18 @@
 fileFormatVersion: 2
-guid: 3abc044f52f377546b12e3b15a6fbf76
+guid: ff368eb24de4547f487585ab4d1ac7ff
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 126951
+  packageName: 2D/3D PathFinder Full
+  packageVersion: 2.0
+  assetPath: Assets/QPathFinder/Script/Followers/PathFollowerToPositionAndSnapToGround.cs
+  uploadId: 408090

@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 853c4f3bd5ca8454ea11d1ea6608a701
+guid: 707379556c3c1d342b231fb71b23ac7d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Data
+    Models/Input Models/WaterNoiseMapParametersModel.cs
+  uploadId: 335159

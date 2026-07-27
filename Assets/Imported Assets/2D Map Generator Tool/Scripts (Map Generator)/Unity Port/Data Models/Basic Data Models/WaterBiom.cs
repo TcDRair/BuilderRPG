@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [Serializable]
     public class WaterBiom : IDataModelValidation

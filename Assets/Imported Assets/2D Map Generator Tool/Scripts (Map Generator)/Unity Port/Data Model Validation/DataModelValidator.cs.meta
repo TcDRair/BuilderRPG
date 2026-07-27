@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: a76bf519d7829804ba179daf15a55d91
+guid: f493312b0786e7143a41483657965f54
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Model Validation/DataModelValidator.cs
+  uploadId: 335159

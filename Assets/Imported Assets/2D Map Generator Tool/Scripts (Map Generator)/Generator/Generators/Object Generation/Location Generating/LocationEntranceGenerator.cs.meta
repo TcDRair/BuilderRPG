@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 7025ae87f6cb376468e22831720e14c4
+guid: 1d28b0b9527d06b45aabfb8c05c325ce
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Generators/Object
+    Generation/Location Generating/LocationEntranceGenerator.cs
+  uploadId: 335159

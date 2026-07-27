@@ -1,7 +1,7 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     public interface ISpaceOrientation
     {

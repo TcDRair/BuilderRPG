@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 2c19d73f558af5449aaf4436fb5ed9e2
+guid: 5bbb87598844ee44b917ac462596dba0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Graphical
+    Map Generation/Graphical Type/TileMapGenerator.cs
+  uploadId: 335159

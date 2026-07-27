@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: dd401c3fa1d0f2a4984064c5a9c49621
+guid: cff6c705c4600924481e276f32e014a4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Models/Models with priority/TreeModelWithPriority.cs
+  uploadId: 335159

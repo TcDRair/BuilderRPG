@@ -1,9 +1,9 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [Serializable]
     public class WaterLayers : IDataModelValidation

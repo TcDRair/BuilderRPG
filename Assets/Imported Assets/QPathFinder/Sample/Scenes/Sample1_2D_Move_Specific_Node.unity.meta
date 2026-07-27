@@ -1,7 +1,14 @@
 fileFormatVersion: 2
-guid: 4ef264bb57458a643ab0c3db852b739e
+guid: e569351fabcf445d3b86934c61e5a0d4
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 126951
+  packageName: 2D/3D PathFinder Full
+  packageVersion: 2.0
+  assetPath: Assets/QPathFinder/Sample/Scenes/Sample1_2D_Move_Specific_Node.unity
+  uploadId: 408090

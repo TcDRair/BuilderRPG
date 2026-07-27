@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
-using MapGeneratorTool.DataModels;
+using MapGenerator.DataModels;
 using System.Collections.Generic;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     public class MapGeneratorTool : MonoBehaviour, IDataModelValidation
     {
@@ -77,8 +77,8 @@ namespace MapGeneratorTool.UnityPort
 
             ISpaceOrientation spaceOrientation = new SpaceOrientationFactory().GetSpaceOrientation(orientationType);
 
-            IGraphicalMapGeneratorTool graphicalMapGeneratorTool = new GraphicalMapGeneratorToolFactory().GetGraphicalMapGeneratorTool(generationType, spaceOrientation);
-            graphicalMapGeneratorTool.Render(transform, generator.Map);
+            IGraphicalMapGenerator graphicalMapGenerator = new GraphicalMapGeneratorFactory().GetGraphicalMapGenerator(generationType, spaceOrientation);
+            graphicalMapGenerator.Render(transform, generator.Map);
 
             ObjectsGenerator objectsGenerator = new ObjectsGenerator(spaceOrientation);
             objectsGenerator.Render(transform, generator.AwaitingObjects);

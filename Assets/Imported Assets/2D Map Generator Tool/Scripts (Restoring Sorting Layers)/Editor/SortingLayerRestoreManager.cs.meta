@@ -1,2 +1,18 @@
 fileFormatVersion: 2
-guid: efd56da19874bae47beddc93963bdfa9
+guid: 3ab995eb12fcd8342a15257ebfbec7fe
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Restoring Sorting Layers)/Editor/SortingLayerRestoreManager.cs
+  uploadId: 335159

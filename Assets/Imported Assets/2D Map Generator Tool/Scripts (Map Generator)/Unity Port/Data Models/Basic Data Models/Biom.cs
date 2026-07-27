@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [CreateAssetMenu(menuName = "Map Generator/Biom Data")]
     public class Biom : ScriptableObject, IDataModelValidation

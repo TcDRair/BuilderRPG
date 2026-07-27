@@ -1,2 +1,18 @@
 fileFormatVersion: 2
-guid: ce51d3aaa46374e40859637a162bbbc4
+guid: 8abc0ae682b7d0242a43b9136ed33fef
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Editor/WaterNoiseMapParametersDrawer.cs
+  uploadId: 335159

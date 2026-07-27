@@ -1,6 +1,6 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     /// <summary>
     /// To check if a location can be generated in a given place.

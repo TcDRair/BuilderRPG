@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: af677b8813dafda45b4a185c3ada8546
+guid: 3d7c5f21e103df14a921ff281337d92f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Generators/Tile
+    Map Generation/WaterMapSmoother.cs
+  uploadId: 335159

@@ -1,11 +1,11 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
-    public class WaterMapGeneratorTool
+    public class WaterMapGenerator
     {
         private class WaterTile
         {
@@ -22,14 +22,14 @@ namespace MapGeneratorTool.Generator
         private readonly WaterBiomModel[] waterBiomes;
         private readonly WaterNoiseMapParametersModel waterNoiseMapParameters;
 
-        private NoiseMapGeneratorTool noiseGenerator;
+        private NoiseMapGenerator noiseGenerator;
 
-        public WaterMapGeneratorTool(Random random, WaterBiomModel[] waterBiomes,
+        public WaterMapGenerator(Random random, WaterBiomModel[] waterBiomes,
                                  WaterNoiseMapParametersModel waterNoiseMapParameters)
         {
             this.waterBiomes = waterBiomes;
             this.waterNoiseMapParameters = waterNoiseMapParameters;
-            this.noiseGenerator = new NoiseMapGeneratorTool(random);
+            this.noiseGenerator = new NoiseMapGenerator(random);
         }
 
         public void GenerateWaterMap(TilesMap map)

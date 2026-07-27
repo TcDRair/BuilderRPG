@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: d15bd29b5a191cc40abb8017bf2ebdf7
+guid: c795940875c8f134fb41d0ca168fc76f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Models/Basic Data Models/WaterBiom.cs
+  uploadId: 335159

@@ -1,7 +1,7 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [CustomPropertyDrawer(typeof(WaterNoiseMapParameters))]
     public class WaterNoiseMapParametersDrawer : PropertyDrawer

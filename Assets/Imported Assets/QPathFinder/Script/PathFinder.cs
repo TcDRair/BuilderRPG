@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using QPathFinder;
@@ -112,8 +112,8 @@ namespace QPathFinder
         /*** Protected & Private ***/
         #region PRIVATE
 
-        protected IEnumerator FindShortestPathAsynchonousInternal ( int fromNodeID, int toNodeID, System.Action<List<Node>> callback )
-        {
+        protected IEnumerator FindShortestPathAsynchonousInternal ( int fromNodeID, int toNodeID, System.Action<List<Node>> callback )
+        {
             if ( callback == null )
                 yield break;
 
@@ -247,7 +247,7 @@ namespace QPathFinder
 
             callback ( null );
             yield break;
-        }
+        }
 
         private List<Node> FindShortedPathSynchronousInternal( int fromNodeID, int toNodeID )
         {

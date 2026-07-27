@@ -1,2 +1,18 @@
 fileFormatVersion: 2
-guid: cdad7314e391450429fb421440a2cd71
+guid: 7fd09be32d26cce459d1aff2bf88ce9d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Other/LayerOrderSetter.cs
+  uploadId: 335159

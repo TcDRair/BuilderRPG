@@ -1,9 +1,9 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using System;
-using MapGeneratorTool.DataModels;
+using MapGenerator.DataModels;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     public class ObjectGenerator
     {

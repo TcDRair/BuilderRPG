@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 994c08fccc88c7f479d8eb0e055dd196
+guid: 31a1f4e481af168469725090e1db5972
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Generators/Tile
+    Map Generation/BiomMapGenerator.cs
+  uploadId: 335159

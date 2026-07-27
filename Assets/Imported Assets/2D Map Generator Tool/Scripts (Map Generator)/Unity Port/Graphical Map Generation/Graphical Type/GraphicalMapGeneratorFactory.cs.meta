@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: a874a19add1271f4bbbfb17000fdbfe0
+guid: aa3a3f9c6106f2c4fa42514405673653
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Graphical
+    Map Generation/Graphical Type/GraphicalMapGeneratorFactory.cs
+  uploadId: 335159

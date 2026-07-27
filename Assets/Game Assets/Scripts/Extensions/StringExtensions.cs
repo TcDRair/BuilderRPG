@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 
-using Unity.VisualScripting;
-
 using UnityEngine;
 
 public static class StringExtensions
@@ -50,10 +48,10 @@ public static class RichTextExtensions
   public static string Italic(this string str) => $"<i>{str}</i>";
   public static string Flavor(this string str) => $"\"{str}\"".Ignore().Italic();
 
-  public static string Color(this string str, Color color) => $"<color=#{color.ToHexString()}>{str}</color>";
+  public static string Color(this string str, Color color) => $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{str}</color>";
   public static string Color(this string str, Color color, bool condition) => condition ? str.Color(color) : str;
   public static string ColorBox(this string str, Color color) {
     color.a = Mathf.Min(.25f, color.a);
-    return $"<mark=#{color.ToHexString()}>{str}</mark>";
+    return $"<mark=#{ColorUtility.ToHtmlStringRGBA(color)}>{str}</mark>";
   }
 }

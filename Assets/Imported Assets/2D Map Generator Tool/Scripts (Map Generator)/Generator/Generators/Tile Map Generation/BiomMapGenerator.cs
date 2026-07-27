@@ -1,21 +1,21 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
-    public class BiomMapGeneratorTool
+    public class BiomMapGenerator
     {
         private readonly BiomModel[,] biomes;
 
         private readonly GroundNoiseMapParametersModel temperatureNoiseMapParameters;
         private readonly GroundNoiseMapParametersModel heightNoiseMapParameters;
 
-        private NoiseMapGeneratorTool noiseGenerator;
+        private NoiseMapGenerator noiseGenerator;
 
         private float temperatureLayerCountInversion;
         private float heightLayerCountInversion;
 
-        public BiomMapGeneratorTool(Random random,
+        public BiomMapGenerator(Random random,
                                 BiomModel[,] biomes,
                                 GroundNoiseMapParametersModel temperatureNoiseMapParameters,
                                 GroundNoiseMapParametersModel heightNoiseMapParameters)
@@ -24,7 +24,7 @@ namespace MapGeneratorTool.Generator
             this.heightNoiseMapParameters = heightNoiseMapParameters;
             this.biomes = biomes;
 
-            noiseGenerator = new NoiseMapGeneratorTool(random);
+            noiseGenerator = new NoiseMapGenerator(random);
         }
 
         public void GenerateBiomMap(TilesMap map)

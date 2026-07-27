@@ -1,7 +1,14 @@
 fileFormatVersion: 2
-guid: 2134175e74c386840a51903b9d54508f
+guid: f4c027386a19de744be9255c83b45eef
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scenes/Snow in 2D.unity
+  uploadId: 335159

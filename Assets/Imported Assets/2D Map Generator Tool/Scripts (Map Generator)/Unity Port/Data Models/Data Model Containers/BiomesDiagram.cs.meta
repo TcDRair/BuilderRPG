@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 0e03fedfee3ba6448b1a7f0e5cd74557
+guid: b5f34463fba68a24c87d66ad8560ac58
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Models/Data Model Containers/BiomesDiagram.cs
+  uploadId: 335159

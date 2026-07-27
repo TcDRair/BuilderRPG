@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 1c4be39f4b63ea54aa1f41dad1dd6d00
+guid: 3d79397f78e184da2b8ea99136d07000
+timeCreated: 1451311511
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 126951
+  packageName: 2D/3D PathFinder Full
+  packageVersion: 2.0
+  assetPath: Assets/QPathFinder/Sample/Scripts/MoveToNode.cs
+  uploadId: 408090

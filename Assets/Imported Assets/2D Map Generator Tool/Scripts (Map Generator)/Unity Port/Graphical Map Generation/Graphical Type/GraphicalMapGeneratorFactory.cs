@@ -1,17 +1,17 @@
-using System;
+﻿using System;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
-    public class GraphicalMapGeneratorToolFactory
+    public class GraphicalMapGeneratorFactory
     {
-        public IGraphicalMapGeneratorTool GetGraphicalMapGeneratorTool(GraphicalGenerationType generationType, ISpaceOrientation spaceOrientation)
+        public IGraphicalMapGenerator GetGraphicalMapGenerator(GraphicalGenerationType generationType, ISpaceOrientation spaceOrientation)
         {
             switch (generationType)
             {
                 case GraphicalGenerationType.Sprites:
-                    return new SpriteMapGeneratorTool(spaceOrientation);
+                    return new SpriteMapGenerator(spaceOrientation);
                 case GraphicalGenerationType.TileMap:
-                    return new TileMapGeneratorTool(spaceOrientation);
+                    return new TileMapGenerator(spaceOrientation);
                 default:
                     throw new InvalidOperationException();
             }

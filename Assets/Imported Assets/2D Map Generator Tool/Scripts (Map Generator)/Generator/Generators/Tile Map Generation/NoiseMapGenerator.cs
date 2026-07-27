@@ -1,16 +1,16 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
-    public class NoiseMapGeneratorTool
+    public class NoiseMapGenerator
     {
         private float xOff;
         private float yOff;
 
         private Random random;
 
-        public NoiseMapGeneratorTool(Random random)
+        public NoiseMapGenerator(Random random)
         {
             this.random = random;
         }

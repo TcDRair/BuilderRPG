@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 35fadd81178cbd045869ae01a4f92a1b
+guid: 250dd0c3db997104f92ba38f9fe51cb7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Graphical
+    Map Generation/Space  Orientation/SpaceOrientationType.cs
+  uploadId: 335159

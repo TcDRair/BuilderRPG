@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 75eb7132573865948bf5c2abdd05969d
+guid: d5a646a6bfd6f8043a4cefeab9e95271
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Models/Basic Data Models/FenceModel.cs
+  uploadId: 335159

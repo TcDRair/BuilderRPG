@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     /// <summary>
     /// To check if a object can be generated in a given place.

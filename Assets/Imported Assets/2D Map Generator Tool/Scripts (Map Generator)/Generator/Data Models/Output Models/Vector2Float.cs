@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace MapGeneratorTool.DataModels
+namespace MapGenerator.DataModels
 {
     public struct Vector2Float
     {

@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [Serializable]
     public abstract class ModelWithPriority<T> where T : IDataModelValidation

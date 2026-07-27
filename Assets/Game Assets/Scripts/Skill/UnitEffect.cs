@@ -4,7 +4,6 @@ using UnityEngine;
 
 using Rair.Field;
 using System;
-using Unity.VisualScripting;
 namespace Rair.Skill
 {
   public delegate void EffectAction(FieldUnit unit);
@@ -68,7 +67,7 @@ namespace Rair.Skill
 
     public readonly override string ToString() {
       if (!m_instantiated) return "";
-      return $"<mark=#{boxColor.ToHexString()}><color=#{textColor.ToHexString()}>{text}</color></mark>";
+      return $"<mark=#{ColorUtility.ToHtmlStringRGBA(boxColor)}><color=#{ColorUtility.ToHtmlStringRGBA(textColor)}>{text}</color></mark>";
     }
   }
 }

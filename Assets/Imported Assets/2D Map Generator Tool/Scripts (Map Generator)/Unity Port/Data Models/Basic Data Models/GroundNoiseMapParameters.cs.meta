@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 22a5df380e3fa474487082379da1350f
+guid: 6e58875302fb68143b2ac0653ba0307f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Models/Basic Data Models/GroundNoiseMapParameters.cs
+  uploadId: 335159

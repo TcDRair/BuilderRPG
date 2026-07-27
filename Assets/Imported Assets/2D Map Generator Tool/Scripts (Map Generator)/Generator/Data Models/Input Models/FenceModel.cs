@@ -1,7 +1,7 @@
-using MapGeneratorTool.Generator;
+﻿using MapGenerator.Generator;
 using System;
 
-namespace MapGeneratorTool.DataModels
+namespace MapGenerator.DataModels
 {
     public class FenceModel
     {

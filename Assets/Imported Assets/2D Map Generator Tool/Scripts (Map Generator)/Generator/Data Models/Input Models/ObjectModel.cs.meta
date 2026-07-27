@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 641c659d666392a4b86c706022636f99
+guid: a5176ad2df66dca4a84944a86c361007
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Data
+    Models/Input Models/ObjectModel.cs
+  uploadId: 335159

@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneratorTool
+namespace MapGenerator
 {
     public abstract class PrefabModel : ScriptableObject
     {

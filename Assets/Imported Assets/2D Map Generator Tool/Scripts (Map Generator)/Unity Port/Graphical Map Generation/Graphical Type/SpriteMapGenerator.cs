@@ -1,15 +1,15 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
-    public class SpriteMapGeneratorTool : IGraphicalMapGeneratorTool
+    public class SpriteMapGenerator : IGraphicalMapGenerator
     {
         private Transform groundParent;
         private Transform waterParent;
         private readonly ISpaceOrientation spaceOrientation;
 
-        public SpriteMapGeneratorTool(ISpaceOrientation spaceOrientation)
+        public SpriteMapGenerator(ISpaceOrientation spaceOrientation)
         {
             this.spaceOrientation = spaceOrientation;
         }

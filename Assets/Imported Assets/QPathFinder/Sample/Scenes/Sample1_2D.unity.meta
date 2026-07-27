@@ -1,7 +1,14 @@
 fileFormatVersion: 2
-guid: 9ac698d76e4f3b24caa1383a19201b5e
+guid: a29426c5b51104330917d066da13b2ea
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 126951
+  packageName: 2D/3D PathFinder Full
+  packageVersion: 2.0
+  assetPath: Assets/QPathFinder/Sample/Scenes/Sample1_2D.unity
+  uploadId: 408090

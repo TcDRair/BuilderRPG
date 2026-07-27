@@ -1,2 +1,18 @@
 fileFormatVersion: 2
-guid: df46f615097bbc54f9b180510284a453
+guid: 7369c70d9c54f48ab88a0261d6059b88
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 126951
+  packageName: 2D/3D PathFinder Full
+  packageVersion: 2.0
+  assetPath: Assets/QPathFinder/Script/Utils.cs
+  uploadId: 408090

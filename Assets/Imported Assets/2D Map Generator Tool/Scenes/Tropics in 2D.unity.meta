@@ -1,7 +1,14 @@
 fileFormatVersion: 2
-guid: 360c26a129af52c4b8db9cd05a723e5c
+guid: fbff6452dd6998d4da2a29bfb9b7406f
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scenes/Tropics in 2D.unity
+  uploadId: 335159

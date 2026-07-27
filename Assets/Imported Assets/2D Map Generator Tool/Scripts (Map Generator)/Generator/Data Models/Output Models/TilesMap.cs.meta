@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: d86049c49c774c94eb1f5dd6a03edade
+guid: b52673486bbfaf143b60cbb112179049
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Data
+    Models/Output Models/TilesMap.cs
+  uploadId: 335159

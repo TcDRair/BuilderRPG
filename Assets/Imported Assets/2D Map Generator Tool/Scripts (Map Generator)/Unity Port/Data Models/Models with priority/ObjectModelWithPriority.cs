@@ -1,8 +1,8 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System;
 using System.Collections.Generic;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [Serializable]
     public class ObjectModelWithPriority : ModelWithPriority<ObjectModel>, IDataModelValidation

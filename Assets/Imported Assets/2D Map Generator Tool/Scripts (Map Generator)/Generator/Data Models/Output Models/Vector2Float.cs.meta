@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 0b12d84cf2df5e943ab017e2171cab96
+guid: 0cb7d603b62eb684db8789a170c39c1e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Data
+    Models/Output Models/Vector2Float.cs
+  uploadId: 335159

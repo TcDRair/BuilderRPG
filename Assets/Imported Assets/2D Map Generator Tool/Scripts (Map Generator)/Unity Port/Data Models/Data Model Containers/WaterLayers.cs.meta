@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 638856b6c7a426a40b0f8b0ee4958e7e
+guid: a849623faa71d834ea9157819788e272
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Models/Data Model Containers/WaterLayers.cs
+  uploadId: 335159

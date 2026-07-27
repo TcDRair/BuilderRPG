@@ -1,9 +1,9 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
-    public interface IGraphicalMapGeneratorTool
+    public interface IGraphicalMapGenerator
     {
         void Render(Transform parentTransform, TilesMap map);
     }

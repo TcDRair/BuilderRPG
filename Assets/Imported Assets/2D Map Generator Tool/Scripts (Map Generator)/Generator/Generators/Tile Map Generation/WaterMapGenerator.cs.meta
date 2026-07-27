@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 7ef9149b0db18f34882a8dbf12a6d0fb
+guid: fe87df4f87837a14ab7d0f9c5d66271f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Generators/Tile
+    Map Generation/WaterMapGenerator.cs
+  uploadId: 335159

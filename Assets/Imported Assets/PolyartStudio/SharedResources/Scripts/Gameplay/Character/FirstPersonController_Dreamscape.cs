@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-namespace Polyart { 
 public class FirstPersonController_Dreamscape : MonoBehaviour
 {
     public bool CanMove { get; private set; } = true;
@@ -268,7 +266,5 @@ public class FirstPersonController_Dreamscape : MonoBehaviour
             currentInteractable.OnInteract();
         }
     }
-
-}
 
 }

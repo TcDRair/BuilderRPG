@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 24324f4678b3218409b95333ca575896
+guid: 732d23e86250108409298b56b9d845db
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Graphical
+    Map Generation/Graphical Type/SpriteMapGenerator.cs
+  uploadId: 335159

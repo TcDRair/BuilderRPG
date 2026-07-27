@@ -1,9 +1,9 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     public class RouletteWheelSelector
     {

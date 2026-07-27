@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MapGeneratorTool.DataModels
+namespace MapGenerator.DataModels
 {
     public class BiomModel
     {

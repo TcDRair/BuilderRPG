@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     public class SpaceOrientationFactory
     {

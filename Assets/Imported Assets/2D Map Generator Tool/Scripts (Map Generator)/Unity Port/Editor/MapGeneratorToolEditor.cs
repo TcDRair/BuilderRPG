@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [CustomEditor(typeof(MapGeneratorTool))]
     public class MapGeneratorToolEditor : Editor
@@ -11,7 +11,7 @@ namespace MapGeneratorTool.UnityPort
         private SerializedProperty waterNoiseMapParameters;
         private SerializedProperty waterLayersProp;
 
-        private MapGeneratorTool MapGeneratorTool;
+        private MapGeneratorTool mapGenerator;
 
         void OnEnable()
         {
@@ -20,7 +20,7 @@ namespace MapGeneratorTool.UnityPort
             temperatureNoiseMapParameters = serializedObject.FindProperty("temperatureNoiseMapParameters");
             waterLayersProp = serializedObject.FindProperty("waterLayers").FindPropertyRelative("waterBiomes");
 
-            MapGeneratorTool = (MapGeneratorTool)target;
+            mapGenerator = (MapGeneratorTool)target;
         }
 
         public override void OnInspectorGUI()
@@ -31,10 +31,10 @@ namespace MapGeneratorTool.UnityPort
             DrawNoiseMapsParametersSection();
             EditorGUILayout.Space();
 
-            DrawWaterBiomesSection(MapGeneratorTool.waterLayers);
+            DrawWaterBiomesSection(mapGenerator.waterLayers);
             EditorGUILayout.Space();
 
-            DrawBiomesDiagramSection(MapGeneratorTool.biomesDiagram);
+            DrawBiomesDiagramSection(mapGenerator.biomesDiagram);
             EditorGUILayout.Space();
 
             DrawGenerationSection();
@@ -46,10 +46,10 @@ namespace MapGeneratorTool.UnityPort
         private void DrawSizeSection()
         {
             EditorGUILayout.LabelField("Size", EditorStyles.boldLabel);
-            MapGeneratorTool.width = EditorGUILayout.IntSlider(new GUIContent("Width", "Count of tiles in the X axis."),
-                                                           MapGeneratorTool.width, 10, 300);
-            MapGeneratorTool.height = EditorGUILayout.IntSlider(new GUIContent("Height", "Count of tiles in the Y axis."),
-                                                            MapGeneratorTool.height, 10, 300);         
+            mapGenerator.width = EditorGUILayout.IntSlider(new GUIContent("Width", "Count of tiles in the X axis."),
+                                                           mapGenerator.width, 10, 300);
+            mapGenerator.height = EditorGUILayout.IntSlider(new GUIContent("Height", "Count of tiles in the Y axis."),
+                                                            mapGenerator.height, 10, 300);         
         }
 
         private void DrawNoiseMapsParametersSection()
@@ -116,32 +116,32 @@ namespace MapGeneratorTool.UnityPort
         {
             EditorGUILayout.LabelField(new GUIContent("Generation"), EditorStyles.boldLabel);
 
-            MapGeneratorTool.generationType = (GraphicalGenerationType)EditorGUILayout.EnumPopup(
+            mapGenerator.generationType = (GraphicalGenerationType)EditorGUILayout.EnumPopup(
                 new GUIContent("Generation type", "The way a graphic representation of the map will be generated."),
-                MapGeneratorTool.generationType);
+                mapGenerator.generationType);
 
-            MapGeneratorTool.orientationType = (SpaceOrientationType)EditorGUILayout.EnumPopup(
+            mapGenerator.orientationType = (SpaceOrientationType)EditorGUILayout.EnumPopup(
                 new GUIContent("Space orientation", "The space orientation in which the map is generated."),
-                MapGeneratorTool.orientationType);
+                mapGenerator.orientationType);
 
-            MapGeneratorTool.generateOnStart = EditorGUILayout.Toggle(
+            mapGenerator.generateOnStart = EditorGUILayout.Toggle(
                 new GUIContent("Generate on start", "Is the map to be generated when the scene starts?"),
-                MapGeneratorTool.generateOnStart);
+                mapGenerator.generateOnStart);
 
-            MapGeneratorTool.generateRandomSeed = EditorGUILayout.Toggle(
+            mapGenerator.generateRandomSeed = EditorGUILayout.Toggle(
                 new GUIContent("Generate random seed", "Is the map to be generated based on random seed?"),
-                MapGeneratorTool.generateRandomSeed);
+                mapGenerator.generateRandomSeed);
 
-            if (!MapGeneratorTool.generateRandomSeed)
+            if (!mapGenerator.generateRandomSeed)
             {
                 EditorGUILayout.BeginHorizontal();
 
-                MapGeneratorTool.seed = EditorGUILayout.IntField(
+                mapGenerator.seed = EditorGUILayout.IntField(
                     new GUIContent("Seed", "Random factor based on which the map is generated."),
-                    MapGeneratorTool.seed);
+                    mapGenerator.seed);
 
                 if (GUILayout.Button("Random Seed"))
-                    MapGeneratorTool.RandomSeed();
+                    mapGenerator.RandomSeed();
 
                 EditorGUILayout.EndHorizontal();
             }
@@ -153,15 +153,15 @@ namespace MapGeneratorTool.UnityPort
 
             if (GUILayout.Button("Generate"))
             {
-                if (MapGeneratorTool.generateRandomSeed)
-                    MapGeneratorTool.RandomSeed();
+                if (mapGenerator.generateRandomSeed)
+                    mapGenerator.RandomSeed();
             
-                MapGeneratorTool.TryGenerate();
+                mapGenerator.TryGenerate();
             }
 
             if (GUILayout.Button("Clear"))
             {
-                MapGeneratorTool.Clear();
+                mapGenerator.Clear();
             }
 
             EditorGUILayout.EndHorizontal();

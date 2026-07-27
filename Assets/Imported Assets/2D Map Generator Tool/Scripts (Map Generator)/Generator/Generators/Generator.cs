@@ -1,8 +1,8 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System;
 using System.Collections.Generic;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     public class Generator
     {
@@ -37,14 +37,14 @@ namespace MapGeneratorTool.Generator
 
         public void Generate()
         {
-            BiomMapGeneratorTool biomMapGeneratorTool = new BiomMapGeneratorTool(random, biomes, temperatureNoiseMapParameters, heightNoiseMapParameters);
-            biomMapGeneratorTool.GenerateBiomMap(Map);
+            BiomMapGenerator biomMapGenerator = new BiomMapGenerator(random, biomes, temperatureNoiseMapParameters, heightNoiseMapParameters);
+            biomMapGenerator.GenerateBiomMap(Map);
 
             BiomMapSmoother biomMapSmoother = new BiomMapSmoother();
             biomMapSmoother.SmoothBiomMap(Map);
 
-            WaterMapGeneratorTool waterMapGeneratorTool = new WaterMapGeneratorTool(random, waterBiomes, waterNoiseMapParameters);
-            waterMapGeneratorTool.GenerateWaterMap(Map);
+            WaterMapGenerator waterMapGenerator = new WaterMapGenerator(random, waterBiomes, waterNoiseMapParameters);
+            waterMapGenerator.GenerateWaterMap(Map);
 
             WaterMapSmoother waterMapSmoother = new WaterMapSmoother(waterBiomes);
             waterMapSmoother.SmoothWaterMap(Map);

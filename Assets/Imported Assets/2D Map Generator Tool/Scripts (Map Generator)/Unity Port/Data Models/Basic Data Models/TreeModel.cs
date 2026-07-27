@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [CreateAssetMenu(menuName = "Map Generator/Tree Data")]
     public class TreeModel : PrefabModel, IDataModelValidation

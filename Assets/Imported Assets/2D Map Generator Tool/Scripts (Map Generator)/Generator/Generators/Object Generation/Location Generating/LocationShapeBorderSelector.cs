@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     public class LocationShapeBorderSelector
     {

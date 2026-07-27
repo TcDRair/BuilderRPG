@@ -1,8 +1,8 @@
-using System;
-using MapGeneratorTool.DataModels;
+﻿using System;
+using MapGenerator.DataModels;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     [Serializable]
     public class WaterNoiseMapParameters : NoiseMapParameters

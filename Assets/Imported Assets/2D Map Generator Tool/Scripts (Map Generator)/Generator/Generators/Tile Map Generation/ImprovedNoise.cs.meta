@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: b16018e0872a3094ba7f002226653a38
+guid: 36dae0cde25c50c4e92d460cde7c6442
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Generators/Tile
+    Map Generation/ImprovedNoise.cs
+  uploadId: 335159

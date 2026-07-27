@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using MapGeneratorTool.DataModels;
+﻿using System.Collections.Generic;
+using MapGenerator.DataModels;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Tile = UnityEngine.Tilemaps.Tile;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
-    public class TileMapGeneratorTool : IGraphicalMapGeneratorTool
+    public class TileMapGenerator : IGraphicalMapGenerator
     {
         private Tilemap groundTilemap;
         private Tilemap waterTilemap;
@@ -14,7 +14,7 @@ namespace MapGeneratorTool.UnityPort
         private Dictionary<Sprite, Tile> tileDictionary = new Dictionary<Sprite, Tile>();
         private readonly ISpaceOrientation spaceOrientation;
 
-        public TileMapGeneratorTool(ISpaceOrientation spaceOrientation)
+        public TileMapGenerator(ISpaceOrientation spaceOrientation)
         {
             this.spaceOrientation = spaceOrientation;
         }

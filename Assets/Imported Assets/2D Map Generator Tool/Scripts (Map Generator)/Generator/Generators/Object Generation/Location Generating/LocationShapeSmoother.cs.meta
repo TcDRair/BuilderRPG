@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 7c397d90ab52bda45856a7f46892d96e
+guid: 79bb2447276c0cd4ab4deabfc3847c44
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Generators/Object
+    Generation/Location Generating/LocationShapeSmoother.cs
+  uploadId: 335159

@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: acfbf57a8029c344b8c09ebc01ba7655
+guid: 53fd166f7dbfa094dafd7e6835b38d99
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Generator/Data
+    Models/Input Models/NoiseMapParametersModel.cs
+  uploadId: 335159

@@ -1,7 +1,14 @@
 fileFormatVersion: 2
-guid: 0e81d631faf3b664aa3153e2d7233e71
+guid: 3d36ee954c5d5cc41a00c9e7c7af110e
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scenes/Islands in 3D.unity
+  uploadId: 335159

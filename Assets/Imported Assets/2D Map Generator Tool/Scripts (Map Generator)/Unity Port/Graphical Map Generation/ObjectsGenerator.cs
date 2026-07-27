@@ -1,8 +1,8 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     public class ObjectsGenerator
     {

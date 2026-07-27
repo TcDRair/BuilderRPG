@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 8beee8d0ff532a24e82c86eb8d80d103
+guid: 8cfbcd0c701e649f5bc447f27e200cdc
+timeCreated: 1451311511
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 126951
+  packageName: 2D/3D PathFinder Full
+  packageVersion: 2.0
+  assetPath: Assets/QPathFinder/Sample/Scripts/MoveToPoint.cs
+  uploadId: 408090

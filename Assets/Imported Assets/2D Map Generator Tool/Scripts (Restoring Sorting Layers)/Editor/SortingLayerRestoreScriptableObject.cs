@@ -1,4 +1,4 @@
-using MapGeneratorTool.UnityPort;
+﻿using MapGenerator.UnityPort;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;

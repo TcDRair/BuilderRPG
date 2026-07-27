@@ -1,7 +1,7 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using System.Collections.Generic;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     public class LocationInstance
     {

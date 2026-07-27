@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace MapGeneratorTool.Generator
+namespace MapGenerator.Generator
 {
     public static class Extensions
     {

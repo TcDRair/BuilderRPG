@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 1fcfcf654e79d934395d3118d5b4095d
+guid: 8daa0d87eecf37143a022436c3a0715d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Models/Basic Data Models/TreeModel.cs
+  uploadId: 335159

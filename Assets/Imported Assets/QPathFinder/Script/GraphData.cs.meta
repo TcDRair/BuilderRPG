@@ -1,2 +1,17 @@
 fileFormatVersion: 2
-guid: 6a137ae86a491bc49a601935205f12c8
+guid: 19e8c27be4bbc0b44bc04044c5f57640
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 126951
+  packageName: 2D/3D PathFinder Full
+  packageVersion: 2.0
+  assetPath: Assets/QPathFinder/Script/GraphData.cs
+  uploadId: 408090

@@ -1,8 +1,8 @@
-using MapGeneratorTool.DataModels;
+﻿using MapGenerator.DataModels;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace MapGeneratorTool.UnityPort
+namespace MapGenerator.UnityPort
 {
     public class SpaceOrientation2D : ISpaceOrientation
     {

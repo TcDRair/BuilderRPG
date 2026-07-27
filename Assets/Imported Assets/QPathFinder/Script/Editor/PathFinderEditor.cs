@@ -247,7 +247,7 @@ namespace QPathFinder
                     Handles.color = color;
 
                 if ( canMove ) 
-                    { var fmh_250_78_638228971833057039 = Quaternion.identity; node.SetPosition ( Handles.FreeMoveHandle(node.Position, script.graphData.nodeSize, Vector3.zero, Handles.SphereHandleCap) ); }
+                    { var fmh_250_78_639207532592270477 = Quaternion.identity; node.SetPosition ( Handles.FreeMoveHandle(node.Position, script.graphData.nodeSize, Vector3.zero, Handles.SphereHandleCap) ); }
                 else
                     Handles.SphereHandleCap(0, node.Position, Quaternion.identity, script.graphData.nodeSize, EventType.Repaint);
             }

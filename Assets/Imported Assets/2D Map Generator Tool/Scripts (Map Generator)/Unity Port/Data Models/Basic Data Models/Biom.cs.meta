@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: c7dcc65c0df2b984ebd7afb078685f93
+guid: 54a9361619325944e8cd0bc94666d2cb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155839
+  packageName: 2D Map Generator Tool
+  packageVersion: 1.0.1
+  assetPath: Assets/2D Map Generator Tool/Scripts (Map Generator)/Unity Port/Data
+    Models/Basic Data Models/Biom.cs
+  uploadId: 335159
