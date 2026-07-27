@@ -19,6 +19,9 @@ Assets/Plugins/Editor/JetBrains*
 [Ll]ogs/
 [Mm]emoryCaptures/
 [Rr]ecordings/
+# MCP 스크린샷 등 디버그 산출물
+/[Aa]ssets/[Ss]creenshots/
+/[Aa]ssets/[Ss]creenshots.meta
 Assets/AssetStoreTools*
 # Unity local user project setting
 UserSettings/
