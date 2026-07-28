@@ -17832,6 +17832,12 @@ MonoBehaviour:
   target: {fileID: 1578950299}
   trackTarget: {fileID: 0}
   RelativePos: {x: 24, y: 20, z: -24}
+  minAlpha: 0.85
+  fadeSpeed: 0.02
+  blockingLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  floorGap: 0.2
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0

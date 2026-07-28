@@ -23,7 +23,6 @@ namespace Rair.Field.Maps
     }
     public override void OnInspectorGUI() {
       var inst = (RandomTextureGenerator)target;
-      var tg = inst.TerrainGenerator;
 
       #region Map Generator
       //* Inspector properties
@@ -66,9 +65,9 @@ namespace Rair.Field.Maps
       //* Progress Indiators
       EditorGUILayout.LabelField("Progress", bold);
         EditorGUI.indentLevel++;
-        if (inst.IsRunning()) {
+        if (MapGenerationRunner.IsRunning(inst)) {
           var m = inst.MapInst;
-          var g = inst.TerrainGenerator;
+          var g = MapGenerationRunner.Terrain;
           (var p, int step) =
             m.Timer.Finished is not true
               ? ((IProgressTimerProvider)m, 1)
@@ -83,7 +82,7 @@ namespace Rair.Field.Maps
             $"{p.Timer} [{step}/4]"
           );
           if (GUI.Button(Indented, "Cancel Generating")) {
-            inst.CancelGenerate();
+            MapGenerationRunner.Cancel(inst);
             aborted = true;
           }
           Repaint();
@@ -97,8 +96,8 @@ namespace Rair.Field.Maps
             );
           GUI.contentColor = temp;
           if (GUI.Button(Indented, "Restart Generator")) {
-            inst.CancelGenerate();
-            inst.Restart();
+            MapGenerationRunner.Cancel(inst);
+            MapGenerationRunner.Reset(inst);
             aborted = false;
           }
         } else {
@@ -113,7 +112,7 @@ namespace Rair.Field.Maps
               inst.riverCount = Random.Range(0, (int)((int)inst.mapSize/16 * inst.landRatio));
             }
             initial = false;
-            inst.TryMapGenerate(this);
+            MapGenerationRunner.Begin(inst, this);
           }
         }
         EditorGUI.indentLevel--;

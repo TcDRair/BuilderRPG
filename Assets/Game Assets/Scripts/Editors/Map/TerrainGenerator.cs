@@ -9,23 +9,10 @@ using Assets.Maps;
 using Assets.Util;
 
 //? 이 파일은 Rair.Editor 어셈블리(에디터 전용)에 속합니다. (문서 05 P3-4)
+//? TerrainVar/SmoothVar는 씬에 직렬화되므로 RandomTextureGenerator.cs(런타임)에 있습니다.
+//? 이쪽으로 도로 옮기면 플레이 모드를 오갈 때 설정이 사라집니다.
 namespace Rair.Field.Maps {
-[System.Serializable]
-public struct TerrainVar {
-  public Transform propParent;
-  public TerrainPropData data;
-  public SmoothVar smoothenBorder, smoothenBiomes;
 
-  [System.Serializable]
-  public struct SmoothVar {
-    public bool active;
-    [Range(0, .2f)] public float randomize;
-    [Range(1, 5)] public int range;
-    [Range(1, 3)] public int iterations;
-  }
-} 
-
-[System.Serializable]
 public class TerrainGenerator : IProgressTimerProvider
 {
   #region Inspector
@@ -96,18 +83,24 @@ public class TerrainGenerator : IProgressTimerProvider
     if (vars.smoothenBorder.active) {
       int n = vars.smoothenBorder.iterations, r = vars.smoothenBorder.range;
       RectInt bound = new(0, 0, MapSize, MapSize);
-      for (int c = 0; c < n; c++) for (int i = 0; i < MapSize; i++) for (int j = 0; j < MapSize; j++) {
-        float sum = 0, count = 0;
-        RectInt rect = new(i - r - 1, j - r - 1, 2 * r + 3, 2 * r + 3);
-        foreach (var p in rect.allPositionsWithin) if (bound.Contains(p)) {
-          sum += heights[p.x, p.y];
-          count++;
+      //! 이웃 평균을 같은 배열에 바로 쓰면 이미 갱신된 이웃이 다시 읽혀
+      //! 주사 방향(좌상 → 우하)으로 편향이 생깁니다. 버퍼를 교대합니다.
+      var buffer = new float[MapSize, MapSize];
+      for (int c = 0; c < n; c++) {
+        for (int i = 0; i < MapSize; i++) for (int j = 0; j < MapSize; j++) {
+          float sum = 0, count = 0;
+          RectInt rect = new(i - r - 1, j - r - 1, 2 * r + 3, 2 * r + 3);
+          foreach (var p in rect.allPositionsWithin) if (bound.Contains(p)) {
+            sum += heights[p.x, p.y];
+            count++;
+          }
+          buffer[i, j] = sum / count;
+          if (Timer.Elapsed) {
+            Timer.SetDetail(i * MapSize + j + c * MapSize * MapSize, heights.Length * n);
+            yield return null;
+          }
         }
-        heights[i, j] = sum / count;
-        if (Timer.Elapsed) {
-          Timer.SetDetail(i * MapSize + j + c * MapSize * MapSize, heights.Length * n);
-          yield return null;
-        }
+        (heights, buffer) = (buffer, heights);
       }
     }
 
@@ -224,7 +217,10 @@ public class TerrainGenerator : IProgressTimerProvider
           result[j, k] = sum;
           if (Timer.Elapsed) { Timer.SetDetail(i * width * width + j * width + k, n * width * width); yield return null; }
         }
-        splatmap = result;
+        //! 예전에는 `splatmap = result` 한 방향으로만 대입해서, 2회차부터 두 변수가
+        //! 같은 배열을 가리켜 하이트맵과 똑같이 in-place가 되었습니다.
+        //! (iterations 기본값이 1이라 그때만 무사했습니다.)
+        (splatmap, result) = (result, splatmap);
       }
     }
     var splatmapData = new float[width, width, 8];

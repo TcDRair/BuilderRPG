@@ -42,7 +42,18 @@ public class MainCamera : MonoBehaviour
   }
 
   #region Prop Transparency
-  const float MIN_ALPHA = 0.85f, FADE_SPEED = 0.02f;
+  //? 아래 셋은 눈으로 보면서 정해야 하는 값이라 인스펙터에 노출합니다.
+  //? 플레이 모드에서 바꿔 가며 확인하고, 정해지면 기본값을 고치십시오.
+  //? (예전에는 const라 값을 바꿀 때마다 재컴파일 후 다시 플레이해야 했습니다.)
+  [Header("Prop Transparency")]
+  [Tooltip("가림 오브젝트가 도달할 최소 불투명도. 낮을수록 더 비칩니다.")]
+  [Range(0f, 1f)] public float minAlpha = 0.85f;
+  [Tooltip("프레임당 알파 변화량.")]
+  [Range(0.001f, 0.2f)] public float fadeSpeed = 0.02f;
+  [Tooltip("가림 판정 대상 레이어.")]
+  public LayerMask blockingLayers = ~0;
+  [Tooltip("플레이어 쪽 레이 끝을 이만큼 줄입니다. 바닥을 레이어로 걸러내면 0으로 두십시오.")]
+  [Range(0f, 1f)] public float floorGap = 0.2f;
   class Blender {
     public Material material;
     public URPLitVar matVar;
@@ -69,8 +80,11 @@ public class MainCamera : MonoBehaviour
     //TODO 카메라가 플레이어를 추적하고 있지 않을 경우 일시적으로 투명화를 중단합니다.
     Vector3 line = target.position - T.position;
     //* 카메라와 플레이어 사이에 존재하는 모든 Collider를 검사하고 적용 대상 여부를 판단합니다.
-    foreach (var hit in Physics.RaycastAll(T.position, line, line.magnitude - 0.2f)) {
-      // 바닥 타일을 제외하기 위해 Ray를 약간 짧게 설정합니다.
+    foreach (var hit in Physics.RaycastAll(T.position, line, line.magnitude - floorGap, blockingLayers)) {
+      //! 레이 길이 단축(floorGap)은 마스크를 정하기 전까지 남겨 둡니다.
+      //! blockingLayers 기본값이 "전체"라 길이까지 늘리면 플레이어 발밑 바닥이 가림 대상이 됩니다.
+      //! 가림 대상 레이어를 지정하고 나면 floorGap을 0으로 두십시오.
+      //! 그래야 플레이어 바로 앞의 얇은 가림물도 잡힙니다.
       Renderer renderer;
       if (
         ( // 렌더러 존재 검사
@@ -110,13 +124,13 @@ public class MainCamera : MonoBehaviour
           pair.Value.targeted = true;
         }
         var color = pair.Value.material.color;
-        color.a = Mathf.Clamp(color.a - FADE_SPEED, MIN_ALPHA, 1f);
+        color.a = Mathf.Clamp(color.a - fadeSpeed, minAlpha, 1f);
         pair.Value.material.color = color; // Dict Value(Blender) is called by reference
       }
       //* 2. 카메라를 가리지 않는 오브젝트는 점차 알파를 회복하고, 완전히 회복한 오브젝트는 더 이상 추적하지 않습니다.
       else {
         var color = pair.Value.material.color;
-        color.a = Mathf.Clamp(color.a + FADE_SPEED, MIN_ALPHA, pair.Value.alpha);
+        color.a = Mathf.Clamp(color.a + fadeSpeed, minAlpha, pair.Value.alpha);
         pair.Value.material.color = color;
         if (color.a == pair.Value.alpha) {
           pair.Value.material.SetLitVar(pair.Value.matVar);

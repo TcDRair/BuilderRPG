@@ -120,23 +120,14 @@ namespace Rair.Tests
     }
 
     [Test]
-    [Ignore("Graph.AssignLands가 목표 비율로 수렴하지 않습니다. 원인과 실측값은 문서 05의 신규 항목 참조. " +
-            "IslandShape.MakePerlin이 호출마다 새 랜덤 오프셋을 만들어, 해수면 이분 탐색이 매 반복 다른 지형을 측정합니다.")]
     public void 육지_비율이_목표치_1퍼센트_이내로_수렴한다([Values(1, 7, 42, 99, 123)] int seed) {
-      //! 이것이 원래 의도된 성질입니다. AssignLands의 종료 조건(|target - result| < .01)이
-      //! 그렇게 적혀 있습니다. 지금은 그 조건에 도달하지 못한 채 시도 횟수를 소진하고 끝납니다.
-      //! 결함을 고치면 이 [Ignore]를 떼십시오.
+      //? AssignLands의 종료 조건(|target - result| < .01)이 실제로 달성되는지 봅니다.
+      //? 이 테스트는 P0-8 때문에 한동안 [Ignore] 상태였습니다.
+      //? 원인은 MakePerlin이 호출마다 지형을 새로 뽑아 탐색 대상이 고정되지 않은 것이었습니다.
+      //!
+      //! 여기서 재는 것은 생성 완료 후의 값이라 AssignLands가 본 값과 미세하게 다릅니다.
+      //! AssignCoasts가 맵 경계 Corner를 물로 덮어쓰기 때문인데, 실측 차이는 0.4%p 이내입니다.
       Assert.That(LandRatioOf(Generate(seed)), Is.EqualTo(LAND_RATIO).Within(0.01f));
-    }
-
-    [Test]
-    public void 육지_비율이_지형이라_부를_수_있는_범위에는_있다([Values(1, 7, 42, 99, 123)] int seed) {
-      //? 위 성질이 깨져 있는 동안에도 "전부 바다" 또는 "전부 육지"로 무너지는 것은 막아야 합니다.
-      //? 실측 범위는 13% ~ 36%이므로, 그 바깥으로 나가면 조정 로직이 더 나빠진 것입니다.
-      float landRatio = LandRatioOf(Generate(seed));
-
-      Assert.That(landRatio, Is.InRange(0.05f, 0.60f),
-        $"육지 비율 {landRatio:P1}은 섬이라고 보기 어렵습니다.");
     }
 
     [Test]
