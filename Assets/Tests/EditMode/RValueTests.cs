@@ -1,4 +1,7 @@
+using System.Text.RegularExpressions;
 using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Rair.Tests
 {
@@ -145,6 +148,31 @@ namespace Rair.Tests
     }
 
     [Test]
+    public void 계약을_어긴_적용기는_순서_의존성_검사에_걸린다() {
+      //? P1-5 처리 결과. 컴파일러가 막을 수 없는 계약이라 실제로 순서를 바꿔 검사합니다.
+      //? 아래 적용기는 받은 값에서 파생시키지 않고 새 RVFloat를 만들어 반환합니다.
+      var stat = new RAFloat(100f, 0, 10000);
+      RAFloat.Applier wellBehaved = v => v + 10f;
+      RAFloat.Applier fabricating = v => new RVFloat(v.Value * 2f, 0, 10000);
+
+      stat.Apply += wellBehaved;
+      stat.Apply += fabricating;
+
+      LogAssert.Expect(LogType.Error, new Regex("적용기 등록 순서가 결과를 바꿉니다"));
+      _ = stat.Value;
+    }
+
+    [Test]
+    public void 적용기가_하나뿐이면_순서_검사를_하지_않는다() {
+      //? 순서라는 것이 없으므로 검사 비용도 들이지 않습니다.
+      var stat = new RAFloat(100f, 0, 10000);
+      RAFloat.Applier fabricating = v => new RVFloat(v.Value * 2f, 0, 10000);
+      stat.Apply += fabricating;
+
+      Assert.That(stat.Value, Is.EqualTo(200f).Within(EPS));
+    }
+
+    [Test]
     public void RAFloat_적용기_등록_순서는_결과를_바꾸지_않는다() {
       RAFloat.Applier add10 = v => v + 10f;
       RAFloat.Applier double_ = v => v * 2f;
@@ -163,34 +191,57 @@ namespace Rair.Tests
 
     #endregion
 
-    #region P1-1 특성화 — RAFloat는 최종 클램프를 하지 않는다
+    #region P1-1 — RMFloat와 RAFloat가 같은 식에 같게 반응한다
 
     [Test]
-    public void RAFloat는_RMFloat와_달리_최종_클램프를_하지_않는다() {
-      //! 특성화 테스트 — 현재 동작을 고정할 뿐, 이것이 옳다는 뜻은 아닙니다.
-      //! 문서 05 P1-1 참조. 상속 관계인 두 타입이 같은 식에 다르게 반응합니다.
-      //!   RMFloat.Value => Clamp((value + add) * mul, Min, Max)
-      //!   RAFloat.Value => RVValue.Value  (= (baseValue + Adder) * Multiplier, 클램프 없음)
-      //! P1-1을 처리하면 이 테스트가 깨져야 정상입니다. 그때 기대값을 20으로 바꾸십시오.
+    public void RAFloat도_RMFloat와_같이_최종_클램프를_한다() {
+      //? P1-1 처리 결과. 이전에는 RMFloat만 클램프해서 상속 관계인 두 타입이
+      //? 같은 식에 다르게 반응했습니다(20 대 30).
       var bounded = new RMFloat(10f, 0, 20);
-      var unbounded = new RAFloat(10f, 0, 20);
+      var applied = new RAFloat(10f, 0, 20);
 
       bounded *= 3f;
-      unbounded *= 3f;
+      applied *= 3f;
 
-      Assert.That(bounded.Value, Is.EqualTo(20f).Within(EPS), "RMFloat는 선언 범위 상한에서 잘립니다.");
-      Assert.That(unbounded.Value, Is.EqualTo(30f).Within(EPS), "RAFloat는 선언 범위를 넘어섭니다.");
+      Assert.That(applied.Value, Is.EqualTo(bounded.Value).Within(EPS), "두 타입의 결과가 같아야 합니다.");
+      Assert.That(applied.Value, Is.EqualTo(20f).Within(EPS), "선언 범위 상한에서 잘려야 합니다.");
     }
 
     [Test]
-    public void RAFloat의_기저값은_생성_시점에만_클램프된다() {
-      //? 상한을 넘겨 생성하면 기저값은 잘리지만, 그 뒤 승산 결과는 잘리지 않습니다.
-      var stat = new RAFloat(50f, 0, 20);
+    public void RAFloat의_클램프는_적용기_체인_이후에_걸린다() {
+      //? 순서가 중요합니다. 체인 이전에 걸면 적용기가 상한을 다시 넘길 수 있습니다.
+      var stat = new RAFloat(10f, 0, 20);
+      RAFloat.Applier triple = v => v * 3f;
+      stat.Apply += triple;
 
-      Assert.That(stat.Value, Is.EqualTo(20f).Within(EPS), "생성 시점의 기저값은 클램프됩니다.");
+      Assert.That(stat.Value, Is.EqualTo(20f).Within(EPS), "적용기 결과까지 포함해 클램프되어야 합니다.");
+      Assert.That(stat.RVValue.Value, Is.EqualTo(30f).Within(EPS), "RVValue는 클램프 이전의 원본입니다.");
+    }
 
-      stat *= 2f;
-      Assert.That(stat.Value, Is.EqualTo(40f).Within(EPS), "승산 결과는 클램프되지 않습니다.");
+    [Test]
+    public void RAFloat의_클램프는_하한에도_걸린다() {
+      //! 실사용에서 실제로 문제가 되던 경로입니다.
+      //! LightBreeze가 RunSPCost를 *0.5로 만든 상태에서 RunnersHigh 적용기가
+      //! 최대 스택으로 *0 을 걸면 배율 합이 -0.5가 되어 소모값이 음수가 됩니다.
+      //! SP를 소모하는 대신 회복하게 되므로, 하한 0에서 잘려야 합니다.
+      var runSPCost = new RAFloat(6f, 0);
+      runSPCost *= 0.5f;
+
+      RAFloat.Applier drainToZero = v => v * 0f;
+      runSPCost.Apply += drainToZero;
+
+      Assert.That(runSPCost.RVValue.Value, Is.EqualTo(-3f).Within(EPS), "클램프 이전에는 음수입니다.");
+      Assert.That(runSPCost.Value, Is.EqualTo(0f).Within(EPS), "최종값은 하한 0에서 잘려야 합니다.");
+    }
+
+    [Test]
+    public void Nullify는_클램프_하한보다_우선한다() {
+      //? 하한이 양수여도 Nullify는 0을 반환해야 합니다. Clamp를 그냥 씌우면 하한이 나옵니다.
+      var stat = new RAFloat(50f, 10, 100);
+      Assert.That(stat.Value, Is.EqualTo(50f).Within(EPS));
+
+      stat.Nullify = true;
+      Assert.That(stat.Value, Is.EqualTo(0f).Within(EPS), "하한 10이 아니라 0이어야 합니다.");
     }
 
     #endregion

@@ -93,25 +93,32 @@ namespace Rair.Field
     readonly Dictionary<UnitEffect.IDSet, UnitEffect> effects = new();
     /// <summary>현재 적용중인 효과를 반환합니다. 여기의 요소를 변경시켜도 실제 효과에는 영향을 주지 않습니다.</summary>
     public List<UnitEffect> Effects => effects.Values.ToList();
+    /// <summary>효과를 적용합니다. 이미 걸려 있으면 <see cref="UnitEffect.Refresh"/>에 위임합니다.</summary>
+    /// <remarks>
+    /// 중첩 규칙은 효과가 정합니다. 유닛은 "이미 있는가"만 판단합니다.
+    /// 기본 규칙은 갱신(지속시간이 긴 쪽을 남김)입니다.
+    /// </remarks>
     public void ApplyEffect(UnitEffect effect) {
-      if (effects.TryGetValue(effect.ID, out var e)) {
-        //todo 효과 중첩 or 갱신 or 덮어쓰기.
-        //todo Effect 내에서 수행할 것?
-      } else {
+      if (effects.TryGetValue(effect.ID, out var current)) current.Refresh(effect);
+      else {
         effects.Add(effect.ID, effect);
-        effect.OnApply(this);
+        effect.Begin(this);
       }
     }
-    public void RemoveEffect(UnitEffect effect, int stack = -1) {
-      if (!effects.TryGetValue(effect.ID, out var e)) return;
-      if (stack < 0){
-        e.OnRemove(this);
-        effects.Remove(e.ID);
-      } else {
-        //todo 효과 중첩 제거. Effect 내에서 수행할 것
-        //todo 중첩 제거 시 만료되는 것도 있고 아닌 것도 있기 때문
+
+    /// <summary>효과를 걷어냅니다.</summary>
+    /// <param name="stack">음수면 통째로, 0 이상이면 그 수만큼 중첩만 걷어냅니다.</param>
+    public void RemoveEffect(UnitEffect.IDSet id, int stack = -1) {
+      if (!effects.TryGetValue(id, out var e)) return;
+
+      if (stack < 0) {
+        e.End(this);
+        effects.Remove(id);
       }
+      //? 중첩을 얼마나 걷어내면 만료인지는 효과마다 다르므로 효과가 판단합니다.
+      else if (e.Consume(stack, this)) effects.Remove(id);
     }
+    public void RemoveEffect(UnitEffect effect, int stack = -1) => RemoveEffect(effect.ID, stack);
     #endregion
 
     #region Unity Events + Tick
