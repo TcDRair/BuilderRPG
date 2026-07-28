@@ -3,8 +3,6 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using UnityEditorInternal;
 
 namespace Rair.Field.Interact
 {
@@ -194,6 +192,10 @@ namespace Rair.Field.Interact
 
 
 
+//? 아래 인스펙터는 비활성 상태입니다. Prop에서 제거된 triggers/cancellers/conditions를
+//? 참조하고 있어 되살리려면 그 필드부터 복원해야 합니다.
+//? 되살릴 때는 이 파일이 아니라 Scripts/Editors/ 아래(Rair.Editor)에 두어야 합니다.
+//? Prop 본체는 런타임 어셈블리에 있으므로 여기서는 UnityEditor를 참조할 수 없습니다.
 #if false
 	[CustomEditor(typeof(Prop), true)]
 	public class PropEditor : Editor

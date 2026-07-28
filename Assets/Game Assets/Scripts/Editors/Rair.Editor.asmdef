@@ -1,0 +1,21 @@
+{
+    "name": "Rair.Editor",
+    "rootNamespace": "Rair",
+    "references": [
+        "Rair.Runtime",
+        "UnityEngine.UI",
+        "Unity.TextMeshPro",
+        "Unity.EditorCoroutines.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

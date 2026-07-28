@@ -34698,7 +34698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba229ec29d7ff874bbc31c5fbf9a50a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 1804493393}
+  terrain: {fileID: 1086074461}
   player: {fileID: 1586114823}
   mapData: {fileID: 2800000, guid: 606afec30d4d5a14187b15371fc03cca, type: 3}
   Blue: {fileID: 2379679470469065447, guid: 4e0b287fdd152b84fa15f0ef049db8bc, type: 3}

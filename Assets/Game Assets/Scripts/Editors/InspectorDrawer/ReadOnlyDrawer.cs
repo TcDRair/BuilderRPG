@@ -1,16 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-#if UNITY_EDITOR
-
-/// <summary>인스펙터상에서 값을 변경할 수 없도록 처리합니다.</summary>
-public class ReadOnlyAttribute : PropertyAttribute {
-  public ReadOnlyAttribute() {} // to find references
-}
-
-
+//? 어트리뷰트 정의는 Scripts/Attributes/ReadOnlyAttribute.cs (런타임 어셈블리)에 있습니다.
 [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
 public class ReadOnlyDrawer : PropertyDrawer {
   public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
@@ -23,5 +14,3 @@ public class ReadOnlyDrawer : PropertyDrawer {
     GUI.enabled = true;
   }
 }
-
-#endif

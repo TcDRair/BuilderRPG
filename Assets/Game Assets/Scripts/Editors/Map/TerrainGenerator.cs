@@ -8,7 +8,7 @@ using Unity.EditorCoroutines.Editor;
 using Assets.Maps;
 using Assets.Util;
 
-#if UNITY_EDITOR
+//? 이 파일은 Rair.Editor 어셈블리(에디터 전용)에 속합니다. (문서 05 P3-4)
 namespace Rair.Field.Maps {
 [System.Serializable]
 public struct TerrainVar {
@@ -143,6 +143,37 @@ public class TerrainGenerator : IProgressTimerProvider
     }}
   }
 
+  /// <summary>바이옴 하나가 8개 터레인 레이어에 배분되는 가중치를 반환합니다.</summary>
+  /// <remarks>
+  /// <b>불변 조건 — 모든 행의 합은 1이어야 합니다.</b> (미지정 바이옴을 뜻하는 기본값은 예외)
+  /// 합이 1이 아니면 해당 지점의 터레인 블렌딩이 어두워지거나 과포화됩니다.
+  /// <br/>
+  /// 이 표는 원래 <see cref="SetSplatMaps"/>의 이중 루프 안에 인라인으로 있었습니다.
+  /// 검증할 방법이 없어 밖으로 꺼냈을 뿐, 값과 동작은 그대로입니다.
+  /// </remarks>
+  public static float[] BiomeWeights(Biome biome) => biome switch {
+    //? Note this :                                   Grass  Dirt  Sand  Snow  Lush Bleak  Dark  Water
+    Biome.Ice                     => new float[] {    0,    0,    0, .70f,    0,    0,    0, .30f },
+    Biome.Lake                    => new float[] {    0,    0,    0,    0,    0,    0,    0,    1 },
+    Biome.Bare                    => new float[] { .05f, .75f,    0,    0,    0, .10f, .10f,    0 },
+    Biome.Snow                    => new float[] {    0,    0,    0,    1,    0,    0,    0,    0 },
+    Biome.Ocean                   => new float[] {    0,    0,    0,    0,    0,    0, .20f, .80f },
+    Biome.Beach                   => new float[] {    0, .15f, .70f,    0,    0,    0, .15f,    0 },
+    Biome.Marsh                   => new float[] {    0, .60f,    0,    0,    0, .10f, .30f,    0 },
+    Biome.Taiga                   => new float[] { .25f, .25f,    0, .40f, .10f,    0,    0,    0 },
+    Biome.Tundra                  => new float[] {    0, .45f,    0, .45f, .10f,    0,    0,    0 },
+    Biome.Scorched                => new float[] {    0, .40f, .10f,    0,    0, .50f,    0,    0 },
+    Biome.Grassland               => new float[] {    1,    0,    0,    0,    0,    0,    0,    0 },
+    Biome.Shrubland               => new float[] { .40f, .10f,    0,    0, .50f,    0,    0,    0 },
+    Biome.TemperateDesert         => new float[] {    0,    0, .90f,    0,    0, .10f,    0,    0 },
+    Biome.SubtropicalDesert       => new float[] {    0, .20f, .70f,    0,    0, .10f,    0,    0 },
+    Biome.TropicalRainyForest     => new float[] {    0, .30f, .60f,    0, .10f,    0,    0,    0 },
+    Biome.TemperateRainyForest    => new float[] {    0, .50f,    0,    0, .50f,    0,    0,    0 },
+    Biome.TropicalSeasonForest    => new float[] { .30f, .20f, .10f,    0, .40f,    0,    0,    0 },
+    Biome.TemperateDecidousForest => new float[] { .40f,    0,    0,    0, .60f,    0,    0,    0 },
+    _                             => new float[] {    0,    0,    0,    0,    0,    0,    0,    0 }
+  };
+
   IEnumerator SetSplatMaps() {
     // Get a reference to the terrain data
     int width = MapData.width;
@@ -160,31 +191,8 @@ public class TerrainGenerator : IProgressTimerProvider
     Timer.Next();
     var splatmap = new float[width, width][];
     
-    for (int y = 0; y < width; y++) for (int x = 0; x < width; x++) {        
-      //? 모든 바이옴 행의 가중치 합은 1이어야 한다. (Biome 18종 전부 명시, 검산 완료)
-      float[] cellData = biomes[y, x] switch {
-        //? Note this :                                   Grass  Dirt  Sand  Snow  Lush Bleak  Dark  Water
-        Biome.Ice                     => new float[] {    0,    0,    0, .70f,    0,    0,    0, .30f },
-        Biome.Lake                    => new float[] {    0,    0,    0,    0,    0,    0,    0,    1 },
-        Biome.Bare                    => new float[] { .05f, .75f,    0,    0,    0, .10f, .10f,    0 },
-        Biome.Snow                    => new float[] {    0,    0,    0,    1,    0,    0,    0,    0 },
-        Biome.Ocean                   => new float[] {    0,    0,    0,    0,    0,    0, .20f, .80f },
-        Biome.Beach                   => new float[] {    0, .15f, .70f,    0,    0,    0, .15f,    0 },
-        Biome.Marsh                   => new float[] {    0, .60f,    0,    0,    0, .10f, .30f,    0 },
-        Biome.Taiga                   => new float[] { .25f, .25f,    0, .40f, .10f,    0,    0,    0 },
-        Biome.Tundra                  => new float[] {    0, .45f,    0, .45f, .10f,    0,    0,    0 },
-        Biome.Scorched                => new float[] {    0, .40f, .10f,    0,    0, .50f,    0,    0 },
-        Biome.Grassland               => new float[] {    1,    0,    0,    0,    0,    0,    0,    0 },
-        Biome.Shrubland               => new float[] { .40f, .10f,    0,    0, .50f,    0,    0,    0 },
-        Biome.TemperateDesert         => new float[] {    0,    0, .90f,    0,    0, .10f,    0,    0 },
-        Biome.SubtropicalDesert       => new float[] {    0, .20f, .70f,    0,    0, .10f,    0,    0 },
-        Biome.TropicalRainyForest     => new float[] {    0, .30f, .60f,    0, .10f,    0,    0,    0 },
-        Biome.TemperateRainyForest    => new float[] {    0, .50f,    0,    0, .50f,    0,    0,    0 },
-        Biome.TropicalSeasonForest    => new float[] { .30f, .20f, .10f,    0, .40f,    0,    0,    0 },
-        Biome.TemperateDecidousForest => new float[] { .40f,    0,    0,    0, .60f,    0,    0,    0 },
-        _                             => new float[] {    0,    0,    0,    0,    0,    0,    0,    0 }
-      };
-      splatmap[x, y] = cellData;
+    for (int y = 0; y < width; y++) for (int x = 0; x < width; x++) {
+      splatmap[x, y] = BiomeWeights(biomes[y, x]);
       if (Timer.Elapsed) { Timer.SetDetail(y * MapTData.alphamapHeight + x, total); yield return null; }
     }
 
@@ -226,4 +234,3 @@ public class TerrainGenerator : IProgressTimerProvider
   }
 }
 }
-#endif

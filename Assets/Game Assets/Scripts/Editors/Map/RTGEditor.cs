@@ -5,7 +5,6 @@ using UnityEditor.SceneManagement;
 using Assets.Maps;
 using Assets.Util;
 
-#if UNITY_EDITOR
 namespace Rair.Field.Maps
 {
   [CustomEditor(typeof(RandomTextureGenerator))]
@@ -123,4 +122,3 @@ namespace Rair.Field.Maps
     Rect Indented => EditorGUI.IndentedRect(EditorGUILayout.GetControlRect());
   }
 }
-#endif

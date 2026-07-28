@@ -25,7 +25,8 @@ public static class StringExtensions
 		if (time < 86400) return (time / 3600f).ToString("F0") + "시간";
 		return (time / 86400f).ToString("F0") + "일";
 	}
-	public static string ToNiceString(this string str) => UnityEditor.ObjectNames.NicifyVariableName(str);
+	//? ToNiceString(this string)은 UnityEditor.ObjectNames.NicifyVariableName 래퍼였으나
+	//? 호출부가 없어 제거했습니다. 인스펙터 라벨 정규화가 필요하면 Rair.Editor 쪽에 두십시오.
 	public static string ToNiceString(this Vector2Int vec) => $"({vec.x}/{vec.y})";
 	public static string ToColonNotation(this float time)
 		=> $"{(int)(time/3600):D1}:{(int)(time/60)%60:D2}:{(int)time%60:D2}";

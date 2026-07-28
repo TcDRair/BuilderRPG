@@ -1,20 +1,7 @@
-// using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-#if UNITY_EDITOR
-/// <summary>인스펙터상에서 보이는 변수명을 주어진 문자열로 변경합니다.</summary>
-public class InspectorNameAttribute : PropertyAttribute
-{
-    public string name;
-    private InspectorNameAttribute() {}
-    public InspectorNameAttribute(string name) {
-        this.name = name;
-    }
-}
-
+//? 어트리뷰트 정의는 Scripts/Attributes/InspectorNameAttribute.cs (런타임 어셈블리)에 있습니다.
 [CustomPropertyDrawer(typeof(InspectorNameAttribute))]
 public class InspectorNameDrawer : PropertyDrawer
 {
@@ -24,4 +11,3 @@ public class InspectorNameDrawer : PropertyDrawer
         EditorGUI.PropertyField(position, property, label);
     }
 }
-#endif

@@ -1,4 +1,5 @@
-#if UNITY_EDITOR
+//? 이 파일은 Rair.Editor 어셈블리(에디터 전용)에 속합니다.
+//? AssetDatabase / EditorCoroutine 의존을 걷어내야 런타임 생성이 가능해집니다. (문서 05 P3-4)
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -99,4 +100,3 @@ namespace Rair.Field.Maps
     }
   }
 }
-#endif
