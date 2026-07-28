@@ -47,7 +47,9 @@ namespace Rair.Field.Values
       var newGrids = new Occupy[Size * Size];
       for (int i = 0; i < Size * Size; i++) {
         RectInt rect = new(i % Size * scale, i / Size * scale, scale, scale);
-        foreach (var p in rect.allPositionsWithin) newGrids[i] &= data.ElementAt(p.x + p.y * width);
+        //? 축소 셀은 포함된 원본 셀들의 점유 플래그를 모두 합집합으로 가진다.
+        //? (하나라도 막혀 있으면 막힌 것으로 본다. 범위 밖을 FULL로 취급하는 것과 같은 보수적 기준)
+        foreach (var p in rect.allPositionsWithin) newGrids[i] |= data.ElementAt(p.x + p.y * width);
       }
       return newGrids;
     }

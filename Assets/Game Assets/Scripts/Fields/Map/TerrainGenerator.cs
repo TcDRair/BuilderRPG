@@ -161,7 +161,8 @@ public class TerrainGenerator : IProgressTimerProvider
     var splatmap = new float[width, width][];
     
     for (int y = 0; y < width; y++) for (int x = 0; x < width; x++) {        
-      float[] cellData = biomes[y, x] switch { //TODO Fill Weights properly (sum=1)
+      //? 모든 바이옴 행의 가중치 합은 1이어야 한다. (Biome 18종 전부 명시, 검산 완료)
+      float[] cellData = biomes[y, x] switch {
         //? Note this :                                   Grass  Dirt  Sand  Snow  Lush Bleak  Dark  Water
         Biome.Ice                     => new float[] {    0,    0,    0, .70f,    0,    0,    0, .30f },
         Biome.Lake                    => new float[] {    0,    0,    0,    0,    0,    0,    0,    1 },
