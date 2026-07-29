@@ -41,9 +41,24 @@ namespace Rair.Field.Maps
     public bool IsGenerating { get; set; }
     /// <summary>생성된 지도.</summary>
     public Map MapInst { get; set; }
+    /// <summary>진행 중인 지형 생성기. 진행률 표시에 씁니다.</summary>
+    public TerrainGenerator TerrainGen { get; set; }
 
     public Texture2D Map => MapInst?.MapTexture?.Map;
     public Texture2D MapData => MapInst?.MapTexture?.MapData;
     #endregion
+
+    /// <summary>인게임에서 맵을 생성합니다.</summary>
+    /// <remarks>
+    /// 플레이 모드·빌드 전용입니다. 에디트 모드에서는 <c>MonoBehaviour</c> 코루틴이 돌지 않으므로
+    /// <c>Rair.Editor</c>의 러너(<c>EditorCoroutine</c> 기반)를 쓰십시오.
+    /// <para>
+    /// 저장 단계는 건너뜁니다. 프로젝트에 PNG를 쓰는 일이라 에디터에서만 의미가 있습니다.
+    /// </para>
+    /// </remarks>
+    public Coroutine Generate() {
+      if (IsGenerating) { Debug.LogWarning("이미 생성 중입니다."); return null; }
+      return StartCoroutine(MapGeneration.Run(this));
+    }
   }
 }

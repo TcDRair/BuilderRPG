@@ -110,6 +110,26 @@ namespace Rair.Field
       $"Run Speed Multiplier: Light {RunSpeedM_Light}, Heavy {WalkSpeedM_Heavy}\n" +
       $"SP Cost Multiplier: Light {RunSPCostM_Light}, Heavy {WalkSPCostM_Heavy}\n";
   }
+  /// <summary>유닛의 능력치입니다.</summary>
+  /// <remarks>
+  /// <b>이 struct를 복사한 뒤 쓰지 마십시오.</b> (문서 05 P1-4)
+  /// <para>
+  /// 값 타입 멤버(<see cref="RFloat"/> <c>Load</c>)와 참조 타입 멤버(<see cref="RAFloat"/> <c>HP</c>)가
+  /// 섞여 있어 복사 시맨틱이 일관되지 않습니다.
+  /// 복사하면 <b>참조 멤버는 원본과 공유되고 값 멤버는 스냅샷이 됩니다.</b>
+  /// </para>
+  /// <code>
+  /// var s = unit.stat;   // 복사본
+  /// s.Load += 10;        // 원본에 반영되지 않음
+  /// s.HP += 10;          // 원본에도 반영됨 (참조 공유)
+  /// </code>
+  /// 지역 변수로 잡아야 하면 <c>ref var s = ref unit.stat;</c>를 쓰십시오.
+  /// <para>
+  /// 클래스 전환은 보류했습니다. 현재 복사 지점이 전부 읽기 전용이라 실제 결함이 없고,
+  /// <see cref="UnitStatus"/>는 어디서도 대입되지 않아 struct의 0 초기화에 의존하므로
+  /// 클래스로 바꾸면 무해한 기본값이 <c>null</c> 참조 오류로 바뀝니다.
+  /// </para>
+  /// </remarks>
   public struct UnitStat {
     public RAFloat HPMax;
     public RAFloat HPRegen;

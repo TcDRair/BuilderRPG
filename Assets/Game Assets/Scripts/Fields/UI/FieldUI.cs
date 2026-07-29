@@ -27,8 +27,11 @@ namespace Rair.Field
 
     protected void Update() {
       #region HP/SP/Fatigue
-      var s = P.stat;
-      var st = P.status;
+      //? ref로 잡아야 합니다. UnitStat/UnitStatus는 struct라 그냥 대입하면 복사본이 되고,
+      //? 그 복사본에 쓰기를 하면 원본에 반영되지 않습니다. (문서 05 P1-4)
+      //? 값 멤버(RFloat)는 스냅샷이 되고 참조 멤버(RAFloat)는 공유되어 시맨틱이 엇갈립니다.
+      ref var s = ref P.stat;
+      ref var st = ref P.status;
       HP.fillAmount = s.HPRatio;
       HPRes.fillAmount = s.HPRCR.Value / s.HPMax.Value;
       SP.fillAmount = s.SPRatio;

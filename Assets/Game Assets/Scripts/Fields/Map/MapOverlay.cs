@@ -6,9 +6,8 @@ using UnityEngine;
 namespace Rair.Field.Maps {
   public class MapOverlay : MonoBehaviour
   {
-    //? 이전에는 RandomTextureGenerator를 참조해 mapVariables.MapTerrain을 꺼내 썼으나,
-    //? RTG는 AssetDatabase/EditorCoroutine 의존이라 Rair.Editor로 분리되었습니다.
-    //? 실제로 필요한 것은 Terrain 하나뿐이므로 직접 참조합니다.
+    //? 이전에는 RandomTextureGenerator를 참조해 mapVariables.MapTerrain을 꺼내 썼습니다.
+    //? 실제로 필요한 것은 Terrain 하나뿐이라 직접 참조하도록 끊었습니다.
     public Terrain terrain;
     public Player player;
     public Texture2D mapData;

@@ -2,15 +2,13 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using Unity.EditorCoroutines.Editor;
 
 using Assets.Maps;
 using Assets.Util;
 
-//? 이 파일은 Rair.Editor 어셈블리(에디터 전용)에 속합니다. (문서 05 P3-4)
-//? TerrainVar/SmoothVar는 씬에 직렬화되므로 RandomTextureGenerator.cs(런타임)에 있습니다.
-//? 이쪽으로 도로 옮기면 플레이 모드를 오갈 때 설정이 사라집니다.
+//? 이 파일에는 에디터 의존이 없습니다. (문서 05 P3-4)
+//? 한동안 Rair.Editor에 있었으나 UnityEditor/EditorCoroutine using이 잔재였을 뿐,
+//? 실제로 쓰는 곳은 없어 런타임으로 되돌렸습니다.
 namespace Rair.Field.Maps {
 
 public class TerrainGenerator : IProgressTimerProvider

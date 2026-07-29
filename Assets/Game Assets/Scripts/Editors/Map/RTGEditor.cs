@@ -67,7 +67,7 @@ namespace Rair.Field.Maps
         EditorGUI.indentLevel++;
         if (MapGenerationRunner.IsRunning(inst)) {
           var m = inst.MapInst;
-          var g = MapGenerationRunner.Terrain;
+          var g = MapGenerationRunner.Terrain(inst);
           (var p, int step) =
             m.Timer.Finished is not true
               ? ((IProgressTimerProvider)m, 1)
