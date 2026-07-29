@@ -6,8 +6,22 @@ using UnityEngine;
 
 namespace Rair.Field.Values
 {
+  /// <summary>한 칸이 <b>얼마나 점유되어 있는지</b>를 나타냅니다.</summary>
+  /// <remarks>
+  /// 플래그가 서 있으면 그만큼 <b>이미 차 있다</b>는 뜻입니다.
+  /// <see cref="None"/>이면 비어 있어 건축할 수 있고, <see cref="FULL"/>이면 더 놓을 자리가 없습니다.
+  /// <para>
+  /// 이 정의에서 파생되는 것들 —
+  /// 범위 밖은 <see cref="FULL"/>로 취급하고(보수적),
+  /// 축소 변환은 포함된 원본 칸들의 <b>합집합</b>을 취하며(하나라도 차 있으면 찬 것),
+  /// 지형에서는 <b>바다가 <see cref="FULL"/>, 육지가 <see cref="None"/></b>입니다.
+  /// </para>
+  /// 플래그 구성은 삭제된 <c>Buildable</c> 열거형과 거의 일대일로 대응합니다.
+  /// 건축 시스템을 되살릴 때 그쪽과 함께 맞춰야 합니다. (문서 05 P1-7)
+  /// </remarks>
   [System.Flags]
   public enum Occupy : short {
+    /// <summary>비어 있음 — 건축 가능</summary>
     None = 0,
     Floor = 1 << 0,
     Ceiling = 1 << 1,
@@ -17,6 +31,7 @@ namespace Rair.Field.Values
     WallW = 1 << 5,
     Inside = 1 << 6,
     Other = 1 << 7,
+    /// <summary>완전 점유 — 건축 불가</summary>
     FULL = byte.MaxValue //? 1 << 8 - 1
   }
   

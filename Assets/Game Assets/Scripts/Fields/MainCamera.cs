@@ -42,12 +42,17 @@ public class MainCamera : MonoBehaviour
   }
 
   #region Prop Transparency
-  //? 아래 셋은 눈으로 보면서 정해야 하는 값이라 인스펙터에 노출합니다.
-  //? 플레이 모드에서 바꿔 가며 확인하고, 정해지면 기본값을 고치십시오.
+  //? 아래 값들은 눈으로 보면서 정해야 하므로 인스펙터에 노출합니다.
   //? (예전에는 const라 값을 바꿀 때마다 재컴파일 후 다시 플레이해야 했습니다.)
+  //?
+  //? minAlpha는 임시 Lit 큐브로 플레이 모드에서 비교해 0.6으로 정했습니다.
+  //?   0.85 — 이전 값. 플레이어는 보이지만 다소 씻긴 느낌
+  //?   0.60 — 가림 오브젝트의 형태가 남으면서 플레이어가 또렷함
+  //?   0.30 — 오브젝트가 거의 사라져 공간감을 잃음
+  //? 알파 프리멀티플라이 블렌딩이라 수치보다 투명하게 보입니다.
   [Header("Prop Transparency")]
   [Tooltip("가림 오브젝트가 도달할 최소 불투명도. 낮을수록 더 비칩니다.")]
-  [Range(0f, 1f)] public float minAlpha = 0.85f;
+  [Range(0f, 1f)] public float minAlpha = 0.6f;
   [Tooltip("프레임당 알파 변화량.")]
   [Range(0.001f, 0.2f)] public float fadeSpeed = 0.02f;
   [Tooltip("가림 판정 대상 레이어.")]

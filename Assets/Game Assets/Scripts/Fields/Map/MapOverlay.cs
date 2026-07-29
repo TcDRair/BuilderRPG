@@ -21,7 +21,16 @@ namespace Rair.Field.Maps {
 
     protected void Start() { InitGrid(); }
     public void InitGrid() {
-      grid = new(terrain, mapData.width, mapData.GetPixels().Select(p => (Values.Occupy)p.a), 4);
+      //! 알파 채널은 land입니다 (육지 1, 바다 0 — MapTexture 참조).
+      //! Occupy는 "얼마나 차 있는가"이므로 그대로 캐스트하면 뜻이 뒤집힙니다.
+      //! 예전 코드는 (Occupy)p.a 였고, 육지가 Floor(1)로 바다가 None(0)으로 들어가
+      //! 물 위가 건축 가능으로 읽혔습니다. (문서 05 P1-7)
+      grid = new(
+        terrain,
+        mapData.width,
+        mapData.GetPixels().Select(p => p.a > .5f ? Values.Occupy.None : Values.Occupy.FULL),
+        4
+      );
     }
     RectInt area;
     float[,] data;
