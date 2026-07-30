@@ -29,7 +29,8 @@ public class TerrainGenerator : IProgressTimerProvider
   private TerrainData MapTData => Generator.mapVariables.MapTerrain.terrainData;
   #endregion
 
-  public const int TOTAL_HEIGHT = 10;
+  //? 지형 높이는 TerrainVar.totalHeight(인스펙터)로 옮겼습니다.
+  //? 상수 10이던 시절에는 512 폭 맵에서 육지 기복이 5유닛뿐이라 평면처럼 보였습니다.
 
   public TerrainGenerator(RandomTextureGenerator Generator) {
     this.Generator = Generator;
@@ -63,7 +64,14 @@ public class TerrainGenerator : IProgressTimerProvider
   IEnumerator SetHeights() {
     // 지형의 크기를 지정합니다.
     MapTData.heightmapResolution = MapSize;
-    MapTData.size = new(MapData.width, TOTAL_HEIGHT, MapData.height);
+    MapTData.size = new(MapData.width, vars.TotalHeight, MapData.height);
+
+    //! 해수면을 월드 y=0에 맞춥니다. 고도가 [-1,1] -> [0,1]로 매핑되므로
+    //! 지형의 절반 높이만큼 내려야 물 평면(y≈0)과 해안선이 일치합니다.
+    //! 높이를 바꾸고 이 오프셋을 갱신하지 않으면 해저가 물 위로 드러나고,
+    //! 프롭은 GetWorldPos가 쓰는 기준점(터레인 위치)을 따라가므로 공중에 뜹니다.
+    var tr = MapTerrain.transform;
+    tr.position = new Vector3(tr.position.x, -vars.TotalHeight / 2f, tr.position.z);
     
     // 맵 경계를 지정합니다.
     float[,] heights = new float[MapSize, MapSize];
