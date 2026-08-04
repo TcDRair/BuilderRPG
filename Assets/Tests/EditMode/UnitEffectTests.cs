@@ -8,7 +8,7 @@ namespace Rair.Tests
   /// 효과 중첩·갱신 규칙(<see cref="UnitEffect"/>)의 계약.
   /// </summary>
   /// <remarks>
-  /// 문서 05 P1-3 · P2-6 처리 결과입니다.
+  /// 보완 기록 P1-3 · P2-6 처리 결과입니다.
   /// 기본 규칙은 <b>갱신</b> — 지속시간만 대조해 긴 쪽을 남깁니다.
   /// <br/>
   /// <see cref="FieldUnit"/>을 거치는 경로는 MonoBehaviour라 EditMode에서 만들 수 없어,

@@ -11,7 +11,7 @@ namespace Rair.Tests
   /// 바이옴 → 터레인 레이어 가중치 표(<see cref="TerrainGenerator.BiomeWeights"/>)의 불변 조건.
   /// </summary>
   /// <remarks>
-  /// 문서 05 P3-1의 마지막 항목입니다.
+  /// 보완 기록 P3-1의 마지막 항목입니다.
   /// 원래는 수동으로 검산했고, 그래서 `TODO` 주석이 몇 달간 남아 있었습니다.
   /// <br/>
   /// 이 테스트는 <see cref="Biome"/> 열거형을 직접 순회하므로,

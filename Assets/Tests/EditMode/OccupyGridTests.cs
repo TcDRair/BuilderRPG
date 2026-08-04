@@ -10,7 +10,7 @@ namespace Rair.Tests
   /// <see cref="Occupy"/>의 의미와 <see cref="OccupyGrid"/>의 축소 규칙을 고정합니다.
   /// </summary>
   /// <remarks>
-  /// 문서 05 P1-7 처리 결과입니다.
+  /// 보완 기록 P1-7 처리 결과입니다.
   /// <b>플래그가 서 있으면 그만큼 이미 차 있다</b>는 뜻으로 통일했습니다.
   /// <para>
   /// 이 값을 실제로 소비하는 코드가 아직 없어(건축 시스템이 빠져 있음)
@@ -68,7 +68,7 @@ namespace Rair.Tests
 
     [Test]
     public void 축소하면_포함된_칸들의_합집합이_된다() {
-      //! 한때 `&=`로 누적해 결과가 항상 비어 있었습니다(문서 05 8절).
+      //! 한때 `&=`로 누적해 결과가 항상 비어 있었습니다(보완 기록 8절).
       //! "하나라도 차 있으면 찬 것"이 범위 밖을 FULL로 두는 기준과 일관됩니다.
       var terrain = CreateTerrain(out var go);
       try {

@@ -9,7 +9,7 @@ namespace Rair.Tests
   /// <see cref="RFloat"/> 계열의 성질 테스트.
   /// </summary>
   /// <remarks>
-  /// 문서 05 P3-1이 지목한 두 성질을 고정합니다.
+  /// 보완 기록 P3-1이 지목한 두 성질을 고정합니다.
   /// <list type="number">
   ///   <item>적용 후 해제하면 원래 값으로 돌아온다</item>
   ///   <item>적용 순서를 바꿔도 결과가 같다</item>

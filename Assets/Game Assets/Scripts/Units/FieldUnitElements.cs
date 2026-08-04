@@ -112,7 +112,7 @@ namespace Rair.Field
   }
   /// <summary>유닛의 능력치입니다.</summary>
   /// <remarks>
-  /// <b>이 struct를 복사한 뒤 쓰지 마십시오.</b> (문서 05 P1-4)
+  /// <b>이 struct를 복사한 뒤 쓰지 마십시오.</b> (보완 기록 P1-4)
   /// <para>
   /// 값 타입 멤버(<see cref="RFloat"/> <c>Load</c>)와 참조 타입 멤버(<see cref="RAFloat"/> <c>HP</c>)가
   /// 섞여 있어 복사 시맨틱이 일관되지 않습니다.

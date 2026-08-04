@@ -17,7 +17,7 @@ namespace Rair.Field.Values
   /// 지형에서는 <b>바다가 <see cref="FULL"/>, 육지가 <see cref="None"/></b>입니다.
   /// </para>
   /// 플래그 구성은 삭제된 <c>Buildable</c> 열거형과 거의 일대일로 대응합니다.
-  /// 건축 시스템을 되살릴 때 그쪽과 함께 맞춰야 합니다. (문서 05 P1-7)
+  /// 건축 시스템을 되살릴 때 그쪽과 함께 맞춰야 합니다. (보완 기록 P1-7)
   /// </remarks>
   [System.Flags]
   public enum Occupy : short {

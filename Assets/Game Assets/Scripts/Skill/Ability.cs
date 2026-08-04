@@ -67,7 +67,7 @@ namespace Rair.Skill
     public virtual void ToggleOn(FieldUnit unit) => unit.ApplyEffect(CreateEffect(unit));
     public virtual void ToggleOff(FieldUnit unit) => unit.RemoveEffect(EffectID);
 
-    //todo 실행 간 안정성이 없어 세이브 데이터에 쓸 수 없습니다. 명시적 ID 필요. (문서 05 P1-6)
+    //todo 실행 간 안정성이 없어 세이브 데이터에 쓸 수 없습니다. 명시적 ID 필요. (보완 기록 P1-6)
     public int ID => (FieldID, AbilID).GetHashCode();
   }
 

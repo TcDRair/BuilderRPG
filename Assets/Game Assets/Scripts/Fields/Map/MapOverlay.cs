@@ -24,7 +24,7 @@ namespace Rair.Field.Maps {
       //! 알파 채널은 land입니다 (육지 1, 바다 0 — MapTexture 참조).
       //! Occupy는 "얼마나 차 있는가"이므로 그대로 캐스트하면 뜻이 뒤집힙니다.
       //! 예전 코드는 (Occupy)p.a 였고, 육지가 Floor(1)로 바다가 None(0)으로 들어가
-      //! 물 위가 건축 가능으로 읽혔습니다. (문서 05 P1-7)
+      //! 물 위가 건축 가능으로 읽혔습니다. (보완 기록 P1-7)
       grid = new(
         terrain,
         mapData.width,

@@ -8,7 +8,7 @@ namespace Rair.Field.Maps
 {
   /// <summary>맵 생성 절차 본체입니다. 런타임에서도 돌아갑니다.</summary>
   /// <remarks>
-  /// 예전에는 절차 전체가 <c>Rair.Editor</c>에 있어 인게임 생성이 불가능했습니다. (문서 05 P3-4)
+  /// 예전에는 절차 전체가 <c>Rair.Editor</c>에 있어 인게임 생성이 불가능했습니다. (보완 기록 P3-4)
   /// 남아 있던 에디터 의존은 두 가지였고, 각각 이렇게 갈랐습니다.
   /// <list type="bullet">
   ///   <item>

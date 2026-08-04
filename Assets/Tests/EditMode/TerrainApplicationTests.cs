@@ -18,7 +18,7 @@ namespace Rair.Tests
   /// <see cref="SplatmapTests"/>는 가중치 <i>표</i>만 검사합니다.
   /// 그 값을 실제로 Terrain API에 넣는 구간은 아무도 보고 있지 않았습니다.
   /// <para>
-  /// 문서 05 기준으로 아래 네 건이 여기서 잡혀야 했습니다.
+  /// 보완 기록 기준으로 아래 네 건이 여기서 잡혀야 했습니다.
   /// <list type="table">
   ///   <item><term>P0-9</term><description>레이어 수 불일치로 <c>SetAlphamaps</c>가 예외. 낡은 알파맵이 남아 화면은 그럴듯했다</description></item>
   ///   <item><term>P0-10</term><description>수직 스케일이 상수 10이라 지형이 평면</description></item>

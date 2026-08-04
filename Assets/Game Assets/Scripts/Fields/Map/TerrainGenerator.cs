@@ -6,7 +6,7 @@ using UnityEngine;
 using Assets.Maps;
 using Assets.Util;
 
-//? 이 파일에는 에디터 의존이 없습니다. (문서 05 P3-4)
+//? 이 파일에는 에디터 의존이 없습니다. (보완 기록 P3-4)
 //? 한동안 Rair.Editor에 있었으나 UnityEditor/EditorCoroutine using이 잔재였을 뿐,
 //? 실제로 쓰는 곳은 없어 런타임으로 되돌렸습니다.
 namespace Rair.Field.Maps {

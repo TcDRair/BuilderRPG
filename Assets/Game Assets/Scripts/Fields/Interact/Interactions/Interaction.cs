@@ -34,7 +34,7 @@ namespace Rair.Field.Interact
   /// </code>
   /// <see cref="Prop.OnEnable"/>이 <c>useDestroy</c>/<c>useRepair</c> 플래그에 따라 호출하므로,
   /// 해당 플래그가 켜진 프롭이 씬에 있으면 매 활성화마다 발생했습니다.
-  /// 즉 기본 파괴·수리 상호작용이 동작하지 않고 있었습니다. (문서 05 P0-12)
+  /// 즉 기본 파괴·수리 상호작용이 동작하지 않고 있었습니다. (보완 기록 P0-12)
   /// </para>
   /// <see cref="CreateInstance"/>로 바꾸는 대신 상속을 뗀 이유 —
   /// 이 타입은 에셋으로 저장된 적이 없고(프로젝트 내 인스턴스 0건),

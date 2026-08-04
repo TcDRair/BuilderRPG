@@ -18,7 +18,7 @@ namespace Rair.Field.Maps
   /// 그래서 데이터(여기)와 생성 로직(<c>Rair.Editor</c>의 <c>MapGenerationRunner</c>)을 갈라 두었습니다.
   /// <b>이 파일에 <c>UnityEditor</c>·<c>EditorCoroutine</c> 의존을 넣지 마십시오.</b>
   /// <para>
-  /// 생성 자체는 아직 에디터에서만 가능합니다. (문서 05 P3-4)
+  /// 생성 자체는 아직 에디터에서만 가능합니다. (보완 기록 P3-4)
   /// </para>
   /// </remarks>
   [ExecuteInEditMode]
